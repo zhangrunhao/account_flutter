@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class CateList extends StatelessWidget {
@@ -9,7 +11,29 @@ class CateList extends StatelessWidget {
       width: double.infinity,
       height: double.infinity,
       color: Colors.grey,
-      child: const Center(child: Text("cate_list")),
+      child: GridView.count(
+        mainAxisSpacing: 15,
+        crossAxisSpacing: 15,
+        crossAxisCount: 5,
+        padding: const EdgeInsets.all(10),
+        children: _buildCateList(32),
+      )
     );
   }
+}
+
+List<Container> _buildCateList(int count) {
+  return List.generate(count, (index) => _buildCateOption("交通", Icons.home));
+}
+
+Container _buildCateOption(String title, IconData icon) {
+  return Container(
+    color: Colors.amber,
+    child: Column(
+      children: [
+        Expanded(child: Image.asset("images/aliya.jpg")),
+        Center(child: Text(title),),
+      ],
+    ),
+  );
 }

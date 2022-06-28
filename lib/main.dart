@@ -1,5 +1,5 @@
-import 'package:account_flutter/pages/home/home_page.dart';
-import 'package:account_flutter/router.dart';
+// import 'package:account_flutter/pages/home/home_page.dart';
+import 'package:account_flutter/pages/trade/trade_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      home: const TradePage(),
     );
   }
 }

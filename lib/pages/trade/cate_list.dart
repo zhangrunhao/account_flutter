@@ -10,7 +10,6 @@ class CateList extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      color: Colors.grey,
       child: GridView.count(
         mainAxisSpacing: 15,
         crossAxisSpacing: 15,
@@ -28,7 +27,7 @@ List<Container> _buildCateList(int count) {
 
 Container _buildCateOption(String title, IconData icon) {
   return Container(
-    color: Colors.amber,
+    color: Colors.grey[300],
     child: Column(
       children: [
         Expanded(child: Image.asset("images/aliya.jpg")),

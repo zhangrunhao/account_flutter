@@ -1,17 +1,19 @@
+import 'package:account_flutter/bean/account_bean.dart';
 import 'package:flutter/material.dart';
 
 class ResultShow extends StatelessWidget {
-  const ResultShow({Key? key}) : super(key: key);
+  const ResultShow({Key? key, required this.cate}) : super(key: key);
+
+  final TradeCateBean cate;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       height: 60,
-      // color: Colors.green,
       child: Row(
         children: [
-          _buildCateIcon(Icons.abc_outlined),
+          _buildCateIcon(cate),
           Expanded(child: _buildInput()),
           _buildCountResult()
         ],
@@ -20,12 +22,12 @@ class ResultShow extends StatelessWidget {
   }
 }
 
-Widget _buildCateIcon(IconData icon) {
+Widget _buildCateIcon(TradeCateBean cate) {
   return Container(
     margin: const EdgeInsets.only(left: 10),
     width: 50,
     height: 50,
-    child: Image.asset("images/aliya.jpg"),
+    child: Image.network(cate.url),
   );
 }
 
@@ -44,7 +46,7 @@ Widget _buildInput() {
 Widget _buildCountResult() {
   return Container(
     margin: const EdgeInsets.only(right: 5),
-    child:  const Center(
+    child: const Center(
       child: Text(
         "10.01",
         style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),

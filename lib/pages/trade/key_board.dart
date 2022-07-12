@@ -1,34 +1,132 @@
 import 'package:flutter/material.dart';
+import 'package:decimal/decimal.dart';
+
+typedef MoneyChangeCallBack = void Function(String money);
+Decimal d (String s) => Decimal.parse(s);
 
 class KeyBoard extends StatelessWidget {
-  const KeyBoard({Key? key}) : super(key: key);
+  const KeyBoard({Key? key, required this.money, required this.callBack})
+      : super(key: key);
+
+  final String money;
+  final MoneyChangeCallBack callBack;
+  
 
   void _handleNumberTap(String key) {
-    print(key);
+
+    if ( // 只有一个 . , 没有+ 和 -的情况下, 小数点后面只能有两位
+      money.contains('.') &&
+      !money.contains('+') &&
+      !money.contains('-') &&
+      money.substring(money.indexOf('.')).length > 2
+    ) {
+      return;
+    }
+
+    if (
+      money.contains('.') &&
+      money.contains('+') &&
+      money.lastIndexOf('.') > money.lastIndexOf('+') && // . 比 + 更靠后
+      money.substring(money.lastIndexOf('.')).length > 2 // . 后面最多有两问
+    ) {
+      return;
+    }
+
+    if (
+      money.contains('.') &&
+      money.contains('-') &&
+      money.lastIndexOf('.') > money.lastIndexOf('-') && // . 比 - 更靠后
+      money.substring(money.lastIndexOf('.')).length > 2 // . 后面最多有两问
+    ) {
+      return;
+    }
+
+    if (money == "0") {
+      callBack(key);
+      return;
+    }
+    callBack(money + key);
   }
 
   void _handleDeleteTap(String key) {
-    print("delete");
+    String res = money.substring(0, money.length - 1);
+    res.isEmpty ? callBack('0') : callBack(res);
   }
 
-  void _handleAddTap(String key) {
-    print("add");
+  void _handlePulsTap(String key) {
+    callBack("${_handleSymbolicOperation()}+");
   }
 
-  void _handleSubtractTap(String key) {
-    print("subtract");
+  String _handleSymbolicOperation() {
+    Decimal res;
+    if (money.contains('-') && money.lastIndexOf("-") < money.length - 1) {
+      //如果存在 - , 先计算
+      List<String> arr = money.split('-');
+      res = d(arr[0]) - d(arr[1]);
+      if (res < d('0')) res = d('0');
+    } else if (money.contains('+') && money.lastIndexOf("+") < money.length - 1) {
+      //如果存在 + , 先计算
+      List<String> arr = money.split('+');
+      res = d(arr[0]) + d(arr[1]);
+    } else if (money.lastIndexOf('+') + 1 == money.length || money.lastIndexOf('-') + 1 == money.length ) {
+      res = d(money.substring(0, money.length - 1));
+    } else {
+      res = d(money);
+    }
+    return res.toString(); 
+  }
+
+  void _handleMinusTap(String key) {
+    callBack("${_handleSymbolicOperation()}-");
   }
 
   void _handleAgainTap(String key) {
-    print("again");
   }
 
   void _handlePointTap(String key) {
-    print("point");
+    if ( // 存在 . , 但是不存在 + 或 -
+      money.contains('.') && 
+      !money.contains('+') && 
+      !money.contains('-')
+    ) {
+      return;
+    }
+
+    if ( // 最后一个 . , 在最后一个 + 后面
+        money.contains('.') &&
+            money.contains('+') &&
+            money.lastIndexOf('.') > money.lastIndexOf('+')) {
+      return;
+    }
+
+    if ( // 最后一个 . , 在最后一个 - 后面
+        money.contains('.') &&
+            money.contains('-') &&
+            money.lastIndexOf('.') > money.lastIndexOf('-')) {
+      return;
+    }
+
+    if (
+      money.contains('+') &&
+      money.length == money.lastIndexOf('+') + 1 // 最后一位是 +
+    ) {
+      callBack('${money}0.');
+      return;
+    }
+
+    if (
+      money.contains('-') &&
+      money.length == money.lastIndexOf('-') + 1 // 最后一位是 -
+    ) {
+      callBack('${money}0.');
+      return;
+    }
+
+    callBack('$money.');
   }
 
   void _handleSaveTap(String key) {
-    print("save");
+    callBack(_handleSymbolicOperation());
   }
 
   @override
@@ -57,7 +155,7 @@ class KeyBoard extends StatelessWidget {
                 Expanded(child: _buildKeyButton("5", "5", _handleNumberTap)),
                 Expanded(child: _buildKeyButton("6", "6", _handleNumberTap)),
                 Expanded(
-                  child: _buildKeyButton("+", "add", _handleAddTap),
+                  child: _buildKeyButton("+", "plus", _handlePulsTap),
                 ),
               ],
             ),
@@ -69,7 +167,7 @@ class KeyBoard extends StatelessWidget {
                 Expanded(child: _buildKeyButton("8", "8", _handleNumberTap)),
                 Expanded(child: _buildKeyButton("9", "9", _handleNumberTap)),
                 Expanded(
-                  child: _buildKeyButton("-", "subtract", _handleSubtractTap),
+                  child: _buildKeyButton("-", "minus", _handleMinusTap),
                 ),
               ],
             ),
@@ -105,23 +203,3 @@ Widget _buildKeyButton(String text, String key, Function onTap) {
   );
 }
 
-// Widget _buildKeyButton(String text, String key, Function onTap) {
-//   return GestureDetector(
-//     onTap: () {
-//       onTap(key);
-//     },
-//     child: Container(
-//       margin: const EdgeInsets.all(2),
-//       decoration: BoxDecoration(
-//         border: Border.all(
-//           color: Colors.black,
-//           width: 2,
-//         ),
-//         color: Colors.grey[400],
-//       ),
-//       child: Center(
-//         child: Text(text),
-//       ),
-//     ),
-//   );
-// }

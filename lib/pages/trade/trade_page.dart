@@ -47,6 +47,7 @@ class TradePage extends StatefulWidget {
 
 class _TradePageState extends State<TradePage> {
   TradeCateBean _selectedTradeCate = cates1.first;
+  String money = "0";
 
   void cateTapCallBack(TradeCateBean cate) {
     setState(() {
@@ -56,12 +57,10 @@ class _TradePageState extends State<TradePage> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("_TradePageState build");
     return DefaultTabController(
       length: 3,
       child: Builder(
         builder: ((context) {
-          debugPrint("DefaultTabController Builder");
           final TabController tabController = DefaultTabController.of(context)!;
           tabController.addListener(() {
             if (!tabController.indexIsChanging) {
@@ -97,9 +96,13 @@ class _TradePageState extends State<TradePage> {
                       ),
                     ]),
                   ),
-                  ResultShow(cate: _selectedTradeCate),
+                  ResultShow(cate: _selectedTradeCate, money: money,),
                   const ToolsList(),
-                  const KeyBoard(),
+                  KeyBoard(money: money, callBack: (String moneyRes) => {
+                    setState(() {
+                      money = moneyRes;
+                    })
+                  }),
                 ],
               ),
             ),

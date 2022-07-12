@@ -2,9 +2,12 @@ import 'package:account_flutter/bean/account_bean.dart';
 import 'package:flutter/material.dart';
 
 class ResultShow extends StatelessWidget {
-  const ResultShow({Key? key, required this.cate}) : super(key: key);
+  const ResultShow({Key? key, required this.cate, required this.money})
+      : super(key: key);
 
   final TradeCateBean cate;
+
+  final String money;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +18,12 @@ class ResultShow extends StatelessWidget {
         children: [
           _buildCateIcon(cate),
           Expanded(child: _buildInput()),
-          _buildCountResult()
+          ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: 110
+            ),
+            child: _buildCountResult(money),
+          )
         ],
       ),
     );
@@ -36,20 +44,23 @@ Widget _buildInput() {
     margin: const EdgeInsets.only(left: 10),
     height: 60,
     child: const TextField(
-      autofocus: true,
       decoration: InputDecoration(
           fillColor: Colors.white, labelText: "备注", hintText: "请输入备注"),
     ),
   );
 }
 
-Widget _buildCountResult() {
+Widget _buildCountResult(String money) {
   return Container(
     margin: const EdgeInsets.only(right: 5),
-    child: const Center(
-      child: Text(
-        "10.01",
-        style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+    child: Center(
+      child: FittedBox(
+        child: Text(
+          money,
+          style: const TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.w600),
+        ),
       ),
     ),
   );

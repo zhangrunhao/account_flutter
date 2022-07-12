@@ -5,8 +5,7 @@ class ToolsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("ToolsList build");
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 40,
       child: ListView(

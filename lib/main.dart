@@ -1,5 +1,4 @@
-// import 'package:account_flutter/pages/home/home_page.dart';
-import 'package:account_flutter/pages/trade/trade_page.dart';
+import 'package:account_flutter/pages/login/login_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const TradePage(),
+      home: const LoginPage(),
     );
   }
 }

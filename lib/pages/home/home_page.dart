@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
-
   @override
   State<StatefulWidget> createState() {
     return _HomePageState();
@@ -14,8 +13,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectIndex = 0;
-  static const List<Widget> _pageWidget = <Widget>[BriefWidget(), WalletWidget()];
-
+  static const List<Widget> _pageWidget = <Widget>[
+    BriefWidget(),
+    WalletWidget()
+  ];
   void _onItemTapped(int index) {
     setState(() {
       _selectIndex = index;
@@ -27,7 +28,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("首页"),
-      ),      
+      ),
       body: _pageWidget.elementAt(_selectIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -42,7 +43,7 @@ class _HomePageState extends State<HomePage> {
         ],
         onTap: _onItemTapped,
         currentIndex: _selectIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Colors.blue,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (() => MyRouter.push(context, "app://trade")),

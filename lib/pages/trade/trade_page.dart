@@ -70,7 +70,12 @@ class _TradePageState extends State<TradePage> {
           return Scaffold(
             appBar: AppBar(
               centerTitle: true,
-              leading: const Icon(Icons.arrow_back),
+              leading: GestureDetector(
+                onTap: (() {
+                  Navigator.pop(context);
+                }),
+                child: const Icon(Icons.arrow_back),
+              ),
               title: const TabBar(
                 tabs: tabs,
               ),

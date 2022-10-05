@@ -1,9 +1,10 @@
+import 'package:account_flutter/api/trade_cate.dart';
 import 'package:account_flutter/pages/trade/cate_list.dart';
 import 'package:account_flutter/pages/trade/key_board.dart';
 import 'package:account_flutter/pages/trade/result_show.dart';
 import 'package:account_flutter/pages/trade/tools_list.dart';
 import 'package:flutter/material.dart';
-import 'package:account_flutter/bean/account_bean.dart';
+import 'package:account_flutter/bean/trade_cate_bean.dart';
 
 const List<Tab> tabs = <Tab>[
   Tab(
@@ -17,42 +18,52 @@ const List<Tab> tabs = <Tab>[
   ),
 ];
 
-List<TradeCateBean> cates1 = <TradeCateBean>[
-  TradeCateBean(
-    icon:
-        "https://zhangrunhao.oss-cn-beijing.aliyuncs.com/account-icon/icons-ali/boots.png",
-    name: "鞋子",
-  ),
-  TradeCateBean(
-    icon:
-        "https://zhangrunhao.oss-cn-beijing.aliyuncs.com/account-icon/icons-ali/car.png",
-    name: "交通",
-  ),
-];
-
-List<TradeCateBean> cates2 = <TradeCateBean>[
-  TradeCateBean(
-    icon:
-        "https://zhangrunhao.oss-cn-beijing.aliyuncs.com/account-icon/icons-ali/boots.png",
-    name: "鞋子",
-  )
-];
+TradeCateBean settingCate = TradeCateBean(
+    name: "编辑",
+    icon: "images/setting.png",
+    id: 0,
+    type: "",
+    operate: "operate");
 
 class TradePage extends StatefulWidget {
   const TradePage({Key? key}) : super(key: key);
-
   @override
   State<StatefulWidget> createState() => _TradePageState();
 }
 
 class _TradePageState extends State<TradePage> {
-  TradeCateBean _selectedTradeCate = cates1.first;
+  List<TradeCateBean> incomeCates = [];
+  List<TradeCateBean> expendCates = [];
+  TradeCateBean? _selectedTradeCate;
   String money = "0";
 
   void cateTapCallBack(TradeCateBean cate) {
     setState(() {
       _selectedTradeCate = cate;
     });
+  }
+
+  void moneyChangeCallBack(String nowMoney) {
+    setState(() {
+      money = nowMoney;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    TradeCateApi.getList().then((value) => {
+          setState(() {
+            incomeCates =
+                value.where((element) => element.operate == "Income").toList();
+            expendCates =
+                value.where((element) => element.operate == "Expend").toList();
+            incomeCates.add(settingCate);
+            expendCates.add(settingCate);
+
+            _selectedTradeCate = incomeCates[0];
+          })
+        });
   }
 
   @override
@@ -63,51 +74,36 @@ class _TradePageState extends State<TradePage> {
         builder: ((context) {
           final TabController tabController = DefaultTabController.of(context)!;
           tabController.addListener(() {
-            if (!tabController.indexIsChanging) {
-              // debugPrint(tabController.index.toString());
+            if (!tabController.indexIsChanging &&
+                incomeCates.length > 1 &&
+                expendCates.length > 1) {
+              // index: 0-> income, 1->expend, 2->transfer
+              if (tabController.index == 0) {
+                setState(() {
+                  _selectedTradeCate = incomeCates[0];
+                });
+              } else if (tabController.index == 1) {
+                setState(() {
+                  _selectedTradeCate = expendCates[0];
+                });
+              }
             }
           });
           return Scaffold(
-            appBar: AppBar(
-              centerTitle: true,
-              leading: GestureDetector(
-                onTap: (() {
-                  Navigator.pop(context);
-                }),
-                child: const Icon(Icons.arrow_back),
-              ),
-              title: const TabBar(
-                tabs: tabs,
-              ),
-            ),
+            appBar: _buildAppBar(context),
             body: SafeArea(
               child: Column(
                 children: [
                   Expanded(
-                    child: TabBarView(controller: tabController, children: [
-                      CateList(
-                        cates: cates1,
-                        callBack: cateTapCallBack,
-                      ),
-                      CateList(
-                        cates: cates2,
-                        callBack: cateTapCallBack,
-                      ),
-                      const Center(
-                        child: Text(
-                          "转账",
-                          style: TextStyle(fontSize: 30),
-                        ),
-                      ),
-                    ]),
+                    child: _buildTabBarView(tabController, incomeCates,
+                        expendCates, cateTapCallBack),
                   ),
-                  ResultShow(cate: _selectedTradeCate, money: money,),
+                  ResultShow(
+                    cate: _selectedTradeCate,
+                    money: money,
+                  ),
                   const ToolsList(),
-                  KeyBoard(money: money, callBack: (String moneyRes) => {
-                    setState(() {
-                      money = moneyRes;
-                    })
-                  }),
+                  _buildKeyBoard(money, moneyChangeCallBack),
                 ],
               ),
             ),
@@ -116,4 +112,46 @@ class _TradePageState extends State<TradePage> {
       ),
     );
   }
+}
+
+Widget _buildTabBarView(
+    TabController tabController,
+    List<TradeCateBean> incomeCates,
+    List<TradeCateBean> expendCates,
+    TapCateListCallBack callBack) {
+  return TabBarView(controller: tabController, children: [
+    CateList(
+      cates: incomeCates,
+      callBack: callBack,
+    ),
+    CateList(
+      cates: expendCates,
+      callBack: callBack,
+    ),
+    const Center(
+      child: Text(
+        "转账",
+        style: TextStyle(fontSize: 30),
+      ),
+    ),
+  ]);
+}
+
+PreferredSizeWidget _buildAppBar(BuildContext context) {
+  return AppBar(
+    centerTitle: true,
+    leading: GestureDetector(
+      onTap: (() {
+        Navigator.pop(context);
+      }),
+      child: const Icon(Icons.arrow_back),
+    ),
+    title: const TabBar(
+      tabs: tabs,
+    ),
+  );
+}
+
+Widget _buildKeyBoard(String money, MoneyChangeCallBack callBack) {
+  return KeyBoard(money: money, callBack: callBack);
 }

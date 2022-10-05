@@ -1,7 +1,7 @@
-import 'package:account_flutter/bean/account_bean.dart';
+import 'package:account_flutter/bean/trade_cate_bean.dart';
 import 'package:flutter/material.dart';
 
-typedef TapCallBack = void Function(TradeCateBean cate);
+typedef TapCateListCallBack = void Function(TradeCateBean cate);
 
 class CateList extends StatelessWidget {
   const CateList({
@@ -11,30 +11,7 @@ class CateList extends StatelessWidget {
   }) : super(key: key);
 
   final List<TradeCateBean> cates;
-  final TapCallBack callBack;
-
-  List<Widget> _buildCateList() {
-    return cates.map((TradeCateBean cate) => _buildCateOption(cate)).toList();
-  }
-
-  Widget _buildCateOption(TradeCateBean cate) {
-    return GestureDetector(
-      onTap: () {
-        callBack(cate);
-      },
-      child: Card(
-        color: Colors.grey[300],
-        child: Column(
-          children: [
-            Expanded(child: Image.network(cate.icon)),
-            Center(
-              child: Text(cate.name),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  final TapCateListCallBack callBack;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +23,45 @@ class CateList extends StatelessWidget {
           crossAxisSpacing: 10,
           crossAxisCount: 5,
           padding: const EdgeInsets.all(15),
-          children: _buildCateList(),
+          children: _buildCateList(cates, callBack),
         ));
+  }
+}
+
+List<Widget> _buildCateList(
+    List<TradeCateBean> cates, TapCateListCallBack callBack) {
+  return cates
+      .map((TradeCateBean cate) => _buildCateOption(cate, callBack))
+      .toList();
+}
+
+Widget _buildCateOption(TradeCateBean cate, TapCateListCallBack callBack) {
+  return GestureDetector(
+    onTap: () {
+      if (cate.id == 0) {
+        // 跳转cate设置页面
+      } else {
+        callBack(cate);
+      }
+    },
+    child: Card(
+      color: Colors.grey[300],
+      child: Column(
+        children: [
+          Expanded(child: _buildIconImage(cate)),
+          Center(
+            child: Text(cate.name),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget _buildIconImage(TradeCateBean cate) {
+  if (cate.id == 0) {
+    return Image.asset(cate.icon);
+  } else {
+    return Image.network(cate.icon);
   }
 }

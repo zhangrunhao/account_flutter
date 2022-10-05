@@ -1,11 +1,11 @@
-import 'package:account_flutter/bean/account_bean.dart';
+import 'package:account_flutter/bean/trade_cate_bean.dart';
 import 'package:flutter/material.dart';
 
 class ResultShow extends StatelessWidget {
   const ResultShow({Key? key, required this.cate, required this.money})
       : super(key: key);
 
-  final TradeCateBean cate;
+  final TradeCateBean? cate;
 
   final String money;
 
@@ -19,9 +19,7 @@ class ResultShow extends StatelessWidget {
           _buildCateIcon(cate),
           Expanded(child: _buildInput()),
           ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxWidth: 110
-            ),
+            constraints: const BoxConstraints(maxWidth: 110),
             child: _buildCountResult(money),
           )
         ],
@@ -30,13 +28,21 @@ class ResultShow extends StatelessWidget {
   }
 }
 
-Widget _buildCateIcon(TradeCateBean cate) {
+Widget _buildCateIcon(TradeCateBean? cate) {
   return Container(
     margin: const EdgeInsets.only(left: 10),
     width: 50,
     height: 50,
-    child: Image.network(cate.icon),
+    child: _buildCateImage(cate),
   );
+}
+
+Widget _buildCateImage(TradeCateBean? cate) {
+  if (cate != null) {
+    return Image.network(cate.icon);
+  } else {
+    return Container();
+  }
 }
 
 Widget _buildInput() {
@@ -57,9 +63,7 @@ Widget _buildCountResult(String money) {
       child: FittedBox(
         child: Text(
           money,
-          style: const TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.w600),
+          style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
         ),
       ),
     ),

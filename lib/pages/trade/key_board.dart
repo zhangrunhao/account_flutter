@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:decimal/decimal.dart';
 
 typedef MoneyChangeCallBack = void Function(String money);
+
 Decimal d (String s) => Decimal.parse(s);
 
 class KeyBoard extends StatelessWidget {

@@ -1,4 +1,6 @@
+import 'package:account_flutter/router.dart';
 import 'package:flutter/material.dart';
+import "../../api/user.dart";
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -7,60 +9,83 @@ class LoginPage extends StatefulWidget {
   State<StatefulWidget> createState() => _LoginPageState();
 }
 
-class PersonInfo {
-  String? email = '';
-}
-
 class _LoginPageState extends State<LoginPage> {
-  PersonInfo info = PersonInfo();
-  late FocusNode _email;
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  void _handleSubmitted() {
-    final form = _formKey.currentState;
-    form?.save();
-    debugPrint("a");
-  }
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _pwdController = TextEditingController();
+  final GlobalKey _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-    _email = FocusNode();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _email.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    const sizedBoxSpace = SizedBox(height: 25);
-    return Form(
-      key: _formKey,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("登录ss"),
-        ),
-        body: Column(
-          children: [
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("登录"),
+      ),
+      body: Form(
+        key: _formKey,
+        // autovalidateMode: AutovalidateMode.onUserInteraction,
+        child: Column(
+          children: <Widget>[
             TextFormField(
-              focusNode: _email,
+              autofocus: true,
+              controller: _emailController,
               decoration: const InputDecoration(
-                filled: true,
-                icon: Icon(Icons.email),
-                labelText: "邮箱",
+                labelText: "用户名",
+                hintText: "您的用户名或者邮箱",
+                prefixIcon: Icon(Icons.person),
               ),
-              onSaved: (value) {
-                info.email = value;
+              validator: (v) {
+                return v!.trim().isNotEmpty ? null : "用户名不能为空";
               },
             ),
-            sizedBoxSpace,
-            Center(
-              child: ElevatedButton(
-                onPressed: _handleSubmitted,
-                child: const Text("Submit"),
+            TextFormField(
+              controller: _pwdController,
+              decoration: const InputDecoration(
+                  labelText: "密码",
+                  hintText: "您的登录密码",
+                  prefixIcon: Icon(Icons.lock)),
+              obscureText: true,
+              validator: (v) {
+                // TODO: 修改数据库密码长度
+                return v!.trim().length > 2 ? null : '密码不能少于3位';
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 28),
+              child: Row(
+                children: <Widget>[
+                  Expanded(child: Builder(
+                    builder: (ctx) {
+                      return ElevatedButton(
+                        onPressed: () {
+                          if (Form.of(ctx)!.validate()) {
+                            // TODO: 此处提交数据
+                            UserApi.login(
+                                    _emailController.text, _pwdController.text)
+                                .then((success) => {
+                                      if (success)
+                                        {MyRouter.push(context, "app://")}
+                                      else
+                                        {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                                  content: Text("登录失败")))
+                                        }
+                                    });
+                          }
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.all(16),
+                          child: Text("登录"),
+                        ),
+                      );
+                    },
+                  ))
+                ],
               ),
             ),
           ],

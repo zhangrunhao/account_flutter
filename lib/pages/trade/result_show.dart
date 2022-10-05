@@ -35,7 +35,7 @@ Widget _buildCateIcon(TradeCateBean cate) {
     margin: const EdgeInsets.only(left: 10),
     width: 50,
     height: 50,
-    child: Image.network(cate.url),
+    child: Image.network(cate.icon),
   );
 }
 

@@ -26,7 +26,7 @@ class CateList extends StatelessWidget {
         color: Colors.grey[300],
         child: Column(
           children: [
-            Expanded(child: Image.network(cate.url)),
+            Expanded(child: Image.network(cate.icon)),
             Center(
               child: Text(cate.name),
             ),

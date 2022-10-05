@@ -19,12 +19,12 @@ const List<Tab> tabs = <Tab>[
 
 List<TradeCateBean> cates1 = <TradeCateBean>[
   TradeCateBean(
-    url:
+    icon:
         "https://zhangrunhao.oss-cn-beijing.aliyuncs.com/account-icon/icons-ali/boots.png",
     name: "鞋子",
   ),
   TradeCateBean(
-    url:
+    icon:
         "https://zhangrunhao.oss-cn-beijing.aliyuncs.com/account-icon/icons-ali/car.png",
     name: "交通",
   ),
@@ -32,7 +32,7 @@ List<TradeCateBean> cates1 = <TradeCateBean>[
 
 List<TradeCateBean> cates2 = <TradeCateBean>[
   TradeCateBean(
-    url:
+    icon:
         "https://zhangrunhao.oss-cn-beijing.aliyuncs.com/account-icon/icons-ali/boots.png",
     name: "鞋子",
   )

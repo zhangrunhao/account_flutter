@@ -139,16 +139,20 @@ Widget _buildTabBarView(
 
 PreferredSizeWidget _buildAppBar(BuildContext context) {
   return AppBar(
-    centerTitle: true,
-    leading: GestureDetector(
-      onTap: (() {
-        Navigator.pop(context);
-      }),
-      child: const Icon(Icons.arrow_back),
-    ),
     title: const TabBar(
       tabs: tabs,
     ),
+    actions: [
+      SizedBox(
+        width: 80,
+        child: GestureDetector(
+          onTap: (() {
+            print("设置");
+          }),
+          child: const Icon(Icons.settings),
+        ),
+      ),
+    ],
   );
 }
 

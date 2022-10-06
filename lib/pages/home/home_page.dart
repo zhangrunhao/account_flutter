@@ -1,4 +1,4 @@
-import 'package:account_flutter/pages/home/brief_page.dart';
+import 'package:account_flutter/pages/home/brief_widget.dart';
 import 'package:account_flutter/pages/home/wallet_widget.dart';
 import 'package:account_flutter/router.dart';
 import 'package:flutter/material.dart';

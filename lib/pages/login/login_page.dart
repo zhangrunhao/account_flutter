@@ -1,6 +1,6 @@
+import 'package:account_flutter/api/user.dart';
 import 'package:account_flutter/router.dart';
 import 'package:flutter/material.dart';
-import "../../api/user.dart";
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:account_flutter/pages/home/home_page.dart';
 import 'package:account_flutter/pages/login/login_page.dart';
-import 'package:account_flutter/pages/trade-cate-list/trade_cate_list_page.dart';
+import 'package:account_flutter/pages/trade_cate_list/trade_cate_list_page.dart';
 import 'package:account_flutter/pages/trade/trade_page.dart';
 import 'package:flutter/material.dart';
 

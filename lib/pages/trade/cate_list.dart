@@ -65,6 +65,6 @@ Widget _buildIconImage(TradeCateBean cate) {
   if (cate.id == 0) {
     return Image.asset(cate.icon);
   } else {
-    return Image.network(cate.icon);
+    return Image.asset("images/cate_icons/${cate.icon}.png");
   }
 }

@@ -1,5 +1,4 @@
 import 'package:account_flutter/api/user.dart';
-import 'package:account_flutter/router.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -68,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                                     _emailController.text, _pwdController.text)
                                 .then((success) => {
                                       if (success)
-                                        {MyRouter.push(context, "app://")}
+                                        Navigator.pushNamed(context, "/")
                                       else
                                         {
                                           ScaffoldMessenger.of(context)

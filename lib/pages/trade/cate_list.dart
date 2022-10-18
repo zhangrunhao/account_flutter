@@ -1,5 +1,4 @@
 import 'package:account_flutter/bean/trade_cate_bean.dart';
-import 'package:account_flutter/router.dart';
 import 'package:flutter/material.dart';
 
 typedef TapCateListCallBack = void Function(TradeCateBean cate);
@@ -7,10 +6,12 @@ typedef TapCateListCallBack = void Function(TradeCateBean cate);
 class CateList extends StatelessWidget {
   const CateList({
     Key? key,
+    required this.operate,
     required this.cates,
     required this.callBack,
   }) : super(key: key);
 
+  final String operate;
   final List<TradeCateBean> cates;
   final TapCateListCallBack callBack;
 
@@ -24,25 +25,26 @@ class CateList extends StatelessWidget {
           crossAxisSpacing: 10,
           crossAxisCount: 5,
           padding: const EdgeInsets.all(15),
-          children: _buildCateList(cates, callBack, context),
+          children: _buildCateList(cates, callBack, context, operate),
         ));
   }
 }
 
 List<Widget> _buildCateList(List<TradeCateBean> cates,
-    TapCateListCallBack callBack, BuildContext context) {
+    TapCateListCallBack callBack, BuildContext context, String operate) {
   return cates
-      .map((TradeCateBean cate) => _buildCateOption(cate, callBack, context))
+      .map((TradeCateBean cate) =>
+          _buildCateOption(cate, callBack, context, operate))
       .toList();
 }
 
-Widget _buildCateOption(
-    TradeCateBean cate, TapCateListCallBack callBack, BuildContext context) {
+Widget _buildCateOption(TradeCateBean cate, TapCateListCallBack callBack,
+    BuildContext context, String operate) {
   return GestureDetector(
     onTap: () {
       if (cate.id == 0) {
         // 跳转cate设置页面
-        MyRouter.push(context, "app://trade-cate-list");
+        Navigator.pushNamed(context, "trade_cate_list", arguments: operate);
       } else {
         callBack(cate);
       }

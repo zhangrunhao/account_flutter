@@ -121,10 +121,12 @@ Widget _buildTabBarView(
     TapCateListCallBack callBack) {
   return TabBarView(controller: tabController, children: [
     CateList(
+      operate: "income",
       cates: incomeCates,
       callBack: callBack,
     ),
     CateList(
+      operate: "expend",
       cates: expendCates,
       callBack: callBack,
     ),

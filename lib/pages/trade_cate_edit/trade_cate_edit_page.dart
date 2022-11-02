@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'package:account_flutter/api/trade_cate.dart';
 import 'package:account_flutter/bean/trade_cate_bean.dart';
 import 'package:account_flutter/pages/trade_cate_edit/icon_list.dart';
 import 'package:account_flutter/pages/trade_cate_edit/name_form.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class TradeCateEditPage extends StatefulWidget {
   // 编辑分类, 传入tradeCate, 新增分类, 传入operate
@@ -40,13 +42,28 @@ class _TradeCateEditPageState extends State<TradeCateEditPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(widget.tradeCate, widget.operate),
+      appBar: AppBar(
+        title: Text(_buildAppBarTitle(widget.tradeCate, widget.operate)),
+        actions: <Widget>[
+          SizedBox(
+            width: 50,
+            child: GestureDetector(
+              onTap: () {
+                submitForm(context, widget.tradeCate, widget.operate,
+                    _nameController.text, iconName);
+              },
+              child: const Icon(Icons.done),
+            ),
+          )
+        ],
+      ),
       body: Column(
         children: <Widget>[
           NameForm(
             formKey: _formKey,
             nameController: _nameController,
             iconName: iconName,
+            operateName: _buildAppBarTitle(widget.tradeCate, widget.operate),
           ),
           Expanded(
             child: IconsList(
@@ -71,23 +88,35 @@ Future<List<dynamic>> getIconsName(BuildContext context) async {
   return icons;
 }
 
-PreferredSizeWidget _buildAppBar(TradeCateBean? tradeCate, String? operate) {
-  String operateCN = "";
+String _buildAppBarTitle(TradeCateBean? tradeCate, String? operate) {
   String behavior = "";
+  String operateCN = "";
   if (operate is String) {
     behavior = "新增";
-    operateCN = operate == "income" ? "收入" : "支出";
+    operateCN = operate == "Income" ? "收入" : "支出";
   } else if (tradeCate is TradeCateBean) {
     behavior = "修改";
-    operateCN = tradeCate.operate == "income" ? "收入" : "支出";
+    operateCN = tradeCate.operate == "Income" ? "收入" : "支出";
   }
-  return AppBar(
-    title: Text("$behavior$operateCN分类"),
-    actions: const <Widget>[
-      SizedBox(
-        width: 50,
-        child: Icon(Icons.done),
-      )
-    ],
-  );
+  return "$behavior$operateCN分类";
+}
+
+void submitForm(BuildContext context, TradeCateBean? tradeCate, String? operate,
+    String name, String? icon) {
+  if (tradeCate is TradeCateBean && icon is String) {
+    TradeCateBean newTradeCate = tradeCate;
+    newTradeCate.icon = icon;
+    TradeCateApi.update(newTradeCate).then((value)  {
+      Navigator.pop(context);
+      EasyLoading.showSuccess("修改成功");
+    });
+  } else if (operate is String && icon is String) {
+    // 新增
+    TradeCateBean newTradeCate = TradeCateBean(
+        name: name, icon: icon, id: 0, type: "type", operate: operate);
+    TradeCateApi.create(newTradeCate).then((v) {
+      Navigator.pop(context);
+      EasyLoading.showSuccess("添加成功");
+    });
+  }
 }

@@ -6,7 +6,8 @@ class IconsList extends StatelessWidget {
   final List<String> icons;
   final IconTap iconTapCallBack;
 
-  const IconsList({super.key, required this.icons, required this.iconTapCallBack});
+  const IconsList(
+      {super.key, required this.icons, required this.iconTapCallBack});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,8 @@ class IconsList extends StatelessWidget {
                   color: Colors.grey[300],
                   child: Container(
                     padding: const EdgeInsets.all(10),
-                    child: Image.asset("images/cate_icons/$iconName.png"),
+                    child: Center(
+                        child: Image.asset("images/cate_icons/$iconName.png")),
                   ),
                 ),
               ))

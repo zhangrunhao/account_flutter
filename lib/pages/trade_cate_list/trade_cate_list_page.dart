@@ -23,13 +23,13 @@ class _TradeCateListPageState extends State<TradeCateListPage> {
   void initState() {
     super.initState();
     TradeCateApi.getList().then((value) {
-      if (widget.operate == "income") {
+      if (widget.operate == "Income") {
         setState(() {
           cates = incomeCates =
               value.where((element) => element.operate == "Income").toList();
           _title = "收入分类类表";
         });
-      } else if (widget.operate == "expend") {
+      } else if (widget.operate == "Expend") {
         setState(() {
           cates =
               value.where((element) => element.operate == "Expend").toList();

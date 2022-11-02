@@ -4,6 +4,7 @@ import 'package:account_flutter/pages/login/login_page.dart';
 import 'package:account_flutter/pages/trade/trade_page.dart';
 import 'package:account_flutter/pages/trade_cate_edit/trade_cate_edit_page.dart';
 import 'package:account_flutter/pages/trade_cate_list/trade_cate_list_page.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      builder: EasyLoading.init(),
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -39,7 +41,6 @@ class MyApp extends StatelessWidget {
         "trade_cate_edit": (context) {
           Object? arguments = ModalRoute.of(context)?.settings.arguments;
           if (arguments is String) {
-            print(arguments);
             return TradeCateEditPage(
               operate: arguments,
             );

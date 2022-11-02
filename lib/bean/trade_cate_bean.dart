@@ -18,4 +18,14 @@ class TradeCateBean {
         id = json['id']!,
         type = json['type']!,
         operate = json['operate']!;
+
+  Map<String, dynamic> toJson() {
+    final Map<String , dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['icon'] = icon;
+    data['id'] = id;
+    data['type'] = type;
+    data['operate'] = operate;
+    return data;
+  }
 }

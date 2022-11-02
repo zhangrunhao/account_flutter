@@ -4,11 +4,13 @@ class NameForm extends StatelessWidget {
   final GlobalKey formKey;
   final TextEditingController nameController;
   final String? iconName;
+  final String operateName;
 
   const NameForm(
       {super.key,
       required this.formKey,
       required this.nameController,
+      required this.operateName,
       this.iconName});
 
   @override
@@ -20,8 +22,8 @@ class NameForm extends StatelessWidget {
             key: formKey,
             controller: nameController,
             decoration: InputDecoration(
-              labelText: "分类名称",
-              hintText: "请输入分类名称",
+              labelText: operateName,
+              hintText: "请输入$operateName",
               prefixIcon: _PrefixIcon(iconName),
             ),
           ),

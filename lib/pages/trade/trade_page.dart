@@ -72,7 +72,7 @@ class _TradePageState extends State<TradePage> {
       length: 3,
       child: Builder(
         builder: ((context) {
-          final TabController tabController = DefaultTabController.of(context)!;
+          final TabController tabController = DefaultTabController.of(context);
           tabController.addListener(() {
             if (!tabController.indexIsChanging &&
                 incomeCates.length > 1 &&
@@ -149,7 +149,7 @@ PreferredSizeWidget _buildAppBar(BuildContext context) {
         width: 80,
         child: GestureDetector(
           onTap: (() {
-            print("设置");
+            // print("设置");
           }),
           child: const Icon(Icons.settings),
         ),

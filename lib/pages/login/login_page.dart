@@ -49,7 +49,6 @@ class _LoginPageState extends State<LoginPage> {
                   prefixIcon: Icon(Icons.lock)),
               obscureText: true,
               validator: (v) {
-                // TODO: 修改数据库密码长度
                 return v!.trim().length > 2 ? null : '密码不能少于3位';
               },
             ),
@@ -61,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                     builder: (ctx) {
                       return ElevatedButton(
                         onPressed: () {
-                          if (Form.of(ctx)!.validate()) {
+                          if (Form.of(ctx).validate()) {
                             // TODO: 此处提交数据
                             UserApi.login(
                                     _emailController.text, _pwdController.text)

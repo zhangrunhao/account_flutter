@@ -1,4 +1,4 @@
-import 'package:account_flutter/api/config.dart';
+// import 'package:account_flutter/api/config.dart';
 import 'package:account_flutter/api/token.dart';
 import "package:dio/dio.dart";
 
@@ -16,7 +16,7 @@ class UserApi {
   static Dio dio = Dio();
 
   static Future<bool> login(String email, String password) async {
-    String url = "${ConfigApi.baseUrl}/user/login";
+    // String url = "${ConfigApi.baseUrl}/user/login";
     try {
       Response response = await dio.post("http://127.0.0.1:3000/api/user/login",
           data: {"email": email, "password": password},

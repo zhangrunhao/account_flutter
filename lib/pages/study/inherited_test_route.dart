@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class InheritedWidgetTestRoute extends StatefulWidget {
+  const InheritedWidgetTestRoute({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return InheritedWidgetTestRouteState();
@@ -46,8 +48,8 @@ class SharedDataWidget extends InheritedWidget {
 
   // 该回调决定当data变化时, 是否通知子树中依赖data的widget是否变化
   @override
-  bool updateShouldNotify(SharedDataWidget old) {
-    return old.data != data;
+  bool updateShouldNotify(SharedDataWidget oldWidget) {
+    return oldWidget.data != data;
   }
 }
 

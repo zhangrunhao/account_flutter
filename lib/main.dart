@@ -1,4 +1,6 @@
 import 'package:account_flutter/bean/trade_cate_bean.dart';
+import 'package:account_flutter/model/counter_model.dart';
+import 'package:account_flutter/model/trade_cate_list_model.dart';
 import 'package:account_flutter/pages/home/home_page.dart';
 import 'package:account_flutter/pages/login/login_page.dart';
 import 'package:account_flutter/pages/study/study_page.dart';
@@ -8,9 +10,18 @@ import 'package:account_flutter/pages/trade_cate_list/trade_cate_list_page.dart'
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (BuildContext context) {
+        // return TraceCateListModel();
+        return CounterModel(10);
+      },
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

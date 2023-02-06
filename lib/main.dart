@@ -1,6 +1,7 @@
 import 'package:account_flutter/bean/trade_cate_bean.dart';
 import 'package:account_flutter/pages/home/home_page.dart';
 import 'package:account_flutter/pages/login/login_page.dart';
+import 'package:account_flutter/pages/study/study_page.dart';
 import 'package:account_flutter/pages/trade/trade_page.dart';
 import 'package:account_flutter/pages/trade_cate_edit/trade_cate_edit_page.dart';
 import 'package:account_flutter/pages/trade_cate_list/trade_cate_list_page.dart';
@@ -31,7 +32,8 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        "/": (context) => const HomePage(),
+        // "/": (context) => const HomePage(),
+        "/": (context) => StudyPage(),
         "login": (context) => const LoginPage(),
         "trade": (context) => const TradePage(),
         "trade_cate_list": (context) {

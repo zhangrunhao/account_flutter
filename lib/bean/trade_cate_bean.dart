@@ -2,6 +2,7 @@ class TradeCateBean {
   int id;
   String icon;
   String name;
+  // 类型 Default 默认, 餐饮/交通/工资等 Extra 扩展, 可乐/游戏机等 System 系统, 转入/借出/平帐等
   String type;
   String operate;
 

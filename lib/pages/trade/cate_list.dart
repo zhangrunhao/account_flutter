@@ -1,18 +1,25 @@
 import 'package:account_flutter/bean/trade_cate_bean.dart';
+import 'package:account_flutter/model/trade_cate_list_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 typedef TapCateListCallBack = void Function(TradeCateBean cate);
+
+TradeCateBean settingCate = TradeCateBean(
+    name: "编辑",
+    icon: "images/setting.png",
+    id: 0,
+    type: "",
+    operate: "operate");
 
 class CateList extends StatelessWidget {
   const CateList({
     Key? key,
     required this.operate,
-    required this.cates,
     required this.callBack,
   }) : super(key: key);
 
   final String operate;
-  final List<TradeCateBean> cates;
   final TapCateListCallBack callBack;
 
   @override
@@ -25,13 +32,20 @@ class CateList extends StatelessWidget {
           crossAxisSpacing: 10,
           crossAxisCount: 5,
           padding: const EdgeInsets.all(15),
-          children: _buildCateList(cates, callBack, context, operate),
+          children: _buildCateList(callBack, context, operate),
         ));
   }
 }
 
-List<Widget> _buildCateList(List<TradeCateBean> cates,
+List<Widget> _buildCateList(
     TapCateListCallBack callBack, BuildContext context, String operate) {
+  List<TradeCateBean> cates0 = [];
+  if (operate == "Income") {
+    cates0 = context.watch<TradeCateListModel>().incomeCates;
+  } else {
+    cates0 = context.watch<TradeCateListModel>().expendCates;
+  }
+  List<TradeCateBean> cates = [...cates0, settingCate];
   return cates
       .map((TradeCateBean cate) =>
           _buildCateOption(cate, callBack, context, operate))
@@ -53,7 +67,9 @@ Widget _buildCateOption(TradeCateBean cate, TapCateListCallBack callBack,
       color: Colors.grey[300],
       child: Column(
         children: [
-          Expanded(child: _buildIconImage(cate)),
+          Expanded(
+            child: BuildIconImage(cate: cate),
+          ),
           Center(
             child: Text(cate.name),
           ),
@@ -63,10 +79,19 @@ Widget _buildCateOption(TradeCateBean cate, TapCateListCallBack callBack,
   );
 }
 
-Widget _buildIconImage(TradeCateBean cate) {
-  if (cate.id == 0) {
-    return Image.asset(cate.icon);
-  } else {
-    return Image.asset("images/cate_icons/${cate.icon}.png");
+class BuildIconImage extends StatelessWidget {
+  const BuildIconImage({
+    super.key,
+    required this.cate,
+  });
+  final TradeCateBean cate;
+
+  @override
+  Widget build(BuildContext context) {
+    if (cate.id == 0) {
+      return Image.asset(cate.icon);
+    } else {
+      return Image.asset("images/cate_icons/${cate.icon}.png");
+    }
   }
 }

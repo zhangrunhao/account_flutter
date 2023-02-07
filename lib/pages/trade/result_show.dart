@@ -39,7 +39,11 @@ Widget _buildCateIcon(TradeCateBean? cate) {
 
 Widget _buildCateImage(TradeCateBean? cate) {
   if (cate != null) {
-    return Image.asset("images/cate_icons/${cate.icon}.png");
+    if (cate.id == 0) {
+      return Image.asset(cate.icon);
+    } else {
+      return Image.asset("images/cate_icons/${cate.icon}.png");
+    }
   } else {
     return Container();
   }

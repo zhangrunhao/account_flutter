@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'package:account_flutter/api/trade_cate.dart';
 import 'package:account_flutter/bean/trade_cate_bean.dart';
+import 'package:account_flutter/model/trade_cate_list_model.dart';
 import 'package:account_flutter/pages/trade_cate_edit/icon_list.dart';
 import 'package:account_flutter/pages/trade_cate_edit/name_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:provider/provider.dart';
 
 class TradeCateEditPage extends StatefulWidget {
   // 编辑分类, 传入tradeCate, 新增分类, 传入operate
@@ -103,11 +105,13 @@ String _buildAppBarTitle(TradeCateBean? tradeCate, String? operate) {
 
 void submitForm(BuildContext context, TradeCateBean? tradeCate, String? operate,
     String name, String? icon) {
+  TradeCateListModel tradeCateListModel = context.read<TradeCateListModel>();
   if (tradeCate is TradeCateBean && icon is String) {
     TradeCateBean newTradeCate = tradeCate;
     newTradeCate.icon = icon;
     TradeCateApi.update(newTradeCate).then((value)  {
       Navigator.pop(context);
+      tradeCateListModel.update();
       EasyLoading.showSuccess("修改成功");
     });
   } else if (operate is String && icon is String) {
@@ -116,6 +120,7 @@ void submitForm(BuildContext context, TradeCateBean? tradeCate, String? operate,
         name: name, icon: icon, id: 0, type: "type", operate: operate);
     TradeCateApi.create(newTradeCate).then((v) {
       Navigator.pop(context);
+      tradeCateListModel.update();
       EasyLoading.showSuccess("添加成功");
     });
   }

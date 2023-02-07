@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProviderShow extends StatelessWidget {
+  const ProviderShow({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Center(

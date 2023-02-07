@@ -111,6 +111,7 @@ void submitForm(BuildContext context, TradeCateBean? tradeCate, String? operate,
     newTradeCate.icon = icon;
     TradeCateApi.update(newTradeCate).then((value)  {
       Navigator.pop(context);
+      // TODO: 完成更新后再进行提示
       tradeCateListModel.update();
       EasyLoading.showSuccess("修改成功");
     });

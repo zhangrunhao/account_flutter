@@ -76,6 +76,5 @@ class _TestWidgetState extends State {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    debugPrint("dependencies change");
   }
 }

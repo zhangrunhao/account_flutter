@@ -54,7 +54,6 @@ class _TradePageState extends State<_TradePage> {
   }
 
   void setDefaultCate() {
-    debugPrint("setDefaultCate");
     var incomeCates = context.read<TradeCateListModel>().incomeCates;
     var expendCates = context.read<TradeCateListModel>().expendCates;
     if (incomeCates.isEmpty && expendCates.isEmpty) {

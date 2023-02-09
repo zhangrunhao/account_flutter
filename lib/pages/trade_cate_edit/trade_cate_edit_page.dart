@@ -103,26 +103,35 @@ String _buildAppBarTitle(TradeCateBean? tradeCate, String? operate) {
   return "$behavior$operateCN分类";
 }
 
-void submitForm(BuildContext context, TradeCateBean? tradeCate, String? operate,
-    String name, String? icon) {
+void submitForm(
+  BuildContext context,
+  TradeCateBean? tradeCate,
+  String? operate,
+  String name,
+  String? icon,
+) {
   TradeCateListModel tradeCateListModel = context.read<TradeCateListModel>();
   if (tradeCate is TradeCateBean && icon is String) {
     TradeCateBean newTradeCate = tradeCate;
+    newTradeCate.name = name;
     newTradeCate.icon = icon;
-    TradeCateApi.update(newTradeCate).then((value)  {
-      Navigator.pop(context);
-      // TODO: 完成更新后再进行提示
-      tradeCateListModel.update();
-      EasyLoading.showSuccess("修改成功");
+    TradeCateApi.update(newTradeCate).then((value) {
+      tradeCateListModel.update().then(
+        (v) {
+          Navigator.pop(context);
+          EasyLoading.showSuccess("修改成功");
+        },
+      );
     });
   } else if (operate is String && icon is String) {
     // 新增
     TradeCateBean newTradeCate = TradeCateBean(
         name: name, icon: icon, id: 0, type: "type", operate: operate);
     TradeCateApi.create(newTradeCate).then((v) {
-      Navigator.pop(context);
-      tradeCateListModel.update();
-      EasyLoading.showSuccess("添加成功");
+      tradeCateListModel.update().then((v) {
+        Navigator.pop(context);
+        EasyLoading.showSuccess("添加成功");
+      });
     });
   }
 }

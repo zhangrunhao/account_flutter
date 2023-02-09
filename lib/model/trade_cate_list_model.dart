@@ -12,20 +12,21 @@ class TradeCateListModel with ChangeNotifier {
     _fetch();
   }
 
-  void _fetch() {
-    TradeCateApi.getList().then((value) {
-      _incomeCates =
-          value.where((element) => element.operate == "Income").toList();
-      _expendCates =
-          value.where((element) => element.operate == "Expend").toList();
-          notifyListeners();
-    });
+  Future<void> _fetch() async {
+    List<TradeCateBean> value = await TradeCateApi.getList();
+    _incomeCates =
+        value.where((element) => element.operate == "Income").toList();
+    _expendCates =
+        value.where((element) => element.operate == "Expend").toList();
+    notifyListeners();
   }
 
-  UnmodifiableListView<TradeCateBean> get incomeCates => UnmodifiableListView(_incomeCates);  
-  UnmodifiableListView<TradeCateBean> get expendCates => UnmodifiableListView(_expendCates);
+  UnmodifiableListView<TradeCateBean> get incomeCates =>
+      UnmodifiableListView(_incomeCates);
+  UnmodifiableListView<TradeCateBean> get expendCates =>
+      UnmodifiableListView(_expendCates);
 
-  void update() {
-    _fetch();
+  Future<void> update() {
+    return _fetch();
   }
 }

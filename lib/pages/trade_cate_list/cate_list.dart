@@ -36,7 +36,7 @@ class CateList extends StatelessWidget {
                       PopupMenuItem<String>(
                         child: TextButton(
                           onPressed: (() {
-                            Navigator.pop(context); // 关闭
+                            Navigator.pop(context);
                             Navigator.of(context)
                                 .pushNamed("trade_cate_edit", arguments: cate);
                           }),
@@ -52,6 +52,7 @@ class CateList extends StatelessWidget {
                                   .read<TradeCateListModel>()
                                   .update()
                                   .then((value) {
+                                Navigator.pop(context);
                                 EasyLoading.showSuccess("删除成功");
                               });
                             });

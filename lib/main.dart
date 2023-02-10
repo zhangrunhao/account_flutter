@@ -1,4 +1,5 @@
 import 'package:account_flutter/bean/trade_cate_bean.dart';
+import 'package:account_flutter/model/account_list_model.dart';
 import 'package:account_flutter/model/trade_cate_list_model.dart';
 import 'package:account_flutter/pages/home/home_page.dart';
 import 'package:account_flutter/pages/login/login_page.dart';
@@ -13,8 +14,11 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => TradeCateListModel(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => TradeCateListModel()),
+        ChangeNotifierProvider(create: (context) => AccountListModel()),
+      ],
       child: const MyApp(),
     ),
   );

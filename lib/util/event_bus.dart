@@ -1,4 +1,4 @@
-typedef EventCallback = void Function(Object arg);
+typedef EventCallback = void Function();
 
 class EventBus {
   // 私有函数
@@ -22,13 +22,13 @@ class EventBus {
   // 移除订阅者
 
   // 触发事件
-  void emit(eventName, [arg]) {
+  void emit(eventName,) {
     var list = _emap[eventName];
     if (list == null) return;
     int len = list.length - 1;
     // 反向遍历, 防止订阅者在回调中移除自身带来的下标错位
     for (var i = len; i > -1; i--) {
-      list[i](arg);
+      list[i]();
     }
   }
 }

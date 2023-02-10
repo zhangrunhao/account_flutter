@@ -36,6 +36,7 @@ class CateList extends StatelessWidget {
                       PopupMenuItem<String>(
                         child: TextButton(
                           onPressed: (() {
+                            Navigator.pop(context); // 关闭
                             Navigator.of(context)
                                 .pushNamed("trade_cate_edit", arguments: cate);
                           }),

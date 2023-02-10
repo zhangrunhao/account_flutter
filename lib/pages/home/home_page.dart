@@ -1,5 +1,6 @@
 import 'package:account_flutter/pages/home/brief_widget.dart';
 import 'package:account_flutter/pages/home/wallet_widget.dart';
+import 'package:account_flutter/util/event_bus.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,6 +20,16 @@ class _HomePageState extends State<HomePage> {
   void _onItemTapped(int index) {
     setState(() {
       _selectIndex = index;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    EventBus bus = EventBus();
+    bus.on('toLogin', () {
+       Navigator.pushNamed(context, "login");
+      // debugPrint("home to login");
     });
   }
 

@@ -1,4 +1,7 @@
+import 'package:account_flutter/bean/account_bean.dart';
+import 'package:account_flutter/model/account_list_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ToolsList extends StatefulWidget {
   const ToolsList({Key? key}) : super(key: key);
@@ -29,29 +32,22 @@ class _ToolsListState extends State<ToolsList> {
     return showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return ListView(
-            children: [
-              ListTile(
-                leading: const Icon(Icons.abc_outlined),
-                title: const Text("微信"),
-                onTap: () {
-                  setState(() {
-                    accountName = "微信";
-                  });
-                  Navigator.of(context).pop();
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.payment),
-                title: const Text("支付宝"),
-                onTap: () {
-                  setState(() {
-                    accountName = "支付宝";
-                  });
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
+          List<AccountBean> accounts =
+              context.watch<AccountListModel>().accounts;
+          return ListView.separated(
+            itemBuilder: ((context, index) {
+              AccountBean account = accounts[index];
+              return ListTile(
+                title: Text(account.name),
+              );
+            }),
+            separatorBuilder: ((BuildContext context, int index) {
+              return const Divider(
+                height: 1.0,
+                color: Colors.black,
+              );
+            }),
+            itemCount: accounts.length,
           );
         });
   }

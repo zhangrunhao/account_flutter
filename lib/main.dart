@@ -1,6 +1,7 @@
 import 'package:account_flutter/bean/trade_cate_bean.dart';
 import 'package:account_flutter/model/account_list_model.dart';
 import 'package:account_flutter/model/trade_cate_list_model.dart';
+import 'package:account_flutter/pages/account_detail/account_detail_page.dart';
 import 'package:account_flutter/pages/home/home_page.dart';
 import 'package:account_flutter/pages/login/login_page.dart';
 // import 'package:account_flutter/pages/study/study_page.dart';
@@ -66,6 +67,9 @@ class MyApp extends StatelessWidget {
             return const TradeCateEditPage();
           }
         },
+        "account_detail": (context) {
+          return const AccountDetailPage();
+        }
       },
     );
   }

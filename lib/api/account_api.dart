@@ -13,4 +13,13 @@ class AccountApi {
           .toList();
     }
   }
+
+  static Future<AccountBean> get(int id) async {
+    Response? response = await MyDio.fetch("get", "/account/$id", {});
+    if (response == null) {
+      return AccountBean(id: 3, name: "name", cate: "cate", icon: "icon");
+    } else {
+      return AccountBean.fromJson(response.data['data']);
+    }
+  }
 }

@@ -23,6 +23,9 @@ class AccountList extends StatelessWidget {
           return ListTile(
             leading: Image.asset("images/cate_icons/${account.icon}.png"),
             title: Text(account.name),
+            onTap: () {
+              Navigator.popAndPushNamed(context, "account_detail");
+            },
           );
         }
       },

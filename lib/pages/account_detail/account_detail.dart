@@ -1,11 +1,10 @@
-import 'package:account_flutter/api/account_api.dart';
 import 'package:account_flutter/bean/account_bean.dart';
 import 'package:flutter/material.dart';
 
 class AccountDetail extends StatefulWidget {
-  final int id;
+  final AccountBean account;
 
-  const AccountDetail({super.key, required this.id});
+  const AccountDetail({super.key, required this.account});
 
   @override
   State<StatefulWidget> createState() {
@@ -14,29 +13,19 @@ class AccountDetail extends StatefulWidget {
 }
 
 class _AccountDetailState extends State<AccountDetail> {
-  String? name;
-  String? cate;
-  String? icon;
 
   @override
   void initState() {
     super.initState();
-    AccountApi.get(widget.id).then((AccountBean accountBean) {
-      setState(() {
-        name = accountBean.name;
-        cate = accountBean.cate;
-        icon = accountBean.icon;
-      });
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _RowInfo(label: "名称", value: name),
-        _RowInfo(label: "类型", value: cate),
-        _RowInfo(label: "图标", value: icon),
+        _RowInfo(label: "名称", value: widget.account.name),
+        _RowInfo(label: "类型", value: widget.account.cate),
+        _RowInfo(label: "图标", value: widget.account.icon),
       ],
     );
   }
@@ -44,7 +33,7 @@ class _AccountDetailState extends State<AccountDetail> {
 
 class _RowInfo extends StatelessWidget {
   final String label;
-  final String? value;
+  final String value;
 
   const _RowInfo({required this.label, required this.value});
   @override
@@ -52,7 +41,7 @@ class _RowInfo extends StatelessWidget {
     return Row(
       children: [
         Text("$label: "),
-        Text(value??""),
+        Text(value),
       ],
     );
   }

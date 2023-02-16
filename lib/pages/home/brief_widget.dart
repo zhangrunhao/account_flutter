@@ -10,8 +10,8 @@ class BriefWidget extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return Card(
           child: ListTile(
-              leading: Image.network(
-                  "https://zhangrunhao.oss-cn-beijing.aliyuncs.com/account-icon/icons-ali/boots.png"),
+              // leading: Image.network(
+              //     "https://zhangrunhao.oss-cn-beijing.aliyuncs.com/account-icon/icons-ali/boots.png"),
               title: const Text("鞋子"),
               subtitle: const Text("从来没有过的耐克"),
               trailing: PopupMenuButton<String>(

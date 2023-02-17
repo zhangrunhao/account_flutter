@@ -15,4 +15,13 @@ class AccountBean {
         icon = json['icon']!,
         id = json['id']!,
         cate = json['cate']!;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['icon'] = icon;
+    data['id'] = id;
+    data['cate'] = cate;
+    return data;
+  }
 }

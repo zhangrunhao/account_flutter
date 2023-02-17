@@ -17,13 +17,13 @@ class WalletWidget extends StatelessWidget {
       children: [
         Expanded(
           child: AccountList(
-            type: "Property",
+            cate: "Property",
             accounts: propertyAccounts,
           ),
         ),
         Expanded(
           child: AccountList(
-            type: "Debt",
+            cate: "Debt",
             accounts: debtAccounts,
           ),
         ),

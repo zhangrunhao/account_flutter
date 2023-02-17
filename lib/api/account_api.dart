@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:account_flutter/api/my_dio.dart';
 import 'package:account_flutter/bean/account_bean.dart';
 import 'package:dio/dio.dart';
@@ -21,5 +23,9 @@ class AccountApi {
     } else {
       return AccountBean.fromJson(response.data['data']);
     }
+  }
+
+  static Future<void> create(AccountBean account) async {
+    await MyDio.fetch("post", "/account", jsonEncode(account));
   }
 }

@@ -74,7 +74,10 @@ class MyApp extends StatelessWidget {
           return AccountDetailPage(account: arguments as AccountBean);
         },
         "account_edit": (context) {
-          return const AccountEditPage();
+          AccountEditPageArguments arguments = ModalRoute.of(context)
+              ?.settings
+              .arguments as AccountEditPageArguments;
+          return AccountEditPage(arguments: arguments,);
         }
       },
     );

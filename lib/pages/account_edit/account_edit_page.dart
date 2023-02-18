@@ -19,6 +19,18 @@ class AccountEditPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
             "${arguments.account == null ? "新建" : "更新"}${arguments.accountCate}账户"),
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_left),
+          onPressed: () {
+            AccountBean result = AccountBean(
+              id: arguments.account?.id ?? 0,
+              name: arguments.account?.name ?? "",
+              cate: arguments.accountCate,
+              icon: arguments.account?.icon ?? "",
+            );
+            Navigator.of(context).pop(result);
+          },
+        ),
       ),
       body: _AccountEditForm(
         cate: arguments.accountCate,
@@ -43,18 +55,23 @@ class _AccountEditForm extends StatefulWidget {
   }
 }
 
-class _AccountEditFormState extends State<_AccountEditForm> {
+class _AccountEditFormState extends State<_AccountEditForm> with RouteAware {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _iconController = TextEditingController();
   final GlobalKey _formKey = GlobalKey<FormState>();
+
+  @override
+  void didPopNext() {
+    super.didPopNext();
+  }
 
   @override
   void initState() {
     super.initState();
     if (widget.account != null) {
       setState(() {
-        _nameController.text = widget.account?.name??"";
-        _iconController.text = widget.account?.icon??"";
+        _nameController.text = widget.account?.name ?? "";
+        _iconController.text = widget.account?.icon ?? "";
       });
     }
   }

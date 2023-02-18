@@ -22,6 +22,7 @@ class AccountEditPage extends StatelessWidget {
       ),
       body: _AccountEditForm(
         cate: arguments.accountCate,
+        account: arguments.account,
       ),
     );
   }
@@ -29,8 +30,12 @@ class AccountEditPage extends StatelessWidget {
 
 class _AccountEditForm extends StatefulWidget {
   final String cate;
+  final AccountBean? account;
 
-  const _AccountEditForm({required this.cate});
+  const _AccountEditForm({
+    required this.cate,
+    this.account,
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -42,6 +47,18 @@ class _AccountEditFormState extends State<_AccountEditForm> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _iconController = TextEditingController();
   final GlobalKey _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.account != null) {
+      setState(() {
+        _nameController.text = widget.account?.name??"";
+        _iconController.text = widget.account?.icon??"";
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -75,22 +92,30 @@ class _AccountEditFormState extends State<_AccountEditForm> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Builder(builder: (ctx) {
-                
                 return ElevatedButton(
                   child: const Text("确认"),
                   onPressed: () {
                     if (Form.of(ctx).validate()) {
-                      AccountApi.create(
-                        AccountBean(
+                      if (widget.account == null) {
+                        _createAccount(
+                          AccountBean(
                             id: 0,
                             name: _nameController.text,
                             cate: widget.cate,
-                            icon: _iconController.text),
-                      ).then((value) {
-                        context.read<AccountListModel>().update().then((value) {
-                          Navigator.of(context).pop();
-                        });
-                      });
+                            icon: _iconController.text,
+                          ),
+                          context,
+                        );
+                      } else {
+                        _updateAccount(
+                            AccountBean(
+                              id: widget.account!.id,
+                              name: _nameController.text,
+                              cate: widget.cate,
+                              icon: _iconController.text,
+                            ),
+                            context);
+                      }
                     }
                   },
                 );
@@ -105,4 +130,28 @@ class _AccountEditFormState extends State<_AccountEditForm> {
       ),
     );
   }
+}
+
+void _createAccount(AccountBean account, BuildContext context) {
+  AccountApi.create(
+    account,
+  ).then((value) {
+    context.read<AccountListModel>().update().then(
+      (value) {
+        Navigator.of(context).pop();
+      },
+    );
+  });
+}
+
+void _updateAccount(AccountBean account, BuildContext context) {
+  AccountApi.update(
+    account,
+  ).then((value) {
+    context.read<AccountListModel>().update().then(
+      (value) {
+        Navigator.of(context).pop(account);
+      },
+    );
+  });
 }

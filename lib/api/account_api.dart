@@ -28,4 +28,8 @@ class AccountApi {
   static Future<void> create(AccountBean account) async {
     await MyDio.fetch("post", "/account", jsonEncode(account));
   }
+
+  static Future<void> update(AccountBean account) async {
+    await MyDio.fetch("put", "/account/${account.id}", jsonEncode(account));
+  }
 }

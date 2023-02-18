@@ -1,31 +1,18 @@
 import 'package:account_flutter/bean/account_bean.dart';
 import 'package:flutter/material.dart';
 
-class AccountDetail extends StatefulWidget {
-  final AccountBean account;
+class AccountDetail extends StatelessWidget {
+  final AccountBean? account;
 
   const AccountDetail({super.key, required this.account});
-
-  @override
-  State<StatefulWidget> createState() {
-    return _AccountDetailState();
-  }
-}
-
-class _AccountDetailState extends State<AccountDetail> {
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _RowInfo(label: "名称", value: widget.account.name),
-        _RowInfo(label: "类型", value: widget.account.cate),
-        _RowInfo(label: "图标", value: widget.account.icon),
+        _RowInfo(label: "名称", value: account?.name ?? ""),
+        _RowInfo(label: "类型", value: account?.cate ?? ""),
+        _RowInfo(label: "图标", value: account?.icon ?? ""),
       ],
     );
   }

@@ -28,32 +28,31 @@ class _ToolsListState extends State<ToolsList> {
     }
   }
 
-  Future<int?> _selectAccount(BuildContext context) {
-    return showModalBottomSheet(
+  Future<void> _selectAccount(List<AccountBean> accounts) async {
+    AccountBean? account = await showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          List<AccountBean> accounts =
-              context.watch<AccountListModel>().accounts;
-          return ListView.separated(
+          return ListView.builder(
             itemBuilder: ((context, index) {
               AccountBean account = accounts[index];
               return ListTile(
                 title: Text(account.name),
-              );
-            }),
-            separatorBuilder: ((BuildContext context, int index) {
-              return const Divider(
-                height: 1.0,
-                color: Colors.black,
+                onTap: () => Navigator.of(context).pop(account),
               );
             }),
             itemCount: accounts.length,
           );
         });
+    if (account != null) {
+      setState(() {
+        accountName = account.name;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    List<AccountBean> accounts = context.watch<AccountListModel>().accounts;
     return SizedBox(
       width: double.infinity,
       height: 40,
@@ -67,6 +66,7 @@ class _ToolsListState extends State<ToolsList> {
           ),
           _buildAccountPickerButton(
             _selectAccount,
+            accounts,
             context,
             accountName,
           ),
@@ -87,12 +87,14 @@ Widget _buildDatePickerButton(
   );
 }
 
-Widget _buildAccountPickerButton(
-    Function pressCallback, BuildContext context, String buttonTitle) {
+Widget _buildAccountPickerButton(Function pressCallback,
+    List<AccountBean> accounts, BuildContext context, String buttonTitle) {
   return Container(
     margin: const EdgeInsets.all(5),
     child: ElevatedButton(
-      onPressed: () => {pressCallback(context)},
+      onPressed: () async {
+        await pressCallback(accounts);
+      },
       child: Text(buttonTitle),
     ),
   );

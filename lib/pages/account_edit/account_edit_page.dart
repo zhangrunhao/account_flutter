@@ -60,10 +60,6 @@ class _AccountEditFormState extends State<_AccountEditForm> with RouteAware {
   final TextEditingController _iconController = TextEditingController();
   final GlobalKey _formKey = GlobalKey<FormState>();
 
-  @override
-  void didPopNext() {
-    super.didPopNext();
-  }
 
   @override
   void initState() {

@@ -25,6 +25,10 @@ class AccountApi {
     }
   }
 
+  static Future<void> delete(int id) async {
+    await MyDio.fetch("delete", "/account/$id", {});
+  }
+
   static Future<void> create(AccountBean account) async {
     await MyDio.fetch("post", "/account", jsonEncode(account));
   }

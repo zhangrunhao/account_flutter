@@ -24,12 +24,12 @@ class TradeApi {
     );
   }
 
+  static Future<void> delete(TradeBean trade) async {
+    await MyDio.fetch("delete", "/trade/${trade.id}", {});
+  }
+
   // static Future<void> update(TradeCateBean tradeCate) async {
   //   await MyDio.fetch(
   //       "put", "/trade-cate/${tradeCate.id}", jsonEncode(tradeCate));
-  // }
-
-  // static Future<void> delete(TradeCateBean tradeCate) async {
-  //   await MyDio.fetch("delete", "/trade-cate/${tradeCate.id}", {});
   // }
 }

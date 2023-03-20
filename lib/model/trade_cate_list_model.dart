@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 class TradeCateListModel with ChangeNotifier {
   List<TradeCateBean> _incomeCates = [];
   List<TradeCateBean> _expendCates = [];
+  List<TradeCateBean> _cates = [];
 
   TradeCateListModel() {
     _fetch();
@@ -18,6 +19,7 @@ class TradeCateListModel with ChangeNotifier {
         value.where((element) => element.operate == "Income").toList();
     _expendCates =
         value.where((element) => element.operate == "Expend").toList();
+    _cates = value;
     notifyListeners();
   }
 
@@ -25,6 +27,7 @@ class TradeCateListModel with ChangeNotifier {
       UnmodifiableListView(_incomeCates);
   UnmodifiableListView<TradeCateBean> get expendCates =>
       UnmodifiableListView(_expendCates);
+  UnmodifiableListView<TradeCateBean> get cates => UnmodifiableListView(_cates);
 
   Future<void> update() {
     return _fetch();

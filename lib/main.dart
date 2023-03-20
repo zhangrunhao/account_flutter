@@ -1,4 +1,5 @@
 import 'package:account_flutter/bean/account_bean.dart';
+import 'package:account_flutter/bean/trade_bean.dart';
 import 'package:account_flutter/bean/trade_cate_bean.dart';
 import 'package:account_flutter/model/account_list_model.dart';
 import 'package:account_flutter/model/trade_cate_list_model.dart';
@@ -52,7 +53,16 @@ class MyApp extends StatelessWidget {
         // "/": (context) => const LoginPage(),
         // "/": (context) => StudyPage(),
         "login": (context) => const LoginPage(),
-        "trade": (context) => const TradePage(),
+        "trade": (context) {
+          Object? arguments = ModalRoute.of(context)?.settings.arguments;
+          if (arguments is TradeBean) {
+            return TradePage(
+              tradeOrigin: arguments,
+            );
+          } else {
+            return const TradePage();
+          }
+        },
         "trade_cate_list": (context) {
           Object? arguments = ModalRoute.of(context)?.settings.arguments;
           return TradeCateListPage(operate: arguments as String);
@@ -79,7 +89,9 @@ class MyApp extends StatelessWidget {
           AccountEditPageArguments arguments = ModalRoute.of(context)
               ?.settings
               .arguments as AccountEditPageArguments;
-          return AccountEditPage(arguments: arguments,);
+          return AccountEditPage(
+            arguments: arguments,
+          );
         }
       },
     );

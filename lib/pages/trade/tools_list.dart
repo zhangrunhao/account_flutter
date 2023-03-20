@@ -3,32 +3,38 @@ import 'package:account_flutter/model/account_list_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ToolsList extends StatefulWidget {
-  const ToolsList({Key? key}) : super(key: key);
-  @override
-  State<StatefulWidget> createState() => _ToolsListState();
-}
+typedef AccountSelectCallBack = void Function(AccountBean account);
+typedef SpendDateSelectCallBack = void Function(DateTime spendDate);
 
-class _ToolsListState extends State<ToolsList> {
-  DateTime selectDate = DateTime.now();
-  String accountName = "选择账户";
+class ToolsList extends StatelessWidget {
+  final DateTime spendDate;
+  final AccountBean? account;
+  final AccountSelectCallBack accountChange;
+  final SpendDateSelectCallBack spendDateChange;
 
-  Future<void> _selectDate(BuildContext content) async {
+  const ToolsList({
+    super.key,
+    required this.account,
+    required this.spendDate,
+    required this.accountChange,
+    required this.spendDateChange,
+  });
+
+  Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       locale: const Locale("zh", "ZH"),
-      initialDate: selectDate,
+      initialDate: spendDate,
       firstDate: DateTime(2000, 01),
       lastDate: DateTime.now(),
     );
-    if (picked != null && picked != selectDate) {
-      setState(() {
-        selectDate = picked;
-      });
+    if (picked != null && picked != spendDate) {
+      spendDateChange(picked);
     }
   }
 
-  Future<void> _selectAccount(List<AccountBean> accounts) async {
+  Future<void> _selectAccount(
+      List<AccountBean> accounts, BuildContext context) async {
     AccountBean? account = await showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
@@ -37,16 +43,17 @@ class _ToolsListState extends State<ToolsList> {
               AccountBean account = accounts[index];
               return ListTile(
                 title: Text(account.name),
-                onTap: () => Navigator.of(context).pop(account),
+                onTap: () {
+                  accountChange(account);
+                  Navigator.of(context).pop(account);
+                },
               );
             }),
             itemCount: accounts.length,
           );
         });
     if (account != null) {
-      setState(() {
-        accountName = account.name;
-      });
+      accountChange(account);
     }
   }
 
@@ -62,14 +69,9 @@ class _ToolsListState extends State<ToolsList> {
           _buildDatePickerButton(
             _selectDate,
             context,
-            '${selectDate.year.toString()}-${selectDate.month.toString()}-${selectDate.day.toString()}',
+            '${spendDate.year.toString()}-${spendDate.month.toString()}-${spendDate.day.toString()}',
           ),
-          _buildAccountPickerButton(
-            _selectAccount,
-            accounts,
-            context,
-            accountName,
-          ),
+          _buildAccountPickerButton(_selectAccount, accounts, context, account),
         ],
       ),
     );
@@ -88,14 +90,14 @@ Widget _buildDatePickerButton(
 }
 
 Widget _buildAccountPickerButton(Function pressCallback,
-    List<AccountBean> accounts, BuildContext context, String buttonTitle) {
+    List<AccountBean> accounts, BuildContext context, AccountBean? account) {
   return Container(
     margin: const EdgeInsets.all(5),
     child: ElevatedButton(
       onPressed: () async {
-        await pressCallback(accounts);
+        await pressCallback(accounts, context);
       },
-      child: Text(buttonTitle),
+      child: Text(account != null ? account.name : "选择账户"),
     ),
   );
 }

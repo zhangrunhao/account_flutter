@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 const List<Tab> tabs = <Tab>[
   Tab(
     text: '收入',
@@ -12,8 +11,6 @@ const List<Tab> tabs = <Tab>[
     text: '转帐',
   ),
 ];
-
-
 
 class TradePageAppBar extends StatelessWidget with PreferredSizeWidget {
   const TradePageAppBar({super.key});
@@ -37,7 +34,7 @@ class TradePageAppBar extends StatelessWidget with PreferredSizeWidget {
       ],
     );
   }
-  
+
   @override
   Size get preferredSize => const Size.fromHeight(50);
 }

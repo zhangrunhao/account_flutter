@@ -40,7 +40,7 @@ class TradeBean {
     data['tradeCateId'] = tradeCateId;
     data['money'] = money;
     data['remark'] = remark;
-    data['spendDate'] = spendDate;
+    data['spendDate'] = spendDate.toString();
     data['operate'] = operate;
     return data;
   }

@@ -23,13 +23,13 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+
   @override
   void initState() {
     super.initState();
     EventBus bus = EventBus();
     bus.on('toLogin', () {
        Navigator.pushNamed(context, "login");
-      // debugPrint("home to login");
     });
   }
 

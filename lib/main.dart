@@ -2,6 +2,7 @@ import 'package:account_flutter/bean/account_bean.dart';
 import 'package:account_flutter/bean/trade_cate_bean.dart';
 import 'package:account_flutter/model/account_list_model.dart';
 import 'package:account_flutter/model/trade_cate_list_model.dart';
+import 'package:account_flutter/model/trade_list.model.dart';
 import 'package:account_flutter/pages/account_detail/account_detail_page.dart';
 import 'package:account_flutter/pages/account_edit/account_edit_page.dart';
 import 'package:account_flutter/pages/home/home_page.dart';
@@ -20,6 +21,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => TradeCateListModel()),
+        ChangeNotifierProvider(create: (context) => TradeListModel()),
         ChangeNotifierProvider(create: (context) => AccountListModel()),
       ],
       child: const MyApp(),

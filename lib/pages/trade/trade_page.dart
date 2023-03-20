@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:account_flutter/api/trade_api.dart';
+import 'package:account_flutter/bean/account_bean.dart';
+import 'package:account_flutter/bean/trade_bean.dart';
 import 'package:account_flutter/model/trade_cate_list_model.dart';
 import 'package:account_flutter/pages/trade/key_board.dart';
 import 'package:account_flutter/pages/trade/my_tab_bar_view.dart';
@@ -8,6 +11,7 @@ import 'package:account_flutter/pages/trade/tools_list.dart';
 import 'package:account_flutter/pages/trade/trade_page_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:account_flutter/bean/trade_cate_bean.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
 class TradePage extends StatelessWidget {
@@ -40,6 +44,8 @@ class _TradePage extends StatefulWidget {
 
 class _TradePageState extends State<_TradePage> {
   TradeCateBean? _selectedTradeCate;
+  AccountBean? _selectAccount;
+  DateTime _spendDate = DateTime.now();
   String money = "0";
 
   @override
@@ -81,10 +87,52 @@ class _TradePageState extends State<_TradePage> {
     });
   }
 
-  void moneyChangeCallBack(String nowMoney) {
+  void accountSelectCallBack(AccountBean account) {
+    setState(() {
+      _selectAccount = account;
+    });
+  }
+
+  void spendDateSelectCallBack(DateTime spendDate) {
+    setState(() {
+      _spendDate = spendDate;
+    });
+  }
+
+  void moneyChange(String nowMoney) {
     setState(() {
       money = nowMoney;
     });
+  }
+
+  void saveTap(String money) {
+    int operateIndex = widget.tabController.index;
+    String? operate;
+    if (operateIndex == 0) {
+      operate = "Income";
+    } else if (operateIndex == 1) {
+      operate = "Expend";
+    }
+    if (_selectAccount != null &&
+        _selectedTradeCate != null &&
+        operate != null) {
+      // TODO: 处理备注
+      TradeBean trade = TradeBean(
+        id: 0,
+        accountName: _selectAccount!.name,
+        accountId: _selectAccount!.id,
+        tradeCateName: _selectedTradeCate!.name,
+        tradeCateId: _selectedTradeCate!.id,
+        money: int.parse(money),
+        remark: "",
+        spendDate: _spendDate,
+        operate: operate,
+      );
+      TradeApi.create(trade).then((value) {
+        Navigator.of(context).pop();
+        EasyLoading.showSuccess("添加成功");
+      });
+    }
   }
 
   @override
@@ -104,8 +152,17 @@ class _TradePageState extends State<_TradePage> {
               cate: _selectedTradeCate,
               money: money,
             ),
-            const ToolsList(),
-            KeyBoard(money: money, callBack: moneyChangeCallBack),
+            ToolsList(
+              spendDate: _spendDate,
+              account: _selectAccount,
+              accountChange: accountSelectCallBack,
+              spendDateChange: spendDateSelectCallBack,
+            ),
+            KeyBoard(
+              money: money,
+              moneyChange: moneyChange,
+              onSaveTap: saveTap,
+            ),
           ],
         ),
       ),

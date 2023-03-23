@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:account_flutter/api/my_dio.dart';
 import 'package:account_flutter/bean/trade_bean.dart';
 import 'package:dio/dio.dart';
@@ -17,19 +15,14 @@ class TradeApi {
   }
 
   static Future<void> create(TradeBean trade) async {
-    await MyDio.fetch(
-      "post",
-      "/trade",
-      trade.toJson(),
-    );
+    await MyDio.fetch("post", "/trade", trade.toJson());
   }
 
   static Future<void> delete(TradeBean trade) async {
     await MyDio.fetch("delete", "/trade/${trade.id}", {});
   }
 
-  // static Future<void> update(TradeCateBean tradeCate) async {
-  //   await MyDio.fetch(
-  //       "put", "/trade-cate/${tradeCate.id}", jsonEncode(tradeCate));
-  // }
+  static Future<void> update(TradeBean trade) async {
+    await MyDio.fetch("put", "/trade/${trade.id}", trade.toJson());
+  }
 }

@@ -158,7 +158,7 @@ class _TradePageState extends State<_TradePage> {
         operate != null) {
       // TODO: 处理备注
       TradeBean trade = TradeBean(
-        id: 0,
+        id: widget.tradeOrigin == null ? 0 : widget.tradeOrigin!.id,
         accountName: _selectAccount!.name,
         accountId: _selectAccount!.id,
         tradeCateName: _selectedTradeCate!.name,
@@ -168,15 +168,26 @@ class _TradePageState extends State<_TradePage> {
         spendDate: _spendDate,
         operate: operate,
       );
-      // TODO: 如何区分添加还是修改?
-      TradeApi.create(trade).then((value) {
-        context.read<TradeListModel>().update().then(
-          (value) {
-            Navigator.of(context).pop();
-            EasyLoading.showSuccess("添加成功");
-          },
-        );
-      });
+
+      if (widget.tradeOrigin == null) {
+        TradeApi.create(trade).then((value) {
+          context.read<TradeListModel>().update().then(
+            (value) {
+              Navigator.of(context).pop();
+              EasyLoading.showSuccess("添加成功");
+            },
+          );
+        });
+      } else {
+        TradeApi.update(trade).then((value) {
+          context.read<TradeListModel>().update().then(
+            (value) {
+              Navigator.of(context).pop();
+              EasyLoading.showSuccess("修改成功");
+            },
+          );
+        });
+      }
     }
   }
 

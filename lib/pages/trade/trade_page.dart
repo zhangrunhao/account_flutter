@@ -54,6 +54,7 @@ class _TradePageState extends State<_TradePage> {
   AccountBean? _selectAccount;
   DateTime _spendDate = DateTime.now();
   String money = "0";
+  TextEditingController remarkController = TextEditingController();
 
   @override
   void initState() {
@@ -156,7 +157,6 @@ class _TradePageState extends State<_TradePage> {
     if (_selectAccount != null &&
         _selectedTradeCate != null &&
         operate != null) {
-      // TODO: 处理备注
       TradeBean trade = TradeBean(
         id: widget.tradeOrigin == null ? 0 : widget.tradeOrigin!.id,
         accountName: _selectAccount!.name,
@@ -164,7 +164,7 @@ class _TradePageState extends State<_TradePage> {
         tradeCateName: _selectedTradeCate!.name,
         tradeCateId: _selectedTradeCate!.id,
         money: int.parse(money),
-        remark: "",
+        remark: remarkController.text,
         spendDate: _spendDate,
         operate: operate,
       );
@@ -207,6 +207,7 @@ class _TradePageState extends State<_TradePage> {
             ResultShow(
               cate: _selectedTradeCate,
               money: money,
+              remarkController: remarkController,
             ),
             ToolsList(
               spendDate: _spendDate,

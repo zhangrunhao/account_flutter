@@ -20,7 +20,7 @@ class BriefWidget extends StatelessWidget {
         return Card(
           child: ListTile(
             title: Text(trade.tradeCateName),
-            subtitle: Text('金额: $moneyStr ${trade.remark}'),
+            subtitle: Text('金额:$moneyStr元 | 备注:${trade.remark}'),
             trailing: PopupMenuButton<int>(
               onSelected: (value) {
                 switch (value) {

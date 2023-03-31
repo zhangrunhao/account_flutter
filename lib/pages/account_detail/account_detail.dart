@@ -25,10 +25,14 @@ class _RowInfo extends StatelessWidget {
   const _RowInfo({required this.label, required this.value});
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        Text("$label: "),
-        Text(value),
+        Row(
+          children: [
+            Text("$label: "),
+            Text(value),
+          ],
+        ),
       ],
     );
   }

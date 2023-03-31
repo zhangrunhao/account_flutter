@@ -11,7 +11,7 @@ class TradeListModel with ChangeNotifier {
     _fetch();
   }
   Future<void> _fetch() async {
-    List<TradeBean> value = await TradeApi.getList();
+    List<TradeBean> value = await TradeApi.getList({});
     _trades = value;
     notifyListeners();
   }

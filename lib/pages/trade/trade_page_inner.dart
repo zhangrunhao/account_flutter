@@ -91,6 +91,7 @@ class _TradePageState extends State<TradePageInner>
       widget.tabController.animateTo(1);
     }
     setState(() {
+      
       _selectedTradeCate = tradeCate;
       _selectAccount = account;
       _spendDate = tradeBean.spendDate;

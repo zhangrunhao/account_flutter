@@ -28,7 +28,7 @@ class TradeBean {
         tradeCateId = json['trade_cate_id']!,
         money = json['money']!,
         remark = json['remark']?? "",
-        spendDate = DateTime.parse(json['spend_date']),
+        spendDate = DateTime.fromMillisecondsSinceEpoch(json['spend_date']),
         operate = json['operate']!;
 
   Map<String, dynamic> toJson() {

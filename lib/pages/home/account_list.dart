@@ -113,7 +113,12 @@ Widget _buildAccountListTitle(AccountBean account, BuildContext context) {
         ];
       },
     ),
-    onTap: () {},
+    onTap: () {
+      Navigator.of(context).pushNamed(
+        "account_detail",
+        arguments: account,
+      );
+    },
   );
 }
 

@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 
 class TradeCateApi {
   static Future<List<TradeCateBean>> getList() async {
-    Response? response = await MyDio.fetch('get', "/trade-cate", {});
+    Response? response = await MyDio.fetch('get', "/trade-cate");
     if (response == null) {
       return [];
     } else {
@@ -19,16 +19,16 @@ class TradeCateApi {
     await MyDio.fetch(
       "post",
       "/trade-cate",
-      jsonEncode(tradeCate),
+      data: tradeCate.toJson,
     );
   }
 
   static Future<void> update(TradeCateBean tradeCate) async {
-    await MyDio.fetch(
-        "put", "/trade-cate/${tradeCate.id}", jsonEncode(tradeCate));
+    await MyDio.fetch("put", "/trade-cate/${tradeCate.id}",
+        data: tradeCate.toJson());
   }
 
   static Future<void> delete(TradeCateBean tradeCate) async {
-    await MyDio.fetch("delete", "/trade-cate/${tradeCate.id}", {});
+    await MyDio.fetch("delete", "/trade-cate/${tradeCate.id}");
   }
 }

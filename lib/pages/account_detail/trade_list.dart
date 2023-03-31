@@ -1,19 +1,19 @@
 import 'package:account_flutter/bean/trade_bean.dart';
-import 'package:account_flutter/model/trade_list.model.dart';
 import 'package:account_flutter/widgets/trade_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class BriefWidget extends StatelessWidget {
-  const BriefWidget({super.key});
+class TradeList extends StatelessWidget {
+  final List<TradeBean> trades;
+
+  const TradeList({super.key, required this.trades});
 
   @override
   Widget build(BuildContext context) {
-    TradeListModel tradesModule = context.watch<TradeListModel>();
-    List<TradeBean> trades = tradesModule.trades;
     return ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
       itemCount: trades.length,
-      itemBuilder: (BuildContext context, int index) {
+      itemBuilder: (context, index) {
         TradeBean trade = trades[index];
         return TradeWidget(trade: trade);
       },

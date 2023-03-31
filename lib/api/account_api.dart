@@ -1,12 +1,10 @@
-import 'dart:convert';
-
 import 'package:account_flutter/api/my_dio.dart';
 import 'package:account_flutter/bean/account_bean.dart';
 import 'package:dio/dio.dart';
 
 class AccountApi {
   static Future<List<AccountBean>> getList() async {
-    Response? response = await MyDio.fetch("get", "/account", {});
+    Response? response = await MyDio.fetch("get", "/account");
     if (response == null) {
       return [];
     } else {
@@ -17,7 +15,7 @@ class AccountApi {
   }
 
   static Future<AccountBean> get(int id) async {
-    Response? response = await MyDio.fetch("get", "/account/$id", {});
+    Response? response = await MyDio.fetch("get", "/account/$id");
     if (response == null) {
       return AccountBean(id: 3, name: "name", cate: "cate", icon: "icon");
     } else {
@@ -26,14 +24,14 @@ class AccountApi {
   }
 
   static Future<void> delete(int id) async {
-    await MyDio.fetch("delete", "/account/$id", {});
+    await MyDio.fetch("delete", "/account/$id");
   }
 
   static Future<void> create(AccountBean account) async {
-    await MyDio.fetch("post", "/account", jsonEncode(account));
+    await MyDio.fetch("post", "/account", data:account.toJson());
   }
 
   static Future<void> update(AccountBean account) async {
-    await MyDio.fetch("put", "/account/${account.id}", jsonEncode(account));
+    await MyDio.fetch("put", "/account/${account.id}", data: account.toJson());
   }
 }

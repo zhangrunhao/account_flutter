@@ -13,7 +13,10 @@ class MyDio {
 
   static EventBus bus = EventBus();
 
-  static Future<Response?> fetch(method, url, data) async {
+  static Future<Response?> fetch(method, url, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+  }) async {
     EasyLoading.show(status: 'loading...');
     String? token = await Token.getToken();
     dio.options.headers["Authorization"] = "Bearer $token";
@@ -21,7 +24,7 @@ class MyDio {
     try {
       switch (method) {
         case 'get':
-          response = await dio.get(url);
+          response = await dio.get(url, queryParameters: queryParameters);
           break;
         case 'post':
           response = await dio.post(url, data: data);

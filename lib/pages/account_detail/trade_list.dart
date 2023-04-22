@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 
 class TradeList extends StatelessWidget {
   final List<TradeBean> trades;
+  final Function tradeUpdateCallBack;
 
-  const TradeList({super.key, required this.trades});
+  const TradeList({super.key, required this.trades, required this.tradeUpdateCallBack});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,9 @@ class TradeList extends StatelessWidget {
         TradeBean trade = trades[index];
         return TradeWidget(
           trade: trade,
-          callback: () {},
+          updateCallback: () {
+            tradeUpdateCallBack();
+          },
         );
       },
     );

@@ -37,7 +37,7 @@ class _BriefWidgetState extends State with RouteAware {
         TradeBean trade = trades[index];
         return TradeWidget(
           trade: trade,
-          callback: () {
+          updateCallback: () {
             _fetch();
           },
         );

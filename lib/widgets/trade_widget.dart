@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 class TradeWidget extends StatelessWidget {
   final TradeBean trade;
-  final Function callback;
+  final Function updateCallback;
 
-  const TradeWidget({super.key, required this.trade, required this.callback});
+  const TradeWidget({super.key, required this.trade, required this.updateCallback});
 
   @override
   Widget build(BuildContext context) {
@@ -18,16 +18,18 @@ class TradeWidget extends StatelessWidget {
           onSelected: (value) {
             switch (value) {
               case 0:
+              // 更新
                 Navigator.of(context)
                     .pushNamed(
                   "trade",
                   arguments: trade,
                 )
                     .then((value) {
-                  callback();
+                  updateCallback();
                 });
                 break;
               case 1:
+              // 删除
                 // TradeApi.delete(trade).then((value) {
                 //   tradesModule.update().then((value) {
                 //     EasyLoading.showSuccess("删除成功");

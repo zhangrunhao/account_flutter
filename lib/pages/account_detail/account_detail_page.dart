@@ -19,11 +19,7 @@ class _AccountDetailState extends State<AccountDetailPage> {
   AccountBean? account;
   List<TradeBean> trades = [];
 
-  @override
-  void initState() {
-    super.initState();
-    account = widget.account;
-    if (account != null) {
+  void _fetchTradeList() {
       TradeApi.getList({
         "accountId": account!.id,
       }).then((List<TradeBean> value) {
@@ -31,6 +27,14 @@ class _AccountDetailState extends State<AccountDetailPage> {
           trades = value;
         });
       });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    account = widget.account;
+    if (account != null) {
+      _fetchTradeList();
     }
   }
 
@@ -69,7 +73,9 @@ class _AccountDetailState extends State<AccountDetailPage> {
           AccountDetail(
             account: account,
           ),
-          TradeList(trades: trades),
+          TradeList(trades: trades, tradeUpdateCallBack: () {
+            _fetchTradeList();
+          },),
         ],
       ),
     );

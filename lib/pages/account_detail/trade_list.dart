@@ -15,7 +15,10 @@ class TradeList extends StatelessWidget {
       itemCount: trades.length,
       itemBuilder: (context, index) {
         TradeBean trade = trades[index];
-        return TradeWidget(trade: trade);
+        return TradeWidget(
+          trade: trade,
+          callback: () {},
+        );
       },
     );
   }

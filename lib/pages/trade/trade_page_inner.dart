@@ -6,7 +6,6 @@ import 'package:account_flutter/bean/trade_bean.dart';
 import 'package:account_flutter/bean/trade_cate_bean.dart';
 import 'package:account_flutter/model/account_list_model.dart';
 import 'package:account_flutter/model/trade_cate_list_model.dart';
-import 'package:account_flutter/model/trade_list.model.dart';
 import 'package:account_flutter/pages/trade/key_board.dart';
 import 'package:account_flutter/pages/trade/my_tab_bar_view.dart';
 import 'package:account_flutter/pages/trade/result_show.dart';
@@ -53,9 +52,9 @@ class _TradePageState extends State<TradePageInner>
     super.didChangeMetrics();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (MediaQuery.of(context).viewInsets.bottom == 0) {
-        print("键盘收回");
+        // print("键盘收回");
       } else {
-        print("键盘谈起");
+        // print("键盘谈起");
       }
     });
   }
@@ -90,8 +89,11 @@ class _TradePageState extends State<TradePageInner>
     } else if (tradeCate != null && tradeCate.operate == "Expend") {
       widget.tabController.animateTo(1);
     }
+    // 处理备注
+    remarkController.text = widget.tradeOrigin == null ? "" : widget.tradeOrigin!.remark;
+
+    // 一起设置状态
     setState(() {
-      
       _selectedTradeCate = tradeCate;
       _selectAccount = account;
       _spendDate = tradeBean.spendDate;
@@ -162,7 +164,7 @@ class _TradePageState extends State<TradePageInner>
         accountId: _selectAccount!.id,
         tradeCateName: _selectedTradeCate!.name,
         tradeCateId: _selectedTradeCate!.id,
-        money: int.parse(money),
+        money: double.parse(money),
         remark: remarkController.text,
         spendDate: _spendDate,
         operate: operate,
@@ -170,21 +172,13 @@ class _TradePageState extends State<TradePageInner>
 
       if (widget.tradeOrigin == null) {
         TradeApi.create(trade).then((value) {
-          context.read<TradeListModel>().update().then(
-            (value) {
-              Navigator.of(context).pop();
-              EasyLoading.showSuccess("添加成功");
-            },
-          );
+          Navigator.of(context).pop();
+          EasyLoading.showSuccess("添加成功");
         });
       } else {
         TradeApi.update(trade).then((value) {
-          context.read<TradeListModel>().update().then(
-            (value) {
-              Navigator.of(context).pop();
-              EasyLoading.showSuccess("修改成功");
-            },
-          );
+          EasyLoading.showSuccess("修改成功");
+          Navigator.of(context).pop("aa");
         });
       }
     }

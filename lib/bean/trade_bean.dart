@@ -4,7 +4,7 @@ class TradeBean {
   String accountName;
   int tradeCateId;
   String tradeCateName;
-  int money;
+  num money;
   String remark;
   DateTime spendDate;
   String operate;
@@ -26,7 +26,7 @@ class TradeBean {
         accountId = json['account_id']!,
         tradeCateName = json['trade_cate_name'],
         tradeCateId = json['trade_cate_id']!,
-        money = json['money']!,
+        money = double.parse(json['money']),
         remark = json['remark']?? "",
         spendDate = DateTime.fromMillisecondsSinceEpoch(json['spend_date']),
         operate = json['operate']!;

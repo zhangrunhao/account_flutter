@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                                     _emailController.text, _pwdController.text)
                                 .then((success) => {
                                       if (success)
-                                        Navigator.pushNamed(context, "/")
+                                        Navigator.popAndPushNamed(context, "/")
                                       else
                                         {
                                           ScaffoldMessenger.of(context)

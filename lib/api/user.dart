@@ -24,6 +24,7 @@ class UserApi {
       UserToken userToken = UserToken.fromJson(response.data['data']);
       return await Token.setToken(userToken.token);
     } catch (e) {
+      print(e);
       return false;
     }
   }

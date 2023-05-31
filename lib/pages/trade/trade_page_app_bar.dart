@@ -12,7 +12,7 @@ const List<Tab> tabs = <Tab>[
   ),
 ];
 
-class TradePageAppBar extends StatelessWidget with PreferredSizeWidget {
+class TradePageAppBar extends StatelessWidget implements PreferredSizeWidget {
   const TradePageAppBar({super.key});
 
   @override

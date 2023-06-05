@@ -14,24 +14,24 @@ class AccountApi {
     }
   }
 
-  static Future<AccountBean> get(int id) async {
-    Response? response = await MyDio.fetch("get", "/account/$id");
-    if (response == null) {
-      return AccountBean(id: 3, name: "name", cate: "cate", icon: "icon");
-    } else {
-      return AccountBean.fromJson(response.data['data']);
-    }
-  }
+  // static Future<AccountBean> get(int id) async {
+  //   Response? response = await MyDio.fetch("get", "/account/$id");
+  //   if (response == null) {
+  //     return AccountBean(id: 3, name: "name", cate: "cate", icon: "icon");
+  //   } else {
+  //     return AccountBean.fromJson(response.data['data']);
+  //   }
+  // }
 
   static Future<void> delete(int id) async {
     await MyDio.fetch("delete", "/account/$id");
   }
 
-  static Future<void> create(AccountBean account) async {
-    await MyDio.fetch("post", "/account", data:account.toJson());
-  }
+  // static Future<void> create(AccountBean account) async {
+  //   await MyDio.fetch("post", "/account", data:account.toJson());
+  // }
 
-  static Future<void> update(AccountBean account) async {
-    await MyDio.fetch("put", "/account/${account.id}", data: account.toJson());
-  }
+  // static Future<void> update(AccountBean account) async {
+  //   await MyDio.fetch("put", "/account/${account.id}", data: account.toJson());
+  // }
 }

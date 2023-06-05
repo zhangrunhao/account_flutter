@@ -1,3 +1,4 @@
+import 'package:account_flutter/api/config.dart';
 import 'package:account_flutter/api/token.dart';
 import 'package:account_flutter/util/event_bus.dart';
 import 'package:dio/dio.dart';
@@ -7,7 +8,7 @@ class MyDio {
   static Dio dio = Dio(
     BaseOptions(
       contentType: "application/json",
-      baseUrl: "http://127.0.0.1:3000/api",
+      baseUrl: ConfigApi.baseUrl,
     ),
   );
 

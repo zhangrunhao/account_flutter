@@ -5,7 +5,8 @@ class TradeWidget extends StatelessWidget {
   final TradeBean trade;
   final Function updateCallback;
 
-  const TradeWidget({super.key, required this.trade, required this.updateCallback});
+  const TradeWidget(
+      {super.key, required this.trade, required this.updateCallback});
 
   @override
   Widget build(BuildContext context) {
@@ -13,23 +14,25 @@ class TradeWidget extends StatelessWidget {
       child: ListTile(
         title: Text(trade.tradeCateName),
         subtitle: Text('金额:${trade.money.toString()}元 | 备注:${trade.remark}'),
-        tileColor: trade.operate == "Income" ? Colors.green[300] : Colors.red[300],
+        tileColor:
+            trade.operate == "Income" ? Colors.green[300] : Colors.red[300],
         trailing: PopupMenuButton<int>(
           onSelected: (value) {
             switch (value) {
               case 0:
-              // 更新
+                // 更新
                 Navigator.of(context)
                     .pushNamed(
                   "trade",
                   arguments: trade,
                 )
                     .then((value) {
+                      // TODO: 只是更新当前这个widget就可以了
                   updateCallback();
                 });
                 break;
               case 1:
-              // 删除
+                // 删除
                 // TradeApi.delete(trade).then((value) {
                 //   tradesModule.update().then((value) {
                 //     EasyLoading.showSuccess("删除成功");

@@ -1,22 +1,39 @@
-import 'package:account_flutter/api/account_api.dart';
 import 'package:account_flutter/bean/account_bean.dart';
-import 'package:account_flutter/model/account_list_model.dart';
+import 'package:account_flutter/db/account_db.dart';
 import 'package:account_flutter/pages/account_edit/account_edit_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:provider/provider.dart';
 
-class AccountList extends StatelessWidget {
-  final List<AccountBean> accounts;
-  final String cate;
+class AccountList extends StatefulWidget {
+  final int type;
 
   const AccountList({
     super.key,
-    required this.accounts,
-    required this.cate,
+    required this.type,
   });
 
-  // 
+  @override
+  State<StatefulWidget> createState() {
+    return _AccountListState();
+  }
+}
+
+class _AccountListState extends State<AccountList> {
+  final AccountDB _accountDB = AccountDB();
+  List<AccountBean> accounts = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchList();
+  }
+
+  _fetchList() {
+    _accountDB.queryList("type=${widget.type}").then((value) {
+      setState(() {
+        accounts = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +43,15 @@ class AccountList extends StatelessWidget {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(cate == "Debt" ? "负债" : "资产"),
+              Text(widget.type == 1 ? "资产" : "负债"),
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(
                     "account_edit",
-                    arguments: AccountEditPageArguments(cate, null),
-                  );
+                    arguments: AccountEditPageArguments(widget.type, null),
+                  ).then((value) {
+                    _fetchList();
+                  });
                 },
                 child: const Icon(Icons.add),
               ),
@@ -41,7 +60,7 @@ class AccountList extends StatelessWidget {
         } else {
           index -= 1;
           AccountBean account = accounts[index];
-          return _buildAccountListTitle(account, context);
+          return _buildAccountListTitle(account, context, _fetchList);
         }
       },
       separatorBuilder: ((BuildContext context, int index) {
@@ -55,7 +74,7 @@ class AccountList extends StatelessWidget {
   }
 }
 
-Widget _buildAccountListTitle(AccountBean account, BuildContext context) {
+Widget _buildAccountListTitle(AccountBean account, BuildContext context, Function fetchList) {
   return ListTile(
     leading: Image.asset("images/cate_icons/${account.icon}.png"),
     title: Text(account.name),
@@ -64,33 +83,29 @@ Widget _buildAccountListTitle(AccountBean account, BuildContext context) {
       onSelected: (value) {
         switch (value) {
           case 0:
+            // 编辑
             Navigator.of(context).pushNamed(
               "account_edit",
-              arguments: AccountEditPageArguments(
-                account.cate,
-                account,
-              ),
-            );
+              arguments: AccountEditPageArguments(account.type, account)
+            ).then((value) {
+              //TODO: 刷新下自己这一个就行
+              fetchList();
+            });
             break;
           case 1:
             Navigator.of(context).pushNamed(
               "account_detail",
               arguments: account,
-            );
+            ).then((value) {
+              //TODO: 刷新下自己这一个就行
+              fetchList();
+            });
             break;
           case 2:
-            showDeleteConfirmDialog(context).then((bool? del) {
+            _showDeleteConfirmDialog(context).then((bool? del) {
               if (del == null) {
               } else {
-                AccountApi.delete(account.id).then(
-                  (value) {
-                    AccountListModel accountListModel =
-                        context.read<AccountListModel>();
-                    accountListModel.update().then((value) {
-                      EasyLoading.showSuccess("删除成功");
-                    });
-                  },
-                );
+                // 删除
               }
             });
             break;
@@ -119,13 +134,12 @@ Widget _buildAccountListTitle(AccountBean account, BuildContext context) {
       Navigator.of(context).pushNamed(
         "account_detail",
         arguments: account,
-      );
+      ).then((value) => fetchList());
     },
   );
 }
 
-// 弹出对话框
-Future<bool?> showDeleteConfirmDialog(BuildContext context) {
+Future<bool?> _showDeleteConfirmDialog(BuildContext context) {
   return showDialog<bool>(
     context: context,
     builder: (context) {

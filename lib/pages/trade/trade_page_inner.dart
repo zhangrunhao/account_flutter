@@ -4,7 +4,6 @@ import 'package:account_flutter/api/trade_api.dart';
 import 'package:account_flutter/bean/account_bean.dart';
 import 'package:account_flutter/bean/trade_bean.dart';
 import 'package:account_flutter/bean/trade_cate_bean.dart';
-import 'package:account_flutter/model/account_list_model.dart';
 import 'package:account_flutter/model/trade_cate_list_model.dart';
 import 'package:account_flutter/pages/trade/key_board.dart';
 import 'package:account_flutter/pages/trade/my_tab_bar_view.dart';
@@ -70,7 +69,7 @@ class _TradePageState extends State<TradePageInner>
     if (tradeBean == null) return;
     // 处理账户
     AccountBean? account;
-    List<AccountBean> accounts = context.read<AccountListModel>().accounts;
+    List<AccountBean> accounts = [];
     for (var element in accounts) {
       if (element.id == tradeBean.accountId) {
         account = element;

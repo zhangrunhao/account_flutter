@@ -1,27 +1,32 @@
 class AccountBean {
-  int id;
-  String name;
-  String cate;
-  String icon;
+  final int id;
+  final String name;
+  final int type; // 1资产 2负债
+  final String icon;
 
-  AccountBean(
-      {required this.id,
-      required this.name,
-      required this.cate,
-      required this.icon});
+  AccountBean({
+    required this.id,
+    required this.name,
+    required this.type,
+    required this.icon,
+  });
 
-  AccountBean.fromJson(Map<String, dynamic> json)
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'type': type,
+      'icon': icon,
+    };
+  }
+
+  AccountBean.fromJson(Map<dynamic, dynamic> json)
       : name = json['name']!,
         icon = json['icon']!,
         id = json['id']!,
-        cate = json['cate']!;
+        type = json['type']!;
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['name'] = name;
-    data['icon'] = icon;
-    data['id'] = id;
-    data['cate'] = cate;
-    return data;
+  @override
+  String toString() {
+    return 'AccountBean{id: $id, name: $name, cate: $type, icon: $icon}';
   }
 }

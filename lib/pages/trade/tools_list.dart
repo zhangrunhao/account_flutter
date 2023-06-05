@@ -1,7 +1,5 @@
 import 'package:account_flutter/bean/account_bean.dart';
-import 'package:account_flutter/model/account_list_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 typedef AccountSelectCallBack = void Function(AccountBean account);
 typedef SpendDateSelectCallBack = void Function(DateTime spendDate);
@@ -59,7 +57,7 @@ class ToolsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<AccountBean> accounts = context.watch<AccountListModel>().accounts;
+    List<AccountBean> accounts = [];
     return SizedBox(
       width: double.infinity,
       height: 40,

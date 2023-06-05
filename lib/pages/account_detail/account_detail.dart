@@ -11,7 +11,7 @@ class AccountDetail extends StatelessWidget {
     return Column(
       children: [
         _RowInfo(label: "名称", value: account?.name ?? ""),
-        _RowInfo(label: "类型", value: account?.cate ?? ""),
+        // _RowInfo(label: "类型", value: account?.type ?? ""),
         _RowInfo(label: "图标", value: account?.icon ?? ""),
       ],
     );

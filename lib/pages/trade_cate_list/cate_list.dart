@@ -1,15 +1,17 @@
 import 'package:account_flutter/bean/trade_cate_bean.dart';
 import 'package:flutter/material.dart';
+
 class CateList extends StatelessWidget {
   final List<TradeCateBean> cates;
   final String title;
-  final String operate;
+  final int operate;
 
-  const CateList(
-      {super.key,
-      required this.cates,
-      required this.title,
-      required this.operate});
+  const CateList({
+    super.key,
+    required this.cates,
+    required this.title,
+    required this.operate,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +34,10 @@ class CateList extends StatelessWidget {
                         child: TextButton(
                           onPressed: (() {
                             Navigator.pop(context);
-                            Navigator.of(context)
-                                .pushNamed("trade_cate_edit", arguments: cate);
+                            Navigator.of(context).pushNamed(
+                              "trade_cate_edit",
+                              arguments: cate,
+                            );
                           }),
                           child: const Text("修改"),
                         ),
@@ -41,8 +45,7 @@ class CateList extends StatelessWidget {
                       PopupMenuItem<String>(
                         child: TextButton(
                           child: const Text("删除"),
-                          onPressed: () {
-                          },
+                          onPressed: () {},
                         ),
                       ),
                     ],

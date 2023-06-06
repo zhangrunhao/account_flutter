@@ -23,7 +23,6 @@ class TradePageAppBar extends StatelessWidget implements PreferredSizeWidget {
           width: 80,
           child: GestureDetector(
             onTap: (() {
-              // print("设置");
             }),
             child: const Icon(Icons.settings),
           ),

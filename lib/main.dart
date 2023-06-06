@@ -13,9 +13,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(
-    const MyApp()
-  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -51,20 +49,19 @@ class MyApp extends StatelessWidget {
         },
         "trade_cate_list": (context) {
           Object? arguments = ModalRoute.of(context)?.settings.arguments;
-          return TradeCateListPage(operate: arguments as String);
+          return TradeCateListPage(operate: arguments as int);
         },
         "trade_cate_edit": (context) {
           Object? arguments = ModalRoute.of(context)?.settings.arguments;
-          if (arguments is String) {
-            return TradeCateEditPage(
-              operate: arguments,
-            );
-          } else if (arguments is TradeCateBean) {
+          if (arguments is TradeCateBean) {
             return TradeCateEditPage(
               tradeCate: arguments,
+              operate: arguments.operate,
             );
           } else {
-            return const TradeCateEditPage();
+            return TradeCateEditPage(
+              operate: arguments as int,
+            );
           }
         },
         "account_detail": (context) {

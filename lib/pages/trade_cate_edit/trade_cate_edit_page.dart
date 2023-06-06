@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:account_flutter/bean/trade_cate_bean.dart';
+import 'package:account_flutter/db/trade_cate_db.dart';
 import 'package:account_flutter/pages/trade_cate_edit/icon_list.dart';
 import 'package:account_flutter/pages/trade_cate_edit/name_form.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +8,9 @@ import 'package:flutter/material.dart';
 class TradeCateEditPage extends StatefulWidget {
   // 编辑分类, 传入tradeCate, 新增分类, 传入operate
   final TradeCateBean? tradeCate;
-  final String? operate;
+  final int operate;
 
-  const TradeCateEditPage({super.key, this.tradeCate, this.operate});
+  const TradeCateEditPage({super.key, this.tradeCate, required this.operate});
 
   @override
   State<StatefulWidget> createState() {
@@ -22,6 +23,7 @@ class _TradeCateEditPageState extends State<TradeCateEditPage> {
   final TextEditingController _nameController = TextEditingController();
   final GlobalKey _formKey = GlobalKey<FormState>();
   String? iconName;
+  final TradeCateDB _tradeCateDB = TradeCateDB();
 
   @override
   void initState() {
@@ -47,8 +49,14 @@ class _TradeCateEditPageState extends State<TradeCateEditPage> {
             width: 50,
             child: GestureDetector(
               onTap: () {
-                submitForm(context, widget.tradeCate, widget.operate,
-                    _nameController.text, iconName);
+                submitForm(
+                  context,
+                  widget.tradeCate,
+                  widget.operate,
+                  _nameController.text,
+                  iconName,
+                  _tradeCateDB,
+                ).then((value) => Navigator.of(context).pop());
               },
               child: const Icon(Icons.done),
             ),
@@ -86,34 +94,48 @@ Future<List<dynamic>> getIconsName(BuildContext context) async {
   return icons;
 }
 
-String _buildAppBarTitle(TradeCateBean? tradeCate, String? operate) {
+String _buildAppBarTitle(TradeCateBean? tradeCate, int operate) {
   String behavior = "";
   String operateCN = "";
-  if (operate is String) {
-    behavior = "新增";
-    operateCN = operate == "Income" ? "收入" : "支出";
-  } else if (tradeCate is TradeCateBean) {
+  if (tradeCate is TradeCateBean) {
     behavior = "修改";
-    operateCN = tradeCate.operate == "Income" ? "收入" : "支出";
+  } else {
+    behavior = "新增";
+  }
+  switch (operate) {
+    case 1:
+      operateCN = "收入";
+      break;
+    case 2:
+      operateCN = "支出";
+      break;
+    default:
   }
   return "$behavior$operateCN分类";
 }
 
-void submitForm(
+Future<void> submitForm(
   BuildContext context,
   TradeCateBean? tradeCate,
-  String? operate,
+  int operate,
   String name,
   String? icon,
-) {
+  TradeCateDB tradeCateDB,
+) async {
   if (tradeCate is TradeCateBean && icon is String) {
     // 修改
     // TradeCateBean newTradeCate = tradeCate;
     // newTradeCate.name = name;
     // newTradeCate.icon = icon;
-  } else if (operate is String && icon is String) {
+  } else if (icon is String) {
     // 新增
-    // TradeCateBean newTradeCate = TradeCateBean(
-    //     name: name, icon: icon, id: 0, type: "type", operate: operate);
+    TradeCateBean newTradeCate = TradeCateBean(
+      name: name,
+      icon: icon,
+      id: 0,
+      type: 2,
+      operate: operate,
+    );
+    await tradeCateDB.insert(newTradeCate);
   }
 }

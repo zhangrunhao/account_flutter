@@ -122,7 +122,7 @@ class KeyBoard extends StatelessWidget {
     moneyChange('$money.');
   }
 
-  void _handleSaveTap() {
+  void _handleSaveTap(String key) {
     onSaveTap(_handleSymbolicOperation());
   }
 
@@ -136,50 +136,45 @@ class KeyBoard extends StatelessWidget {
           Expanded(
             child: Row(
               children: [
-                Expanded(child: _buildKeyButton("1", "1", _handleNumberTap)),
-                Expanded(child: _buildKeyButton("2", "2", _handleNumberTap)),
-                Expanded(child: _buildKeyButton("3", "3", _handleNumberTap)),
-                Expanded(
-                  child: _buildKeyButton("删除", "delete", _handleDeleteTap),
-                ),
+                _KeyButton(text: "1", buttonKey: "1", onTap: _handleNumberTap),
+                _KeyButton(text: "2", buttonKey: "2", onTap: _handleNumberTap),
+                _KeyButton(text: "3", buttonKey: "3", onTap: _handleNumberTap),
+                _KeyButton(
+                    text: "删除", buttonKey: "delete", onTap: _handleDeleteTap),
               ],
             ),
           ),
           Expanded(
             child: Row(
               children: [
-                Expanded(child: _buildKeyButton("4", "4", _handleNumberTap)),
-                Expanded(child: _buildKeyButton("5", "5", _handleNumberTap)),
-                Expanded(child: _buildKeyButton("6", "6", _handleNumberTap)),
-                Expanded(
-                  child: _buildKeyButton("+", "plus", _handlePulsTap),
-                ),
+                _KeyButton(text: "4", buttonKey: "4", onTap: _handleNumberTap),
+                _KeyButton(text: "5", buttonKey: "5", onTap: _handleNumberTap),
+                _KeyButton(text: "6", buttonKey: "6", onTap: _handleNumberTap),
+                _KeyButton(text: "+", buttonKey: "plus", onTap: _handlePulsTap),
               ],
             ),
           ),
           Expanded(
             child: Row(
               children: [
-                Expanded(child: _buildKeyButton("7", "7", _handleNumberTap)),
-                Expanded(child: _buildKeyButton("8", "8", _handleNumberTap)),
-                Expanded(child: _buildKeyButton("9", "9", _handleNumberTap)),
-                Expanded(
-                  child: _buildKeyButton("-", "minus", _handleMinusTap),
-                ),
+                _KeyButton(text: "7", buttonKey: "7", onTap: _handleNumberTap),
+                _KeyButton(text: "8", buttonKey: "8", onTap: _handleNumberTap),
+                _KeyButton(text: "9", buttonKey: "9", onTap: _handleNumberTap),
+                _KeyButton(
+                    text: "-", buttonKey: "minus", onTap: _handleMinusTap)
               ],
             ),
           ),
           Expanded(
             child: Row(
               children: [
-                Expanded(
-                  child: _buildKeyButton("再记", "again", _handleAgainTap),
-                ),
-                Expanded(child: _buildKeyButton("0", "0", _handleNumberTap)),
-                Expanded(child: _buildKeyButton(".", "point", _handlePointTap)),
-                Expanded(
-                  child: _buildKeyButton("保存", null, _handleSaveTap),
-                ),
+                _KeyButton(
+                    text: "再记", buttonKey: "again", onTap: _handleAgainTap),
+                _KeyButton(text: "0", buttonKey: "0", onTap: _handleNumberTap),
+                _KeyButton(
+                    text: ".", buttonKey: "point", onTap: _handlePointTap),
+                _KeyButton(
+                    text: "保存", buttonKey: "save", onTap: _handleSaveTap),
               ],
             ),
           ),
@@ -189,13 +184,28 @@ class KeyBoard extends StatelessWidget {
   }
 }
 
-Widget _buildKeyButton(String text, String? key, Function onTap) {
-  return FittedBox(
-    child: TextButton(
-      onPressed: () {
-        key == null ? onTap() : onTap(key);
-      },
-      child: Text(text),
-    ),
-  );
+class _KeyButton extends StatelessWidget {
+  final String text;
+  final String buttonKey;
+  final Function onTap;
+
+  const _KeyButton({
+    required this.text,
+    required this.buttonKey,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: FittedBox(
+        child: TextButton(
+          onPressed: () {
+            onTap(buttonKey);
+          },
+          child: Text(text),
+        ),
+      ),
+    );
+  }
 }

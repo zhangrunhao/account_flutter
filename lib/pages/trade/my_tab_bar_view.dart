@@ -17,11 +17,11 @@ class MyTabBarView extends StatelessWidget {
   Widget build(BuildContext context) {
     return TabBarView(controller: tabController, children: [
       CateList(
-        operate: "Income",
+        operate: 1,
         callBack: callBack,
       ),
       CateList(
-        operate: "Expend",
+        operate: 2,
         callBack: callBack,
       ),
     ]);

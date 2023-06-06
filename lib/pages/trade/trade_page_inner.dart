@@ -16,6 +16,7 @@ class TradePageInner extends StatefulWidget {
   });
   final TabController tabController;
   final TradeBean? tradeOrigin;
+
   @override
   State<StatefulWidget> createState() => _TradePageState();
 }
@@ -78,13 +79,14 @@ class _TradePageState extends State<TradePageInner>
         tradeCate = element;
       }
     }
-    if (tradeCate != null && tradeCate.operate == "Income") {
+    if (tradeCate != null && tradeCate.operate == 1) {
       widget.tabController.animateTo(0);
-    } else if (tradeCate != null && tradeCate.operate == "Expend") {
+    } else if (tradeCate != null && tradeCate.operate == 2) {
       widget.tabController.animateTo(1);
     }
     // 处理备注
-    remarkController.text = widget.tradeOrigin == null ? "" : widget.tradeOrigin!.remark;
+    remarkController.text =
+        widget.tradeOrigin == null ? "" : widget.tradeOrigin!.remark;
 
     // 一起设置状态
     setState(() {

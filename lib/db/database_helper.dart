@@ -37,10 +37,39 @@ class DatabaseHelper {
       CREATE TABLE trade_cate (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT, 
-        icon TEXT
+        icon TEXT,
         type INTEGER,
         operate INTEGER
       )
     ''');
+    // 初始化账户
+    await db.insert("account", {
+      "name": "支付宝",
+      "type": 1,
+      "icon": "yundong",
+    });
+    await db.insert("account", {
+      "name": "微信",
+      "type": 1,
+      "icon": "canyin",
+    });
+    await db.insert("account", {
+      "name": "京东白条",
+      "type": 2,
+      "icon": "feiji",
+    });
+    // 初始化分类
+    await db.insert("trade_cate", {
+      "name": "工资",
+      "type": 2,
+      "icon": "gongzi",
+      "operate": 1,
+    });
+    await db.insert("trade_cate", {
+      "name": "飞机",
+      "type": 2,
+      "icon": "feiji",
+      "operate": 2,
+    });
   }
 }

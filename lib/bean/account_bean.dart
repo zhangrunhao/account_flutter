@@ -1,7 +1,8 @@
 class AccountBean {
   final int id;
   final String name;
-  final int type; // 1资产 2负债
+  // 1资产 2负债
+  final int type;
   final String icon;
 
   AccountBean({

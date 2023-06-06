@@ -111,7 +111,7 @@ Widget _buildAccountListTitle(
               if (del == null) {
               } else {
                 // TODO: 其实删除以后, 不需要更新整个列表
-                AccountDB().delete(account).then((value) => fetchList());
+                AccountDB().delete(account.id).then((value) => fetchList());
               }
             });
             break;

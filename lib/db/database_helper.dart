@@ -21,19 +21,22 @@ class DatabaseHelper {
   // this opens the database (and creates it if it doesn't exist)
   _initDatabase() async {
     String path = join(await getDatabasesPath(), _databaseName);
-    return await openDatabase(path,
-        version: _databaseVersion, onCreate: _onCreate);
+    return await openDatabase(
+      path,
+      version: _databaseVersion,
+      onCreate: _onCreate,
+    );
   }
+
   // SQL code to create the database table
   Future _onCreate(Database db, int version) async {
     await db.execute('''
-          CREATE TABLE account (
-            id INTEGER PRIMARY KEY,
-            name TEXT, 
-            type INTEGER,
-            icon TEXT,
-          )
+      CREATE TABLE account (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT, 
+        type INTEGER,
+        icon TEXT
+      )
     ''');
-    // prepopulate a few rows (consider using a transaction)
   }
 }

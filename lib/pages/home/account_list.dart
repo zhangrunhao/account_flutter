@@ -46,10 +46,12 @@ class _AccountListState extends State<AccountList> {
               Text(widget.type == 1 ? "资产" : "负债"),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(
+                  Navigator.of(context)
+                      .pushNamed(
                     "account_edit",
                     arguments: AccountEditPageArguments(widget.type, null),
-                  ).then((value) {
+                  )
+                      .then((value) {
                     _fetchList();
                   });
                 },
@@ -74,7 +76,8 @@ class _AccountListState extends State<AccountList> {
   }
 }
 
-Widget _buildAccountListTitle(AccountBean account, BuildContext context, Function fetchList) {
+Widget _buildAccountListTitle(
+    AccountBean account, BuildContext context, Function fetchList) {
   return ListTile(
     leading: Image.asset("images/cate_icons/${account.icon}.png"),
     title: Text(account.name),
@@ -84,19 +87,21 @@ Widget _buildAccountListTitle(AccountBean account, BuildContext context, Functio
         switch (value) {
           case 0:
             // 编辑
-            Navigator.of(context).pushNamed(
-              "account_edit",
-              arguments: AccountEditPageArguments(account.type, account)
-            ).then((value) {
+            Navigator.of(context)
+                .pushNamed("account_edit",
+                    arguments: AccountEditPageArguments(account.type, account))
+                .then((value) {
               //TODO: 刷新下自己这一个就行
               fetchList();
             });
             break;
           case 1:
-            Navigator.of(context).pushNamed(
+            Navigator.of(context)
+                .pushNamed(
               "account_detail",
               arguments: account,
-            ).then((value) {
+            )
+                .then((value) {
               //TODO: 刷新下自己这一个就行
               fetchList();
             });
@@ -105,7 +110,8 @@ Widget _buildAccountListTitle(AccountBean account, BuildContext context, Functio
             _showDeleteConfirmDialog(context).then((bool? del) {
               if (del == null) {
               } else {
-                // 删除
+                // TODO: 其实删除以后, 不需要更新整个列表
+                AccountDB().delete(account).then((value) => fetchList());
               }
             });
             break;
@@ -131,10 +137,12 @@ Widget _buildAccountListTitle(AccountBean account, BuildContext context, Functio
       },
     ),
     onTap: () {
-      Navigator.of(context).pushNamed(
-        "account_detail",
-        arguments: account,
-      ).then((value) => fetchList());
+      Navigator.of(context)
+          .pushNamed(
+            "account_detail",
+            arguments: account,
+          )
+          .then((value) => fetchList());
     },
   );
 }

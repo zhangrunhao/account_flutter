@@ -18,7 +18,14 @@ class AccountDB {
 
   Future<int> update(AccountBean account) async {
     Database db = await DatabaseHelper.instance.database;
-    int count = await db.update(tableName, account.toMap(), where: "id=${account.id}");
+    int count =
+        await db.update(tableName, account.toMap(), where: "id=${account.id}");
+    return count;
+  }
+
+  Future<int> delete(AccountBean account) async {
+    Database db = await DatabaseHelper.instance.database;
+    int count = await db.delete(tableName, where: "id=${account.id}");
     return count;
   }
 }

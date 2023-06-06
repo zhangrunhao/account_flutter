@@ -11,7 +11,7 @@ class TradePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Builder(
         builder: ((context) {
           final TabController tabController = DefaultTabController.of(context);

@@ -1,17 +1,12 @@
 import 'dart:async';
-
-import 'package:account_flutter/api/trade_api.dart';
 import 'package:account_flutter/bean/account_bean.dart';
 import 'package:account_flutter/bean/trade_bean.dart';
 import 'package:account_flutter/bean/trade_cate_bean.dart';
-import 'package:account_flutter/model/trade_cate_list_model.dart';
 import 'package:account_flutter/pages/trade/key_board.dart';
 import 'package:account_flutter/pages/trade/my_tab_bar_view.dart';
 import 'package:account_flutter/pages/trade/result_show.dart';
 import 'package:account_flutter/pages/trade/tools_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:provider/provider.dart';
 
 class TradePageInner extends StatefulWidget {
   const TradePageInner({
@@ -77,7 +72,7 @@ class _TradePageState extends State<TradePageInner>
     }
     // 处理分类
     TradeCateBean? tradeCate;
-    List<TradeCateBean> cates = context.read<TradeCateListModel>().cates;
+    List<TradeCateBean> cates = [];
     for (var element in cates) {
       if (element.id == tradeBean.tradeCateId) {
         tradeCate = element;
@@ -101,8 +96,8 @@ class _TradePageState extends State<TradePageInner>
   }
 
   void setDefaultCate() {
-    var incomeCates = context.read<TradeCateListModel>().incomeCates;
-    var expendCates = context.read<TradeCateListModel>().expendCates;
+    var incomeCates = [];
+    var expendCates = [];
     if (incomeCates.isEmpty && expendCates.isEmpty) {
       // 递归查看是否有值了
       Timer(
@@ -157,28 +152,28 @@ class _TradePageState extends State<TradePageInner>
     if (_selectAccount != null &&
         _selectedTradeCate != null &&
         operate != null) {
-      TradeBean trade = TradeBean(
-        id: widget.tradeOrigin == null ? 0 : widget.tradeOrigin!.id,
-        accountName: _selectAccount!.name,
-        accountId: _selectAccount!.id,
-        tradeCateName: _selectedTradeCate!.name,
-        tradeCateId: _selectedTradeCate!.id,
-        money: double.parse(money),
-        remark: remarkController.text,
-        spendDate: _spendDate,
-        operate: operate,
-      );
+      // TradeBean trade = TradeBean(
+      //   id: widget.tradeOrigin == null ? 0 : widget.tradeOrigin!.id,
+      //   accountName: _selectAccount!.name,
+      //   accountId: _selectAccount!.id,
+      //   tradeCateName: _selectedTradeCate!.name,
+      //   tradeCateId: _selectedTradeCate!.id,
+      //   money: double.parse(money),
+      //   remark: remarkController.text,
+      //   spendDate: _spendDate,
+      //   operate: operate,
+      // );
 
       if (widget.tradeOrigin == null) {
-        TradeApi.create(trade).then((value) {
-          Navigator.of(context).pop();
-          EasyLoading.showSuccess("添加成功");
-        });
+        // TradeApi.create(trade).then((value) {
+        //   Navigator.of(context).pop();
+        //   EasyLoading.showSuccess("添加成功");
+        // });
       } else {
-        TradeApi.update(trade).then((value) {
-          EasyLoading.showSuccess("修改成功");
-          Navigator.of(context).pop("aa");
-        });
+        // TradeApi.update(trade).then((value) {
+        //   EasyLoading.showSuccess("修改成功");
+        //   Navigator.of(context).pop("aa");
+        // });
       }
     }
   }

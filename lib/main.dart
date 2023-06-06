@@ -1,7 +1,6 @@
 import 'package:account_flutter/bean/account_bean.dart';
 import 'package:account_flutter/bean/trade_bean.dart';
 import 'package:account_flutter/bean/trade_cate_bean.dart';
-import 'package:account_flutter/model/trade_cate_list_model.dart';
 import 'package:account_flutter/pages/account_detail/account_detail_page.dart';
 import 'package:account_flutter/pages/account_edit/account_edit_page.dart';
 import 'package:account_flutter/pages/home/home_page.dart';
@@ -12,16 +11,10 @@ import 'package:account_flutter/pages/trade_cate_list/trade_cate_list_page.dart'
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => TradeCateListModel()),
-      ],
-      child: const MyApp(),
-    ),
+    const MyApp()
   );
 }
 

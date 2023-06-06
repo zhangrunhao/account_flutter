@@ -1,12 +1,8 @@
 import 'dart:convert';
-import 'package:account_flutter/api/trade_cate_api.dart';
 import 'package:account_flutter/bean/trade_cate_bean.dart';
-import 'package:account_flutter/model/trade_cate_list_model.dart';
 import 'package:account_flutter/pages/trade_cate_edit/icon_list.dart';
 import 'package:account_flutter/pages/trade_cate_edit/name_form.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:provider/provider.dart';
 
 class TradeCateEditPage extends StatefulWidget {
   // 编辑分类, 传入tradeCate, 新增分类, 传入operate
@@ -110,28 +106,14 @@ void submitForm(
   String name,
   String? icon,
 ) {
-  TradeCateListModel tradeCateListModel = context.read<TradeCateListModel>();
   if (tradeCate is TradeCateBean && icon is String) {
-    TradeCateBean newTradeCate = tradeCate;
-    newTradeCate.name = name;
-    newTradeCate.icon = icon;
-    TradeCateApi.update(newTradeCate).then((value) {
-      tradeCateListModel.update().then(
-        (v) {
-          Navigator.pop(context);
-          EasyLoading.showSuccess("修改成功");
-        },
-      );
-    });
+    // 修改
+    // TradeCateBean newTradeCate = tradeCate;
+    // newTradeCate.name = name;
+    // newTradeCate.icon = icon;
   } else if (operate is String && icon is String) {
     // 新增
-    TradeCateBean newTradeCate = TradeCateBean(
-        name: name, icon: icon, id: 0, type: "type", operate: operate);
-    TradeCateApi.create(newTradeCate).then((v) {
-      tradeCateListModel.update().then((v) {
-        Navigator.pop(context);
-        EasyLoading.showSuccess("添加成功");
-      });
-    });
+    // TradeCateBean newTradeCate = TradeCateBean(
+    //     name: name, icon: icon, id: 0, type: "type", operate: operate);
   }
 }

@@ -1,10 +1,5 @@
-import 'package:account_flutter/api/trade_cate_api.dart';
 import 'package:account_flutter/bean/trade_cate_bean.dart';
-import 'package:account_flutter/model/trade_cate_list_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:provider/provider.dart';
-
 class CateList extends StatelessWidget {
   final List<TradeCateBean> cates;
   final String title;
@@ -47,15 +42,6 @@ class CateList extends StatelessWidget {
                         child: TextButton(
                           child: const Text("删除"),
                           onPressed: () {
-                            TradeCateApi.delete(cate).then((value) {
-                              context
-                                  .read<TradeCateListModel>()
-                                  .update()
-                                  .then((value) {
-                                Navigator.pop(context);
-                                EasyLoading.showSuccess("删除成功");
-                              });
-                            });
                           },
                         ),
                       ),

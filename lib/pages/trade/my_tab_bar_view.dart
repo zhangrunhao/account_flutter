@@ -24,12 +24,6 @@ class MyTabBarView extends StatelessWidget {
         operate: "Expend",
         callBack: callBack,
       ),
-      const Center(
-        child: Text(
-          "转账",
-          style: TextStyle(fontSize: 30),
-        ),
-      ),
     ]);
   }
 }

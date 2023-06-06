@@ -1,8 +1,6 @@
 import 'package:account_flutter/bean/trade_cate_bean.dart';
-import 'package:account_flutter/model/trade_cate_list_model.dart';
 import 'package:account_flutter/pages/trade_cate_list/cate_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class TradeCateListPage extends StatefulWidget {
   const TradeCateListPage({super.key, required this.operate});
@@ -21,10 +19,10 @@ class _TradeCateListPageState extends State<TradeCateListPage> {
     String title;
     if (widget.operate == "Income") {
       title = "收入分类类表";
-      cates = context.watch<TradeCateListModel>().incomeCates;
+      cates = [];
     } else {
       title = "支出分类列表";
-      cates = context.watch<TradeCateListModel>().expendCates;
+      cates = [];
     }
     return Scaffold(
       appBar: AppBar(

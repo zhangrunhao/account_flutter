@@ -1,4 +1,5 @@
 import 'package:account_flutter/bean/account_bean.dart';
+import 'package:account_flutter/db/account_db.dart';
 import 'package:flutter/material.dart';
 
 typedef AccountSelectCallBack = void Function(AccountBean account);
@@ -32,7 +33,10 @@ class ToolsList extends StatelessWidget {
   }
 
   Future<void> _selectAccount(
-      List<AccountBean> accounts, BuildContext context) async {
+    BuildContext context,
+  ) async {
+    List<AccountBean> accounts = await AccountDB().queryList(null);
+    // ignore: use_build_context_synchronously
     AccountBean? account = await showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
@@ -57,7 +61,6 @@ class ToolsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<AccountBean> accounts = [];
     return SizedBox(
       width: double.infinity,
       height: 40,
@@ -69,7 +72,7 @@ class ToolsList extends StatelessWidget {
             context,
             '${spendDate.year.toString()}-${spendDate.month.toString()}-${spendDate.day.toString()}',
           ),
-          _buildAccountPickerButton(_selectAccount, accounts, context, account),
+          _buildAccountPickerButton(_selectAccount, context, account),
         ],
       ),
     );
@@ -77,7 +80,10 @@ class ToolsList extends StatelessWidget {
 }
 
 Widget _buildDatePickerButton(
-    Function pressCallback, BuildContext context, String buttonTitle) {
+  Function pressCallback,
+  BuildContext context,
+  String buttonTitle,
+) {
   return Container(
     margin: const EdgeInsets.all(5),
     child: ElevatedButton(
@@ -87,13 +93,16 @@ Widget _buildDatePickerButton(
   );
 }
 
-Widget _buildAccountPickerButton(Function pressCallback,
-    List<AccountBean> accounts, BuildContext context, AccountBean? account) {
+Widget _buildAccountPickerButton(
+  Function pressCallback,
+  BuildContext context,
+  AccountBean? account,
+) {
   return Container(
     margin: const EdgeInsets.all(5),
     child: ElevatedButton(
       onPressed: () async {
-        await pressCallback(accounts, context);
+        await pressCallback(context);
       },
       child: Text(account != null ? account.name : "选择账户"),
     ),

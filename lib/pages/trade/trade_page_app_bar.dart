@@ -7,9 +7,6 @@ const List<Tab> tabs = <Tab>[
   Tab(
     text: '支出',
   ),
-  Tab(
-    text: '转帐',
-  ),
 ];
 
 class TradePageAppBar extends StatelessWidget implements PreferredSizeWidget {

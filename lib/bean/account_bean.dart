@@ -24,9 +24,4 @@ class AccountBean {
         icon = json['icon']!,
         id = json['id']!,
         type = json['type']!;
-
-  @override
-  String toString() {
-    return 'AccountBean{id: $id, name: $name, cate: $type, icon: $icon}';
-  }
 }

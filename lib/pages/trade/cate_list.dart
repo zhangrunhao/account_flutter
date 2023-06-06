@@ -1,16 +1,15 @@
 import 'package:account_flutter/bean/trade_cate_bean.dart';
-import 'package:account_flutter/model/trade_cate_list_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 typedef TapCateListCallBack = void Function(TradeCateBean cate);
 
 TradeCateBean settingCate = TradeCateBean(
-    name: "编辑",
-    icon: "images/setting.png",
-    id: 0,
-    type: "",
-    operate: "operate");
+  name: "编辑",
+  icon: "images/setting.png",
+  id: 0,
+  type: 1,
+  operate: 1,
+);
 
 class CateList extends StatelessWidget {
   const CateList({
@@ -41,9 +40,11 @@ List<Widget> _buildCateList(
     TapCateListCallBack callBack, BuildContext context, String operate) {
   List<TradeCateBean> cates0 = [];
   if (operate == "Income") {
-    cates0 = context.watch<TradeCateListModel>().incomeCates;
+    // cates0 = context.watch<TradeCateListModel>().incomeCates;
+    cates0 = [];
   } else {
-    cates0 = context.watch<TradeCateListModel>().expendCates;
+    // cates0 = context.watch<TradeCateListModel>().expendCates;
+    cates0 = [];
   }
   List<TradeCateBean> cates = [...cates0, settingCate];
   return cates

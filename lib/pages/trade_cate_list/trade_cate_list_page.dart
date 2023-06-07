@@ -63,7 +63,6 @@ class _TradeCateListPageState extends State<TradeCateListPage> with RouteAware {
             arguments: widget.operate,
           )
               .then((value) {
-            print("add pop");
             _fetchList();
           });
         }),

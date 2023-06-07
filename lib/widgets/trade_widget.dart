@@ -27,7 +27,6 @@ class TradeWidget extends StatelessWidget {
                   arguments: trade,
                 )
                     .then((value) {
-                      // TODO: 只是更新当前这个widget就可以了
                   updateCallback();
                 });
                 break;

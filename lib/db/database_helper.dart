@@ -42,6 +42,17 @@ class DatabaseHelper {
         operate INTEGER
       )
     ''');
+    await db.execute('''
+      CREATE TABLE trade (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        account_id INTEGER,
+        trade_cate_id INTEGER,
+        money TEXT,
+        spend_date TEXT,
+        remark TEXT
+      )
+    ''');
+
     // 初始化账户
     await db.insert("account", {
       "name": "支付宝",
@@ -70,6 +81,14 @@ class DatabaseHelper {
       "type": 2,
       "icon": "feiji",
       "operate": 2,
+    });
+    // 新建一条测试数据
+    await db.insert("trade", {
+      "account_id": 1,
+      "trade_cate_id": 1,
+      "money": "20.99",
+      "spend_date": "2023-03-21",
+      "remark": "午饭",
     });
   }
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:account_flutter/bean/account_bean.dart';
 import 'package:account_flutter/bean/trade_bean.dart';
 import 'package:account_flutter/bean/trade_cate_bean.dart';
+import 'package:account_flutter/db/trade.dart';
 import 'package:account_flutter/db/trade_cate_db.dart';
 import 'package:account_flutter/pages/trade/key_board.dart';
 import 'package:account_flutter/pages/trade/my_tab_bar_view.dart';
@@ -30,6 +31,7 @@ class _TradePageState extends State<TradePageInner>
   String money = "0";
   TextEditingController remarkController = TextEditingController();
   final TradeCateDB _tradeCateDB = TradeCateDB();
+  final TradeDB _tradeDB = TradeDB();
 
   @override
   void initState() {
@@ -44,17 +46,17 @@ class _TradePageState extends State<TradePageInner>
     WidgetsBinding.instance.addObserver(this);
   }
 
-  @override
-  void didChangeMetrics() {
-    super.didChangeMetrics();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (MediaQuery.of(context).viewInsets.bottom == 0) {
-        // print("键盘收回");
-      } else {
-        // print("键盘谈起");
-      }
-    });
-  }
+  // @override
+  // void didChangeMetrics() {
+  //   super.didChangeMetrics();
+  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+  //     if (MediaQuery.of(context).viewInsets.bottom == 0) {
+  //       // print("键盘收回");
+  //     } else {
+  //       // print("键盘谈起");
+  //     }
+  //   });
+  // }
 
   @override
   void dispose() {
@@ -156,23 +158,19 @@ class _TradePageState extends State<TradePageInner>
     if (_selectAccount != null &&
         _selectedTradeCate != null &&
         operate != null) {
-      // TradeBean trade = TradeBean(
-      //   id: widget.tradeOrigin == null ? 0 : widget.tradeOrigin!.id,
-      //   accountName: _selectAccount!.name,
-      //   accountId: _selectAccount!.id,
-      //   tradeCateName: _selectedTradeCate!.name,
-      //   tradeCateId: _selectedTradeCate!.id,
-      //   money: double.parse(money),
-      //   remark: remarkController.text,
-      //   spendDate: _spendDate,
-      //   operate: operate,
-      // );
-
+      TradeBean trade = TradeBean(
+        id: widget.tradeOrigin == null ? 0 : widget.tradeOrigin!.id,
+        accountName: _selectAccount!.name,
+        accountId: _selectAccount!.id,
+        tradeCateName: _selectedTradeCate!.name,
+        tradeCateId: _selectedTradeCate!.id,
+        money: double.parse(money),
+        remark: remarkController.text,
+        spendDate: _spendDate,
+        operate: operate,
+      );
       if (widget.tradeOrigin == null) {
-        // TradeApi.create(trade).then((value) {
-        //   Navigator.of(context).pop();
-        //   EasyLoading.showSuccess("添加成功");
-        // });
+        _tradeDB.insert(trade).then((value) => Navigator.of(context).pop());
       } else {
         // TradeApi.update(trade).then((value) {
         //   EasyLoading.showSuccess("修改成功");

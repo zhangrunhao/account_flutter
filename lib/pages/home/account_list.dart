@@ -92,7 +92,6 @@ Widget _buildAccountListTitle(
                 .pushNamed("account_edit",
                     arguments: AccountEditPageArguments(account.type, account))
                 .then((value) {
-              //TODO: 刷新下自己这一个就行
               fetchList();
             });
             break;
@@ -103,7 +102,6 @@ Widget _buildAccountListTitle(
               arguments: account,
             )
                 .then((value) {
-              //TODO: 刷新下自己这一个就行
               fetchList();
             });
             break;

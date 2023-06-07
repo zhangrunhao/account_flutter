@@ -13,7 +13,7 @@ class TradeCateListPage extends StatefulWidget {
   }
 }
 
-class _TradeCateListPageState extends State<TradeCateListPage> {
+class _TradeCateListPageState extends State<TradeCateListPage> with RouteAware {
   List<TradeCateBean> cates = [];
   final TradeCateDB _tradeCateDB = TradeCateDB();
 
@@ -50,6 +50,7 @@ class _TradeCateListPageState extends State<TradeCateListPage> {
               cates: cates,
               title: title,
               operate: widget.operate,
+              fetchList: _fetchList,
             ),
           )
         ],
@@ -58,10 +59,13 @@ class _TradeCateListPageState extends State<TradeCateListPage> {
         onPressed: (() {
           Navigator.of(context)
               .pushNamed(
-                "trade_cate_edit",
-                arguments: widget.operate,
-              )
-              .then((value) => _fetchList());
+            "trade_cate_edit",
+            arguments: widget.operate,
+          )
+              .then((value) {
+            print("add pop");
+            _fetchList();
+          });
         }),
         child: const Text("添加"),
       ),

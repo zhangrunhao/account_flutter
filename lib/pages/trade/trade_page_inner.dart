@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:account_flutter/bean/account_bean.dart';
 import 'package:account_flutter/bean/trade_bean.dart';
 import 'package:account_flutter/bean/trade_cate_bean.dart';
+import 'package:account_flutter/db/trade_cate_db.dart';
 import 'package:account_flutter/pages/trade/key_board.dart';
 import 'package:account_flutter/pages/trade/my_tab_bar_view.dart';
 import 'package:account_flutter/pages/trade/result_show.dart';
@@ -28,6 +29,7 @@ class _TradePageState extends State<TradePageInner>
   DateTime _spendDate = DateTime.now();
   String money = "0";
   TextEditingController remarkController = TextEditingController();
+  final TradeCateDB _tradeCateDB = TradeCateDB();
 
   @override
   void initState() {
@@ -97,9 +99,9 @@ class _TradePageState extends State<TradePageInner>
     });
   }
 
-  void setDefaultCate() {
-    var incomeCates = [];
-    var expendCates = [];
+  void setDefaultCate() async {
+    var incomeCates = await _tradeCateDB.queryList("operate=1");
+    var expendCates = await _tradeCateDB.queryList("operate=2");
     if (incomeCates.isEmpty && expendCates.isEmpty) {
       // 递归查看是否有值了
       Timer(

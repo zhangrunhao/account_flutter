@@ -25,6 +25,5 @@ flutter:
   uses-material-design: true
   assets:
     - images/aliya.jpg
-    - images/setting.png
     - images/cate_icons/
     - json/

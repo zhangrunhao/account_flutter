@@ -1,6 +1,7 @@
 import 'package:account_flutter/bean/account_bean.dart';
 import 'package:account_flutter/db/account_db.dart';
 import 'package:account_flutter/pages/account_edit/account_edit_page.dart';
+import 'package:account_flutter/util/show_dialog.dart';
 import 'package:flutter/material.dart';
 
 class AccountList extends StatefulWidget {
@@ -107,10 +108,9 @@ Widget _buildAccountListTitle(
             });
             break;
           case 2:
-            _showDeleteConfirmDialog(context).then((bool? del) {
+            showDeleteConfirmDialog(context, "确定要删除该账户吗?").then((bool? del) {
               if (del == null) {
               } else {
-                // TODO: 其实删除以后, 不需要更新整个列表
                 AccountDB().delete(account.id).then((value) => fetchList());
               }
             });
@@ -143,31 +143,6 @@ Widget _buildAccountListTitle(
             arguments: account,
           )
           .then((value) => fetchList());
-    },
-  );
-}
-
-Future<bool?> _showDeleteConfirmDialog(BuildContext context) {
-  return showDialog<bool>(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: const Text("提示"),
-        content: const Text("您确定要删除当前账户吗?"),
-        actions: <Widget>[
-          TextButton(
-            child: const Text("取消"),
-            onPressed: () => Navigator.of(context).pop(), // 关闭对话框
-          ),
-          TextButton(
-            child: const Text("删除"),
-            onPressed: () {
-              //关闭对话框并返回true
-              Navigator.of(context).pop(true);
-            },
-          ),
-        ],
-      );
     },
   );
 }

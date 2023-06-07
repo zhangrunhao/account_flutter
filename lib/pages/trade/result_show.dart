@@ -2,7 +2,11 @@ import 'package:account_flutter/bean/trade_cate_bean.dart';
 import 'package:flutter/material.dart';
 
 class ResultShow extends StatelessWidget {
-  const ResultShow({Key? key, required this.cate, required this.money, required this.remarkController})
+  const ResultShow(
+      {Key? key,
+      required this.cate,
+      required this.money,
+      required this.remarkController})
       : super(key: key);
 
   final TradeCateBean? cate;
@@ -22,7 +26,9 @@ class ResultShow extends StatelessWidget {
             margin: const EdgeInsets.only(left: 10),
             width: 50,
             height: 50,
-            child: _buildCateImage(cate),
+            child: cate == null
+                ? Container()
+                : Image.asset("images/cate_icons/${cate!.icon}.png"),
           ),
           Expanded(
             child: Container(
@@ -55,17 +61,5 @@ class ResultShow extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-Widget _buildCateImage(TradeCateBean? cate) {
-  if (cate != null) {
-    if (cate.id == 0) {
-      return Image.asset(cate.icon);
-    } else {
-      return Image.asset("images/cate_icons/${cate.icon}.png");
-    }
-  } else {
-    return Container();
   }
 }

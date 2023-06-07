@@ -14,19 +14,17 @@ class AccountDetailPage extends StatefulWidget {
 }
 
 class _AccountDetailState extends State<AccountDetailPage> {
-  AccountBean? account;
   List<TradeBean> trades = [];
-  TradeDB _tradeDB = TradeDB();
+  final TradeDB _tradeDB = TradeDB();
 
   @override
   void initState() {
     super.initState();
-    account = widget.account;
     _fetch();
   }
 
   _fetch() async {
-    List<TradeBean> result = await _tradeDB.queryList(null);
+    List<TradeBean> result = await _tradeDB.queryList("account_id=${widget.account.id}");
     setState(() {
       trades = result;
     });
@@ -50,11 +48,11 @@ class _AccountDetailState extends State<AccountDetailPage> {
               Navigator.of(context)
                   .pushNamed(
                 "account_edit",
-                arguments: AccountEditPageArguments(account!.type, account),
+                arguments: AccountEditPageArguments(widget.account.type, widget.account),
               )
                   .then((value) {
                 setState(() {
-                  account = value as AccountBean?;
+                  // TODO: 更新当前的account信息
                 });
               });
             },
@@ -65,7 +63,7 @@ class _AccountDetailState extends State<AccountDetailPage> {
       body: Column(
         children: [
           AccountDetail(
-            account: account,
+            account: widget.account,
           ),
           TradeList(trades: trades, tradeUpdateCallBack: () {
             _fetch();

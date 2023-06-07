@@ -2,7 +2,7 @@ import 'package:account_flutter/bean/account_bean.dart';
 import 'package:flutter/material.dart';
 
 class AccountDetail extends StatelessWidget {
-  final AccountBean? account;
+  final AccountBean account;
 
   const AccountDetail({super.key, required this.account});
 
@@ -10,9 +10,8 @@ class AccountDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _RowInfo(label: "名称", value: account?.name ?? ""),
-        // _RowInfo(label: "类型", value: account?.type ?? ""),
-        _RowInfo(label: "图标", value: account?.icon ?? ""),
+        _RowInfo(label: "名称", value: account.name),
+        _RowInfo(label: "图标", value: account.icon),
       ],
     );
   }

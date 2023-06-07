@@ -16,4 +16,11 @@ class TradeDB {
     int id = await db.insert(tableName, trade.toMap());
     return id;
   }
+
+  Future<int> update(TradeBean trade) async {
+    Database db = await DatabaseHelper.instance.database;
+    int count =
+        await db.update(tableName, trade.toMap(), where: "id=${trade.id}");
+    return count;
+  }
 }

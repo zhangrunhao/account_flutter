@@ -14,8 +14,7 @@ class TradeWidget extends StatelessWidget {
       child: ListTile(
         title: Text(trade.tradeCateName),
         subtitle: Text('金额:${trade.money.toString()}元 | 备注:${trade.remark}'),
-        tileColor:
-            trade.operate == "Income" ? Colors.green[300] : Colors.red[300],
+        tileColor: trade.operate == 1 ? Colors.green[300] : Colors.red[300],
         trailing: PopupMenuButton<int>(
           onSelected: (value) {
             switch (value) {

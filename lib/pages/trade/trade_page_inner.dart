@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:account_flutter/bean/account_bean.dart';
 import 'package:account_flutter/bean/trade_bean.dart';
 import 'package:account_flutter/bean/trade_cate_bean.dart';
+import 'package:account_flutter/db/account_db.dart';
 import 'package:account_flutter/db/trade_db.dart';
 import 'package:account_flutter/db/trade_cate_db.dart';
 import 'package:account_flutter/pages/trade/key_board.dart';
@@ -30,6 +31,7 @@ class _TradePageState extends State<TradePageInner>
   DateTime _spendDate = DateTime.now();
   String money = "0";
   TextEditingController remarkController = TextEditingController();
+  final AccountDB _accountDB = AccountDB();
   final TradeCateDB _tradeCateDB = TradeCateDB();
   final TradeDB _tradeDB = TradeDB();
 
@@ -58,18 +60,18 @@ class _TradePageState extends State<TradePageInner>
   //   });
   // }
 
-  @override
-  void dispose() {
-    super.dispose();
-    WidgetsBinding.instance.removeObserver(this);
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   WidgetsBinding.instance.removeObserver(this);
+  // }
 
-  void setDefaultTradeData() {
+  void setDefaultTradeData() async {
     TradeBean? tradeBean = widget.tradeOrigin;
     if (tradeBean == null) return;
     // 处理账户
     AccountBean? account;
-    List<AccountBean> accounts = [];
+    List<AccountBean> accounts = await _accountDB.queryList(null);
     for (var element in accounts) {
       if (element.id == tradeBean.accountId) {
         account = element;
@@ -77,7 +79,7 @@ class _TradePageState extends State<TradePageInner>
     }
     // 处理分类
     TradeCateBean? tradeCate;
-    List<TradeCateBean> cates = [];
+    List<TradeCateBean> cates = await _tradeCateDB.queryList(null);
     for (var element in cates) {
       if (element.id == tradeBean.tradeCateId) {
         tradeCate = element;
@@ -166,10 +168,7 @@ class _TradePageState extends State<TradePageInner>
       if (widget.tradeOrigin == null) {
         _tradeDB.insert(trade).then((value) => Navigator.of(context).pop());
       } else {
-        // TradeApi.update(trade).then((value) {
-        //   EasyLoading.showSuccess("修改成功");
-        //   Navigator.of(context).pop("aa");
-        // });
+        _tradeDB.update(trade).then((value) => Navigator.of(context).pop());
       }
     }
   }

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:account_flutter/bean/account_bean.dart';
 import 'package:account_flutter/bean/trade_bean.dart';
 import 'package:account_flutter/bean/trade_cate_bean.dart';
-import 'package:account_flutter/db/trade.dart';
+import 'package:account_flutter/db/trade_db.dart';
 import 'package:account_flutter/db/trade_cate_db.dart';
 import 'package:account_flutter/pages/trade/key_board.dart';
 import 'package:account_flutter/pages/trade/my_tab_bar_view.dart';
@@ -149,15 +149,9 @@ class _TradePageState extends State<TradePageInner>
 
   void saveTap(String money) {
     int operateIndex = widget.tabController.index;
-    String? operate;
-    if (operateIndex == 0) {
-      operate = "Income";
-    } else if (operateIndex == 1) {
-      operate = "Expend";
-    }
-    if (_selectAccount != null &&
-        _selectedTradeCate != null &&
-        operate != null) {
+    // 第一个时是收入, 第二个是指出
+    int operate = operateIndex == 0 ? 1 : 2;
+    if (_selectAccount != null && _selectedTradeCate != null) {
       TradeBean trade = TradeBean(
         id: widget.tradeOrigin == null ? 0 : widget.tradeOrigin!.id,
         accountName: _selectAccount!.name,

@@ -1,6 +1,8 @@
 import 'package:account_flutter/bean/account_bean.dart';
 import 'package:account_flutter/bean/trade_bean.dart';
+import 'package:account_flutter/db/trade_db.dart';
 import 'package:account_flutter/pages/account_detail/account_detail.dart';
+import 'package:account_flutter/pages/account_detail/trade_list.dart';
 import 'package:account_flutter/pages/account_edit/account_edit_page.dart';
 import 'package:flutter/material.dart';
 
@@ -14,11 +16,20 @@ class AccountDetailPage extends StatefulWidget {
 class _AccountDetailState extends State<AccountDetailPage> {
   AccountBean? account;
   List<TradeBean> trades = [];
+  TradeDB _tradeDB = TradeDB();
 
   @override
   void initState() {
     super.initState();
     account = widget.account;
+    _fetch();
+  }
+
+  _fetch() async {
+    List<TradeBean> result = await _tradeDB.queryList(null);
+    setState(() {
+      trades = result;
+    });
   }
 
   @override
@@ -56,6 +67,9 @@ class _AccountDetailState extends State<AccountDetailPage> {
           AccountDetail(
             account: account,
           ),
+          TradeList(trades: trades, tradeUpdateCallBack: () {
+            _fetch();
+          })
         ],
       ),
     );

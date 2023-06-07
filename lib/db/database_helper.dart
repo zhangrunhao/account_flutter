@@ -52,6 +52,22 @@ class DatabaseHelper {
         remark TEXT
       )
     ''');
+    await db.execute('''
+        CREATE VIEW v_trade AS
+          SELECT
+            t.id AS id,
+            a.id AS account_id,
+            a.name AS account_name, 
+            c.id AS trade_cate_id,
+            c.name AS trade_cate_name,
+            t.money AS money,
+            t.remark AS remark,
+            t.spend_date AS spend_date,
+            c.operate AS operate
+          FROM trade t,  account a, trade_cate c
+          WHERE t.account_id = a.id
+            AND t.trade_cate_id = c.id;
+    ''');
 
     // 初始化账户
     await db.insert("account", {

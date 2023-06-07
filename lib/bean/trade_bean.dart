@@ -8,7 +8,7 @@ class TradeBean {
   num money;
   String remark;
   DateTime spendDate;
-  String operate;
+  int operate;
 
   TradeBean({
     required this.id,
@@ -22,7 +22,7 @@ class TradeBean {
     required this.operate,
   });
 
-  Map<String, dynamic> insertToMap() {
+  Map<String, dynamic> toMap() {
     return {
       "account_id": accountId,
       "trade_cate_id": tradeCateId,
@@ -31,4 +31,15 @@ class TradeBean {
       "remark": remark,
     };
   }
+
+  TradeBean.fromJson(Map<dynamic, dynamic> json)
+      : id = json['id']!,
+        accountId = json['account_id']!,
+        accountName = json['account_name']!,
+        tradeCateId = json['trade_cate_id']!,
+        tradeCateName = json['trade_cate_name']!,
+        money = num.parse(json['money']!),
+        remark = json['remark']!,
+        spendDate = DateTime.parse(json['spend_date']!),
+        operate = json['operate']!;
 }

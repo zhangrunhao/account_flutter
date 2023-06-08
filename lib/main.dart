@@ -43,6 +43,11 @@ class MyApp extends StatelessWidget {
             return TradePage(
               tradeOrigin: arguments,
             );
+          } else if (arguments is AccountBean) {
+            // 新增, 执行账户
+            return TradePage(
+              accountOrigin: arguments,
+            );
           } else {
             return const TradePage();
           }

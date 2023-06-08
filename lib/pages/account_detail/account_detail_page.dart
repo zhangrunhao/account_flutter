@@ -16,15 +16,18 @@ class AccountDetailPage extends StatefulWidget {
 class _AccountDetailState extends State<AccountDetailPage> {
   List<TradeBean> trades = [];
   final TradeDB _tradeDB = TradeDB();
+  AccountBean? account;
 
   @override
   void initState() {
     super.initState();
+    account = widget.account;
     _fetch();
   }
 
   _fetch() async {
-    List<TradeBean> result = await _tradeDB.queryList("account_id=${widget.account.id}");
+    List<TradeBean> result =
+        await _tradeDB.queryList("account_id=${widget.account.id}");
     setState(() {
       trades = result;
     });
@@ -38,7 +41,7 @@ class _AccountDetailState extends State<AccountDetailPage> {
         leading: IconButton(
           icon: const Icon(Icons.chevron_left),
           onPressed: () {
-            Navigator.of(context).pop("aaa");
+            Navigator.of(context).pop();
           },
         ),
         actions: [
@@ -48,11 +51,14 @@ class _AccountDetailState extends State<AccountDetailPage> {
               Navigator.of(context)
                   .pushNamed(
                 "account_edit",
-                arguments: AccountEditPageArguments(widget.account.type, widget.account),
+                arguments: AccountEditPageArguments(
+                  widget.account.type,
+                  widget.account,
+                ),
               )
                   .then((value) {
                 setState(() {
-                  // TODO: 更新当前的account信息
+                  account = value as AccountBean?;
                 });
               });
             },
@@ -63,11 +69,25 @@ class _AccountDetailState extends State<AccountDetailPage> {
       body: Column(
         children: [
           AccountDetail(
-            account: widget.account,
+            account: account!,
           ),
-          TradeList(trades: trades, tradeUpdateCallBack: () {
-            _fetch();
-          })
+          TradeList(
+            trades: trades,
+            tradeUpdateCallBack: () {
+              _fetch();
+            },
+          ),
+          ElevatedButton(
+            child: const Text("添加一条"),
+            onPressed: () {
+              Navigator.of(context)
+                  .pushNamed(
+                    "trade",
+                    arguments: account,
+                  )
+                  .then((value) => _fetch());
+            },
+          )
         ],
       ),
     );

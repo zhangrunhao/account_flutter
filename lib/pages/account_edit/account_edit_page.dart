@@ -103,6 +103,7 @@ class _AccountEditFormState extends State<_AccountEditForm> with RouteAware {
                   onPressed: () {
                     if (Form.of(ctx).validate()) {
                       if (widget.account == null) {
+                        // 新增
                         _accountDB
                             .insert(AccountBean(
                               id: 0,
@@ -112,6 +113,7 @@ class _AccountEditFormState extends State<_AccountEditForm> with RouteAware {
                             ))
                             .then((value) => Navigator.of(context).pop());
                       } else {
+                        //  更新
                         AccountBean result = AccountBean(
                           id: widget.account!.id,
                           name: _nameController.text,

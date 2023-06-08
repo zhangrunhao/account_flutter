@@ -124,13 +124,14 @@ Future<void> submitForm(
 ) async {
   if (tradeCate is TradeCateBean && icon is String) {
     // 修改
-    await tradeCateDB.update(TradeCateBean(
+    TradeCateBean newTradeCate = TradeCateBean(
       id: tradeCate.id,
       name: name,
       icon: icon,
       type: 2,
       operate: operate,
-    ));
+    );
+    await tradeCateDB.update(newTradeCate);
   } else if (icon is String) {
     // 新增
     TradeCateBean newTradeCate = TradeCateBean(

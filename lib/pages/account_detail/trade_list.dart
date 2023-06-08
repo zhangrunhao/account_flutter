@@ -18,9 +18,7 @@ class TradeList extends StatelessWidget {
         TradeBean trade = trades[index];
         return TradeWidget(
           trade: trade,
-          updateCallback: () {
-            tradeUpdateCallBack();
-          },
+          updateCallback: tradeUpdateCallBack,
         );
       },
     );

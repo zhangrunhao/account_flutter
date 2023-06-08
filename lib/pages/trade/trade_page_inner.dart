@@ -16,9 +16,11 @@ class TradePageInner extends StatefulWidget {
     super.key,
     required this.tabController,
     this.tradeOrigin,
+    this.accountOrigin,
   });
   final TabController tabController;
   final TradeBean? tradeOrigin;
+  final AccountBean? accountOrigin;
 
   @override
   State<StatefulWidget> createState() => _TradePageState();
@@ -67,40 +69,46 @@ class _TradePageState extends State<TradePageInner>
   // }
 
   void setDefaultTradeData() async {
-    TradeBean? tradeBean = widget.tradeOrigin;
-    if (tradeBean == null) return;
-    // 处理账户
-    AccountBean? account;
-    List<AccountBean> accounts = await _accountDB.queryList(null);
-    for (var element in accounts) {
-      if (element.id == tradeBean.accountId) {
-        account = element;
+    TradeBean? tradeOrigin = widget.tradeOrigin;
+    AccountBean? accountOrigin = widget.accountOrigin;
+    if (tradeOrigin != null) {
+      // 处理账户
+      AccountBean? account;
+      List<AccountBean> accounts = await _accountDB.queryList(null);
+      for (var element in accounts) {
+        if (element.id == tradeOrigin.accountId) {
+          account = element;
+        }
       }
-    }
-    // 处理分类
-    TradeCateBean? tradeCate;
-    List<TradeCateBean> cates = await _tradeCateDB.queryList(null);
-    for (var element in cates) {
-      if (element.id == tradeBean.tradeCateId) {
-        tradeCate = element;
+      // 处理分类
+      TradeCateBean? tradeCate;
+      List<TradeCateBean> cates = await _tradeCateDB.queryList(null);
+      for (var element in cates) {
+        if (element.id == tradeOrigin.tradeCateId) {
+          tradeCate = element;
+        }
       }
-    }
-    if (tradeCate != null && tradeCate.operate == 1) {
-      widget.tabController.animateTo(0);
-    } else if (tradeCate != null && tradeCate.operate == 2) {
-      widget.tabController.animateTo(1);
-    }
-    // 处理备注
-    remarkController.text =
-        widget.tradeOrigin == null ? "" : widget.tradeOrigin!.remark;
+      if (tradeCate != null && tradeCate.operate == 1) {
+        widget.tabController.animateTo(0);
+      } else if (tradeCate != null && tradeCate.operate == 2) {
+        widget.tabController.animateTo(1);
+      }
+      // 处理备注
+      remarkController.text =
+          widget.tradeOrigin == null ? "" : widget.tradeOrigin!.remark;
 
-    // 一起设置状态
-    setState(() {
-      _selectedTradeCate = tradeCate;
-      _selectAccount = account;
-      _spendDate = tradeBean.spendDate;
-      money = tradeBean.money.toString();
-    });
+      // 一起设置状态
+      setState(() {
+        _selectedTradeCate = tradeCate;
+        _selectAccount = account;
+        _spendDate = tradeOrigin.spendDate;
+        money = tradeOrigin.money.toString();
+      });
+    } else if (accountOrigin != null) {
+      setState(() {
+        _selectAccount = accountOrigin;
+      });
+    }
   }
 
   void setDefaultCate() async {

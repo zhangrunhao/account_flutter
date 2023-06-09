@@ -12,6 +12,7 @@ class AccountDB {
 
   Future<int> insert(AccountBean account) async {
     Database db = await DatabaseHelper.instance.database;
+    // TODO: 新建账户的时候, 应该加入一个余额
     int id = await db.insert(tableName, account.toMap());
     return id;
   }
@@ -20,6 +21,7 @@ class AccountDB {
     Database db = await DatabaseHelper.instance.database;
     int count =
         await db.update(tableName, account.toMap(), where: "id=${account.id}");
+    // TODO: 更新账户的时候, 也应该有平帐这个事 
     return count;
   }
 

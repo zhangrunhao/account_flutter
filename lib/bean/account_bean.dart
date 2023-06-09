@@ -1,15 +1,17 @@
 class AccountBean {
   final int id;
-  final String name;
   // 1资产 2负债
   final int type;
-  final String icon;
+  String name;
+  String icon;
+  num money; // 当前账户余额
 
   AccountBean({
     required this.id,
     required this.name,
     required this.type,
     required this.icon,
+    required this.money,
   });
 
   Map<String, dynamic> toMap() {
@@ -17,6 +19,7 @@ class AccountBean {
       'name': name,
       'type': type,
       'icon': icon,
+      'money': money,
     };
   }
 
@@ -24,5 +27,6 @@ class AccountBean {
       : name = json['name']!,
         icon = json['icon']!,
         id = json['id']!,
-        type = json['type']!;
+        type = json['type']!,
+        money = num.parse(json['money']!);
 }

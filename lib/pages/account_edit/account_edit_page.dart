@@ -51,6 +51,7 @@ class _AccountEditForm extends StatefulWidget {
 class _AccountEditFormState extends State<_AccountEditForm> with RouteAware {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _iconController = TextEditingController();
+  final TextEditingController _moneyController = TextEditingController();
   final GlobalKey _formKey = GlobalKey<FormState>();
   final AccountDB _accountDB = AccountDB();
 
@@ -94,6 +95,14 @@ class _AccountEditFormState extends State<_AccountEditForm> with RouteAware {
               return v!.trim().isNotEmpty ? null : "图标不能为空";
             },
           ),
+          TextFormField(
+            controller: _moneyController,
+            decoration: const InputDecoration(
+              labelText: "余额",
+              hintText: "请输入当前余额",
+              prefixIcon: Icon(Icons.balance),
+            ),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -110,6 +119,7 @@ class _AccountEditFormState extends State<_AccountEditForm> with RouteAware {
                               name: _nameController.text,
                               type: widget.type,
                               icon: _iconController.text,
+                              money: num.parse(_moneyController.text),
                             ))
                             .then((value) => Navigator.of(context).pop());
                       } else {
@@ -119,6 +129,7 @@ class _AccountEditFormState extends State<_AccountEditForm> with RouteAware {
                           name: _nameController.text,
                           type: widget.type,
                           icon: _iconController.text,
+                          money: num.parse(_moneyController.text),
                         );
                         _accountDB
                             .update(result)

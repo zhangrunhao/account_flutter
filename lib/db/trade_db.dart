@@ -14,6 +14,7 @@ class TradeDB {
   Future<int> insert(TradeBean trade) async {
     Database db = await DatabaseHelper.instance.database;
     int id = await db.insert(tableName, trade.toMap());
+    // TODO: 插入交易记录的时候, 变更账户余额
     return id;
   }
 
@@ -21,6 +22,7 @@ class TradeDB {
     Database db = await DatabaseHelper.instance.database;
     int count =
         await db.update(tableName, trade.toMap(), where: "id=${trade.id}");
+    // TODO: 更新交易记录的时候, 要注意处理前后的账户余额
     return count;
   }
 }

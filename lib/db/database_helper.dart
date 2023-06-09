@@ -30,7 +30,8 @@ class DatabaseHelper {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT, 
         type INTEGER,
-        icon TEXT
+        icon TEXT,
+        money TEXT
       )
     ''');
     await db.execute('''
@@ -74,16 +75,19 @@ class DatabaseHelper {
       "name": "支付宝",
       "type": 1,
       "icon": "yundong",
+      "money": 0,
     });
     await db.insert("account", {
       "name": "微信",
       "type": 1,
       "icon": "canyin",
+      "money": 0,
     });
     await db.insert("account", {
       "name": "京东白条",
       "type": 2,
       "icon": "feiji",
+      "money": 0,
     });
     // 初始化分类
     await db.insert("trade_cate", {

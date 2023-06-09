@@ -57,9 +57,11 @@ class _AccountDetailState extends State<AccountDetailPage> {
                 ),
               )
                   .then((value) {
-                setState(() {
-                  account = value as AccountBean?;
-                });
+                if (value is AccountBean) {
+                  setState(() {
+                    account = value;
+                  });
+                }
               });
             },
             child: const Icon(Icons.edit),

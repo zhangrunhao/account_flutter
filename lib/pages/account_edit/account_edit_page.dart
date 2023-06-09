@@ -62,6 +62,7 @@ class _AccountEditFormState extends State<_AccountEditForm> with RouteAware {
       setState(() {
         _nameController.text = widget.account?.name ?? "";
         _iconController.text = widget.account?.icon ?? "";
+        _moneyController.text = widget.account!.money.toString();
       });
     }
   }
@@ -97,6 +98,7 @@ class _AccountEditFormState extends State<_AccountEditForm> with RouteAware {
           ),
           TextFormField(
             controller: _moneyController,
+            keyboardType: TextInputType.number,
             decoration: const InputDecoration(
               labelText: "余额",
               hintText: "请输入当前余额",
@@ -129,7 +131,7 @@ class _AccountEditFormState extends State<_AccountEditForm> with RouteAware {
                           name: _nameController.text,
                           type: widget.type,
                           icon: _iconController.text,
-                          money: num.parse(_moneyController.text),
+                          money: _moneyController.text == "" ? 0 : num.parse(_moneyController.text),
                         );
                         _accountDB
                             .update(result)

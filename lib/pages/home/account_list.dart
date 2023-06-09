@@ -82,7 +82,7 @@ Widget _buildAccountListTitle(
   return ListTile(
     leading: Image.asset("images/cate_icons/${account.icon}.png"),
     title: Text(account.name),
-    subtitle: const Text("当前金额: 0元"),
+    subtitle: Text("当前金额: ${account.money.toString()}元"),
     trailing: PopupMenuButton(
       onSelected: (value) {
         switch (value) {

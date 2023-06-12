@@ -9,6 +9,7 @@ class TradeBean {
   String remark;
   DateTime spendDate;
   int operate;
+  String sign;
 
   TradeBean({
     required this.id,
@@ -20,6 +21,7 @@ class TradeBean {
     required this.remark,
     required this.spendDate,
     required this.operate,
+    required this.sign,
   });
 
   Map<String, dynamic> toMap() {
@@ -29,6 +31,7 @@ class TradeBean {
       "money": money.toString(),
       "spend_date": spendDate.toString(),
       "remark": remark,
+      "sign": sign,
     };
   }
 
@@ -41,5 +44,6 @@ class TradeBean {
         money = num.parse(json['money']!),
         remark = json['remark']!,
         spendDate = DateTime.parse(json['spend_date']!),
-        operate = json['operate']!;
+        operate = json['operate']!,
+        sign = json['sign']!;
 }

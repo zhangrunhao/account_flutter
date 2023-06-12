@@ -26,13 +26,13 @@ class TradePageInner extends StatefulWidget {
   State<StatefulWidget> createState() => _TradePageState();
 }
 
-class _TradePageState extends State<TradePageInner>
-    with WidgetsBindingObserver {
+class _TradePageState extends State<TradePageInner> {
   TradeCateBean? _selectedTradeCate;
   AccountBean? _selectAccount;
   DateTime _spendDate = DateTime.now();
   String money = "0";
   TextEditingController remarkController = TextEditingController();
+
   final AccountDB _accountDB = AccountDB();
   final TradeCateDB _tradeCateDB = TradeCateDB();
   final TradeDB _tradeDB = TradeDB();
@@ -47,26 +47,7 @@ class _TradePageState extends State<TradePageInner>
         setDefaultCate();
       }
     });
-    WidgetsBinding.instance.addObserver(this);
   }
-
-  // @override
-  // void didChangeMetrics() {
-  //   super.didChangeMetrics();
-  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-  //     if (MediaQuery.of(context).viewInsets.bottom == 0) {
-  //       // print("键盘收回");
-  //     } else {
-  //       // print("键盘谈起");
-  //     }
-  //   });
-  // }
-
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   WidgetsBinding.instance.removeObserver(this);
-  // }
 
   void setDefaultTradeData() async {
     TradeBean? tradeOrigin = widget.tradeOrigin;
@@ -80,6 +61,7 @@ class _TradePageState extends State<TradePageInner>
           account = element;
         }
       }
+
       // 处理分类
       TradeCateBean? tradeCate;
       List<TradeCateBean> cates = await _tradeCateDB.queryList(null);
@@ -161,6 +143,7 @@ class _TradePageState extends State<TradePageInner>
     int operateIndex = widget.tabController.index;
     // 第一个时是收入, 第二个是指出
     int operate = operateIndex == 0 ? 1 : 2;
+    String sign = operate == 1 ? 'add' : 'minus';
     if (_selectAccount != null && _selectedTradeCate != null) {
       TradeBean trade = TradeBean(
         id: widget.tradeOrigin == null ? 0 : widget.tradeOrigin!.id,
@@ -172,11 +155,14 @@ class _TradePageState extends State<TradePageInner>
         remark: remarkController.text,
         spendDate: _spendDate,
         operate: operate,
+        sign: sign
       );
-      if (widget.tradeOrigin == null) {
-        _tradeDB.insert(trade).then((value) => Navigator.of(context).pop());
+      if (widget.tradeOrigin is TradeBean) {
+        _tradeDB
+            .update(trade, widget.tradeOrigin!)
+            .then((value) => Navigator.of(context).pop());
       } else {
-        _tradeDB.update(trade).then((value) => Navigator.of(context).pop());
+        _tradeDB.insert(trade).then((value) => Navigator.of(context).pop());
       }
     }
   }

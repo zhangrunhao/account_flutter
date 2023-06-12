@@ -113,7 +113,21 @@ class _AccountEditFormState extends State<_AccountEditForm> with RouteAware {
                   child: const Text("确认"),
                   onPressed: () {
                     if (Form.of(ctx).validate()) {
-                      if (widget.account == null) {
+                      if (widget.account is AccountBean) {
+                        //  更新
+                        AccountBean result = AccountBean(
+                          id: widget.account!.id,
+                          name: _nameController.text,
+                          type: widget.type,
+                          icon: _iconController.text,
+                          money: _moneyController.text == ""
+                              ? 0
+                              : num.parse(_moneyController.text),
+                        );
+                        _accountDB
+                            .update(result, widget.account!)
+                            .then((value) => Navigator.of(context).pop(result));
+                      } else {
                         // 新增
                         _accountDB
                             .insert(AccountBean(
@@ -124,18 +138,6 @@ class _AccountEditFormState extends State<_AccountEditForm> with RouteAware {
                               money: num.parse(_moneyController.text),
                             ))
                             .then((value) => Navigator.of(context).pop());
-                      } else {
-                        //  更新
-                        AccountBean result = AccountBean(
-                          id: widget.account!.id,
-                          name: _nameController.text,
-                          type: widget.type,
-                          icon: _iconController.text,
-                          money: _moneyController.text == "" ? 0 : num.parse(_moneyController.text),
-                        );
-                        _accountDB
-                            .update(result)
-                            .then((value) => Navigator.of(context).pop(result));
                       }
                     }
                   },

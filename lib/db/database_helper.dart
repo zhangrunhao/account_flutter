@@ -50,7 +50,8 @@ class DatabaseHelper {
         trade_cate_id INTEGER,
         money TEXT,
         spend_date TEXT,
-        remark TEXT
+        remark TEXT,
+        sign TEXT
       )
     ''');
     await db.execute('''
@@ -64,7 +65,8 @@ class DatabaseHelper {
             t.money AS money,
             t.remark AS remark,
             t.spend_date AS spend_date,
-            c.operate AS operate
+            c.operate AS operate,
+            t.sign AS sign
           FROM trade t,  account a, trade_cate c
           WHERE t.account_id = a.id
             AND t.trade_cate_id = c.id;
@@ -109,6 +111,7 @@ class DatabaseHelper {
       "money": "20.99",
       "spend_date": "2023-03-21",
       "remark": "午饭",
+      "sign": "add"
     });
   }
 }

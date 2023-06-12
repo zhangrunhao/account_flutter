@@ -80,7 +80,7 @@ class _AccountListState extends State<AccountList> {
 Widget _buildAccountListTitle(
     AccountBean account, BuildContext context, Function fetchList) {
   return ListTile(
-    leading: Image.asset("images/cate_icons/${account.icon}.png"),
+    leading: Image.asset("images/account_icons/${account.icon}.png"),
     title: Text(account.name),
     subtitle: Text("当前金额: ${account.money.toString()}元"),
     trailing: PopupMenuButton(

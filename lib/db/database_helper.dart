@@ -62,10 +62,10 @@ class DatabaseHelper {
             a.name AS account_name, 
             c.id AS trade_cate_id,
             c.name AS trade_cate_name,
+            c.operate AS operate,
             t.money AS money,
             t.remark AS remark,
             t.spend_date AS spend_date,
-            c.operate AS operate,
             t.sign AS sign
           FROM trade t,  account a, trade_cate c
           WHERE t.account_id = a.id
@@ -76,19 +76,19 @@ class DatabaseHelper {
     await db.insert("account", {
       "name": "支付宝",
       "type": 1,
-      "icon": "yundong",
-      "money": 0,
+      "icon": "zhifubao",
+      "money": 10,
     });
     await db.insert("account", {
       "name": "微信",
       "type": 1,
-      "icon": "canyin",
+      "icon": "weixin",
       "money": 0,
     });
     await db.insert("account", {
       "name": "京东白条",
       "type": 2,
-      "icon": "feiji",
+      "icon": "jd",
       "money": 0,
     });
     // 初始化分类
@@ -108,7 +108,7 @@ class DatabaseHelper {
     await db.insert("trade", {
       "account_id": 1,
       "trade_cate_id": 1,
-      "money": "20.99",
+      "money": "20",
       "spend_date": "2023-03-21",
       "remark": "午饭",
       "sign": "add"

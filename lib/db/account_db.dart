@@ -32,7 +32,7 @@ class AccountDB {
       await txn.insert("trade", {
         "account_id": account.id,
         "trade_cate_id": 1, // TODO: 此处应该是默认的初始化的分类id,
-        "money": account.money,
+        "money": (account.money - preAccount.money).abs(),
         "spend_date": DateTime.now().toString(),
         "remark": "初始化账户",
         "sign": preAccount.money < account.money ? "add" : "minus",

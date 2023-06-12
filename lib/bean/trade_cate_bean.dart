@@ -6,16 +6,16 @@ class TradeCateBean {
   // 现在客户端存储简单的逻辑: 1: 系统的, 不可删除, 不展示. 2: 扩展的, 可进行各种操作
   final int type;
   // 0  表示设置cate按钮
-  // 1 收入 Income add
-  // 2 支出 Expend subtract
-  // 3 转入 TransferIn add
-  // 4 转出 TransferOut subtract
-  // 5 借入 Borrow add
-  // 6 借出 Lend subtract
-  // 7 收款 Receive add
-  // 8 还款 Repayment subtract
-  // 9 初始化 Init add
-  // 10 平款 Flat add
+  // 1 收入 Income
+  // 2 支出 Expend
+  // 3 转入 TransferIn
+  // 4 转出 TransferOut
+  // 5 借入 Borrow
+  // 6 借出 Lend
+  // 7 收款 Receive
+  // 8 还款 Repayment
+  // 9 初始化 Init
+  // 10 平款 Flat
   final int operate;
 
   TradeCateBean({

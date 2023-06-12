@@ -45,7 +45,7 @@ class _RowInfo extends StatelessWidget {
         valueWidget = Text(value);
         break;
       case "image":
-        valueWidget = Image.asset("images/cate_icons/$value.png");
+        valueWidget = Image.asset("images/account_icons/$value.png");
         break;
       default:
     }

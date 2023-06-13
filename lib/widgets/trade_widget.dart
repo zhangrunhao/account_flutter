@@ -1,6 +1,5 @@
 import 'package:account_flutter/bean/trade_bean.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class TradeWidget extends StatelessWidget {
   final TradeBean trade;
@@ -31,8 +30,6 @@ class TradeWidget extends StatelessWidget {
                       .then((value) {
                     updateCallback();
                   });
-                } else {
-                  EasyLoading.showToast("当前类型不能编辑");
                 }
                 break;
               case 1:

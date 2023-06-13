@@ -51,17 +51,36 @@ class TradeDB {
             where: "id=${preAccount.id}");
       }
 
-      // 针对当前账户的操作
+      // 针对当前账户的操作, 当前账户一定是存在的
       List nowAccounts =
           await txn.query("account", where: 'id=${trade.accountId}');
       AccountBean nowAccount = AccountBean.fromJson(nowAccounts.first);
       if (preTrade.sign == "add") {
-        nowAccount.money = preTrade.money + trade.money;
+        nowAccount.money = nowAccount.money + trade.money;
       } else if (preTrade.sign == 'minus') {
-        nowAccount.money = preTrade.money - trade.money;
+        nowAccount.money = nowAccount.money - trade.money;
       }
       await txn.update("account", nowAccount.toMap(),
           where: "id=${nowAccount.id}");
+      await txn.update("trade", trade.toMap(), where: "id=${trade.id}");
+    });
+  }
+
+  Future<void> delete(TradeBean trade) async {
+    Database db = await DatabaseHelper.instance.database;
+    await db.transaction((txn) async {
+      List accounts =
+          await txn.query("account", where: 'id=${trade.accountId}');
+      if (accounts.isNotEmpty) { // 之前的账户可能不存在
+        AccountBean account = AccountBean.fromJson(accounts.first);
+        if (trade.sign == "add") {
+          account.money = account.money + trade.money;
+        } else if (trade.sign == 'minus') {
+          account.money = account.money - trade.money;
+        }
+        await txn.update("account", account.toMap(),
+            where: "id=${trade.accountId}");
+      }
       await txn.update("trade", trade.toMap(), where: "id=${trade.id}");
     });
   }

@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 class TradeList extends StatelessWidget {
   final List<TradeBean> trades;
   final Function tradeUpdateCallBack;
+  final Function tradeDeleteCallBack;
 
   const TradeList(
-      {super.key, required this.trades, required this.tradeUpdateCallBack});
+      {super.key, required this.trades, required this.tradeUpdateCallBack, required this.tradeDeleteCallBack});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,7 @@ class TradeList extends StatelessWidget {
           return TradeWidget(
             trade: trade,
             updateCallback: tradeUpdateCallBack,
+            deleteCallback: tradeDeleteCallBack,
           );
         },
       ),

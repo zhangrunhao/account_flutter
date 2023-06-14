@@ -1,12 +1,16 @@
 import 'package:account_flutter/bean/trade_bean.dart';
+import 'package:account_flutter/db/trade_db.dart';
+import 'package:account_flutter/util/show_dialog.dart';
 import 'package:flutter/material.dart';
 
 class TradeWidget extends StatelessWidget {
   final TradeBean trade;
   final Function updateCallback;
+  final Function deleteCallback;
+  final TradeDB _tradeDB = TradeDB();
 
-  const TradeWidget(
-      {super.key, required this.trade, required this.updateCallback});
+  TradeWidget(
+      {super.key, required this.trade, required this.updateCallback, required this.deleteCallback});
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +37,14 @@ class TradeWidget extends StatelessWidget {
                 }
                 break;
               case 1:
-                // 删除
-                // TradeApi.delete(trade).then((value) {
-                //   tradesModule.update().then((value) {
-                //     EasyLoading.showSuccess("删除成功");
-                //   });
-                // });
+                showDeleteConfirmDialog(context, "确定删除这个交易记录吗?").then((del)  {
+                  if (del == null) {
+                  } else {
+                    _tradeDB.delete(trade).then((value) {
+                      deleteCallback(trade.id);
+                    });
+                  }
+                });
                 break;
               default:
             }

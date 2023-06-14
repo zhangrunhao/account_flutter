@@ -99,6 +99,11 @@ class _AccountDetailState extends State<AccountDetailPage> {
                 trades = newTradeList;
               });
             },
+            tradeDeleteCallBack: (int id) {
+              setState(() {
+                trades.removeWhere((element) => element.id == id);
+              });
+            },
           ),
           ElevatedButton(
             child: const Text("添加一条"),

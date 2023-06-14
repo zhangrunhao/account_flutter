@@ -21,8 +21,10 @@ class AccountDetail extends StatelessWidget {
           type: "image",
         ),
         _RowInfo(
-          label: "余额",
-          value: account.money.toString(),
+          label: account.type == 1 ? "余额" : "负债",
+          value: account.type == 1
+              ? account.money.toString()
+              : (-account.money).toString(),
           type: "text",
         ),
       ],

@@ -47,7 +47,7 @@ class _PrefixIcon extends StatelessWidget {
         padding: const EdgeInsets.all(5),
         height: 30,
         width: 30,
-        child: Image.asset("images/cate_icons/$iconName.png"),
+        child: Image.asset("images/cates/$iconName"),
       );
     }
   }

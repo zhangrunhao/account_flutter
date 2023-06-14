@@ -7,8 +7,12 @@ class TradeList extends StatelessWidget {
   final Function tradeUpdateCallBack;
   final Function tradeDeleteCallBack;
 
-  const TradeList(
-      {super.key, required this.trades, required this.tradeUpdateCallBack, required this.tradeDeleteCallBack});
+  const TradeList({
+    super.key,
+    required this.trades,
+    required this.tradeUpdateCallBack,
+    required this.tradeDeleteCallBack,
+  });
 
   @override
   Widget build(BuildContext context) {

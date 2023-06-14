@@ -20,5 +20,5 @@ flutter:
   uses-material-design: true
   assets:
     - images/account_icons/
-    - images/cate_icons/
+    - images/cates/
     - json/

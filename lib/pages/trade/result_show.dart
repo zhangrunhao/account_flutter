@@ -28,7 +28,7 @@ class ResultShow extends StatelessWidget {
             height: 50,
             child: cate == null
                 ? Container()
-                : Image.asset("images/cate_icons/${cate!.icon}.png"),
+                : Image.asset("images/cates/${cate!.icon}"),
           ),
           Expanded(
             child: Container(

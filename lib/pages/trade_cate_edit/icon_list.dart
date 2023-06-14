@@ -26,7 +26,7 @@ class IconsList extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(10),
                     child: Center(
-                        child: Image.asset("images/cate_icons/$iconName.png")),
+                        child: Image.asset("images/cates/$iconName")),
                   ),
                 ),
               ))

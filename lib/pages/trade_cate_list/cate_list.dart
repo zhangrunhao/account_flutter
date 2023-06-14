@@ -29,7 +29,7 @@ class CateList extends StatelessWidget {
             itemBuilder: ((BuildContext context, int index) {
               TradeCateBean cate = cates[index];
               return ListTile(
-                  leading: Image.asset("images/cate_icons/${cate.icon}.png"),
+                  leading: Image.asset("images/cates/${cate.icon}"),
                   title: Text(cate.name),
                   trailing: PopupMenuButton<String>(
                     padding: EdgeInsets.zero,

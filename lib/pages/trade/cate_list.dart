@@ -6,7 +6,7 @@ typedef TapCateListCallBack = void Function(TradeCateBean cate);
 
 TradeCateBean settingCate = TradeCateBean(
   name: "编辑",
-  icon: "setting",
+  icon: "",
   id: 0,
   type: 1,
   operate: 0,
@@ -102,7 +102,9 @@ class _CateOption extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: Image.asset("images/cate_icons/${cate.icon}.png"),
+              child: cate.icon.isEmpty
+                  ? const Icon(Icons.settings)
+                  : Image.asset("images/cates/${cate.icon}"),
             ),
             Center(
               child: Text(cate.name),

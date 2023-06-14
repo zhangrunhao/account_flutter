@@ -95,13 +95,13 @@ class DatabaseHelper {
     await db.insert("trade_cate", {
       "name": "工资",
       "type": 2,
-      "icon": "gongzi",
+      "icon": "investments.png",
       "operate": 1,
     });
     await db.insert("trade_cate", {
-      "name": "飞机",
+      "name": "背包",
       "type": 2,
-      "icon": "feiji",
+      "icon": "bag.png",
       "operate": 2,
     });
     // 新建一条测试数据

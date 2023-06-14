@@ -28,7 +28,7 @@ class TradeWidget extends StatelessWidget {
                     arguments: trade,
                   )
                       .then((value) {
-                    updateCallback();
+                    if (value is TradeBean) updateCallback(value);
                   });
                 }
                 break;

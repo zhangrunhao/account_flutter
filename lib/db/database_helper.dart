@@ -108,9 +108,9 @@ class DatabaseHelper {
     await db.insert("trade", {
       "account_id": 1,
       "trade_cate_id": 1,
-      "money": "20",
+      "money": "10",
       "spend_date": "2023-03-21",
-      "remark": "午饭",
+      "remark": "工资",
       "sign": "add"
     });
   }

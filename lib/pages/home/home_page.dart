@@ -1,7 +1,5 @@
 import 'package:account_flutter/bean/trade_bean.dart';
-// import 'package:account_flutter/pages/home/brief_widget.dart';
 import 'package:account_flutter/pages/home/wallet_widget.dart';
-import 'package:account_flutter/util/event_bus.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,10 +15,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    EventBus bus = EventBus();
-    bus.on('toLogin', () {
-      Navigator.pushNamed(context, "login");
-    });
   }
 
   @override

@@ -6,21 +6,24 @@ class TradeList extends StatelessWidget {
   final List<TradeBean> trades;
   final Function tradeUpdateCallBack;
 
-  const TradeList({super.key, required this.trades, required this.tradeUpdateCallBack});
+  const TradeList(
+      {super.key, required this.trades, required this.tradeUpdateCallBack});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemCount: trades.length,
-      itemBuilder: (context, index) {
-        TradeBean trade = trades[index];
-        return TradeWidget(
-          trade: trade,
-          updateCallback: tradeUpdateCallBack,
-        );
-      },
+    return Expanded(
+      child: ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: trades.length,
+        itemBuilder: (context, index) {
+          TradeBean trade = trades[index];
+          return TradeWidget(
+            trade: trade,
+            updateCallback: tradeUpdateCallBack,
+          );
+        },
+      ),
     );
   }
 }

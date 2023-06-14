@@ -10,9 +10,9 @@ class TradeDB {
     return result.map((e) => TradeBean.fromJson(e)).toList();
   }
 
-  Future<void> insert(TradeBean trade) async {
+  Future<int> insert(TradeBean trade) async {
     Database db = await DatabaseHelper.instance.database;
-    await db.transaction((Transaction txn) async {
+    return await db.transaction((Transaction txn) async {
       // 查询当前账户
       List accounts =
           await txn.query("account", where: "id=${trade.accountId}");
@@ -29,7 +29,7 @@ class TradeDB {
       await txn.update("account", account.toMap(),
           where: 'id=${trade.accountId}');
       // 插入记录
-      await txn.insert("trade", trade.toMap());
+      return await txn.insert("trade", trade.toMap());
     });
   }
 
@@ -71,7 +71,8 @@ class TradeDB {
     await db.transaction((txn) async {
       List accounts =
           await txn.query("account", where: 'id=${trade.accountId}');
-      if (accounts.isNotEmpty) { // 之前的账户可能不存在
+      if (accounts.isNotEmpty) {
+        // 之前的账户可能不存在
         AccountBean account = AccountBean.fromJson(accounts.first);
         if (trade.sign == "add") {
           account.money = account.money + trade.money;

@@ -1,5 +1,6 @@
 import 'package:account_flutter/bean/account_bean.dart';
 import 'package:account_flutter/bean/trade_bean.dart';
+import 'package:account_flutter/db/account_db.dart';
 import 'package:account_flutter/db/trade_db.dart';
 import 'package:account_flutter/pages/account_detail/account_detail.dart';
 import 'package:account_flutter/pages/account_detail/trade_list.dart';
@@ -16,20 +17,28 @@ class AccountDetailPage extends StatefulWidget {
 class _AccountDetailState extends State<AccountDetailPage> {
   List<TradeBean> trades = [];
   final TradeDB _tradeDB = TradeDB();
+  final AccountDB _accountDB = AccountDB();
   AccountBean? account;
 
   @override
   void initState() {
     super.initState();
     account = widget.account;
-    _fetch();
+    _fetchTradeList();
   }
 
-  _fetch() async {
+  _fetchTradeList() async {
     List<TradeBean> result =
         await _tradeDB.queryList("account_id=${widget.account.id}");
     setState(() {
       trades = result;
+    });
+  }
+
+  _fetchAccountDetail() async {
+    AccountBean resAccount = await _accountDB.queryById(account!.id);
+    setState(() {
+      account = resAccount;
     });
   }
 
@@ -75,8 +84,20 @@ class _AccountDetailState extends State<AccountDetailPage> {
           ),
           TradeList(
             trades: trades,
-            tradeUpdateCallBack: () {
-              _fetch();
+            tradeUpdateCallBack: (TradeBean trade) {
+              List<TradeBean> newTradeList = trades.map((e) {
+                if (e.id == trade.id) {
+                  if (trade.accountId == account!.id) {
+                    _fetchAccountDetail();
+                  }
+                  return trade;
+                } else {
+                  return e;
+                }
+              }).toList();
+              setState(() {
+                trades = newTradeList;
+              });
             },
           ),
           ElevatedButton(
@@ -84,10 +105,18 @@ class _AccountDetailState extends State<AccountDetailPage> {
             onPressed: () {
               Navigator.of(context)
                   .pushNamed(
-                    "trade",
-                    arguments: account,
-                  )
-                  .then((value) => _fetch());
+                "trade",
+                arguments: account,
+              )
+                  .then((value) {
+                _fetchAccountDetail();
+                setState(() {
+                  TradeBean tradeResult = value as TradeBean;
+                  if (tradeResult.accountId == account!.id) {
+                    trades.add(tradeResult);
+                  }
+                });
+              });
             },
           )
         ],

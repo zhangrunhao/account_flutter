@@ -9,6 +9,12 @@ class AccountDB {
     return result.map((e) => AccountBean.fromJson(e)).toList();
   }
 
+  Future<AccountBean> queryById(int id) async {
+    Database db = await DatabaseHelper.instance.database;
+    List<Map> result = await db.query("account", where: 'id=$id');
+    return AccountBean.fromJson(result.first);
+  }
+
   Future<void> insert(AccountBean account) async {
     Database db = await DatabaseHelper.instance.database;
     db.transaction((txn) async {

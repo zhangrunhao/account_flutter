@@ -160,9 +160,12 @@ class _TradePageState extends State<TradePageInner> {
       if (widget.tradeOrigin is TradeBean) {
         _tradeDB
             .update(trade, widget.tradeOrigin!)
-            .then((value) => Navigator.of(context).pop());
+            .then((value) => Navigator.of(context).pop(trade));
       } else {
-        _tradeDB.insert(trade).then((value) => Navigator.of(context).pop());
+        _tradeDB.insert(trade).then((int id) {
+          trade.id = id;
+          Navigator.of(context).pop(trade);
+        });
       }
     }
   }

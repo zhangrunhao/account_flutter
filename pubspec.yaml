@@ -21,4 +21,5 @@ flutter:
   assets:
     - images/account_icons/
     - images/cates/
+    - images/bg/
     - json/

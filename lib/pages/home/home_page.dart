@@ -1,3 +1,4 @@
+import 'package:account_flutter/pages/home/top_switch.dart';
 import 'package:account_flutter/widgets/bg_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return const BgWidget(
-      child: Text("aa"),
+      child: Column(
+        children: [
+          TopSwitch(),
+        ],
+      ),
     );
   }
 }

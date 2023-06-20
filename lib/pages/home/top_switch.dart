@@ -21,7 +21,7 @@ class _TopSwitchState extends State<TopSwitch> {
         child: Row(
           children: List.generate(arr.length, (index) {
             return _SwitchItem(
-              isActive: !!(active == index),
+              isActive: active == index,
               text: arr[index],
               isFirstItem: index == 0,
               isLastItem: index == arr.length - 1,

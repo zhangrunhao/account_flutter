@@ -1,3 +1,4 @@
+import 'package:account_flutter/pages/home/account_list_info.dart';
 import 'package:account_flutter/pages/home/top_switch.dart';
 import 'package:account_flutter/widgets/bg_widget.dart';
 import 'package:flutter/material.dart';
@@ -11,18 +12,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   Widget build(BuildContext context) {
-    return const BgWidget(
-      child: Column(
-        children: [
-          TopSwitch(),
-        ],
+    return BgWidget(
+      child: Container(
+        margin: const EdgeInsets.only(top: 20),
+        child: const Column(
+          children: [
+            TopSwitch(),
+            AccountListInfo(),
+          ],
+        ),
       ),
     );
   }
 }
+
+
 
 
 

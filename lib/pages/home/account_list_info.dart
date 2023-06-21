@@ -43,16 +43,17 @@ class _AddButton extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(
-                Icons.add_circle,
+                Icons.add,
                 size: 14,
               ),
               Text(
                 "添加",
                 style: TextStyle(
-                    decoration: TextDecoration.none,
-                    fontSize: 14,
-                    color: Color.fromARGB(255, 4, 11, 32),
-                    fontWeight: FontWeight.w500),
+                  decoration: TextDecoration.none,
+                  fontSize: 14,
+                  color: Color.fromARGB(255, 4, 11, 32),
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ],
           ),

@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             TopSwitch(),
             AccountListInfo(),
+            _AccountCard(),
           ],
         ),
       ),
@@ -28,9 +29,87 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-
-
-
+class _AccountCard extends StatelessWidget {
+  const _AccountCard();
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 130,
+      margin: const EdgeInsets.only(top: 20),
+      child: Center(
+        child: Container(
+          width: 335,
+          height: 130,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(colors: [
+              Color.fromARGB(255, 16, 92, 251),
+              Color.fromARGB(255, 10, 171, 255)
+            ]),
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+          ),
+          child: Stack(
+            children: [
+              const Positioned(
+                top: 20.5,
+                left: 20,
+                child: Text(
+                  "当前余额:",
+                  style: TextStyle(
+                    fontSize: 12,
+                    decoration: TextDecoration.none,
+                    color: Colors.white60,
+                  ),
+                ),
+              ),
+              const Positioned(
+                top: 14,
+                right: 14,
+                child: Icon(
+                  Icons.keyboard_arrow_right,
+                  size: 18,
+                  color: Colors.white,
+                ),
+              ),
+              const Positioned(
+                bottom: 20,
+                left: 20,
+                child: Text(
+                  "889888",
+                  style: TextStyle(
+                    fontSize: 28,
+                    decoration: TextDecoration.none,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 20,
+                right: 20,
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  color: Colors.white,
+                  child: Image.asset(
+                    "images/account_icons/zhifubao.png",
+                    width: 40,
+                    height: 40,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      // child: Stack(
+      //   alignment: Alignment.center,
+      //   children: [
+      //
+      //   ],
+      // ),
+    );
+  }
+}
 
 // class _HomePageState extends State<HomePage> {
 //   List<TradeBean> trades = [];

@@ -49,7 +49,16 @@ class _AccountCard extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(15)),
           ),
           child: Stack(
+            alignment: Alignment.center,
             children: [
+              Positioned(
+                right: 8,
+                child: Container(
+                  width: 4,
+                  height: 20,
+                  color: const Color.fromARGB(255, 203, 207, 222),
+                ),
+              ),
               const Positioned(
                 top: 20.5,
                 left: 20,

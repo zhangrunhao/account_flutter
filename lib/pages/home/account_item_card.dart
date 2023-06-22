@@ -6,8 +6,8 @@ class AccountItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Slidable(
-      key: const ValueKey(0),
       endActionPane: const ActionPane(
+        extentRatio: .25,
         motion: ScrollMotion(),
         children: [
           _OperationUI(),
@@ -23,7 +23,7 @@ class _OperationUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         _OperationItemUI(
           bgColor: Color.fromARGB(255, 209, 224, 255),
@@ -32,7 +32,7 @@ class _OperationUI extends StatelessWidget {
           iconColor: Color.fromARGB(255, 16, 92, 251),
         ),
         _OperationItemUI(
-          bgColor: Color.fromARGB(255, 255, 219, 224,),
+          bgColor: Color.fromARGB(255, 255, 219, 224),
           iconData: Icons.delete,
           title: "删除",
           iconColor: Color.fromARGB(255, 255, 0, 0),
@@ -65,7 +65,10 @@ class _OperationItemUI extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Icon(iconData, color: iconColor,),
+          Icon(
+            iconData,
+            color: iconColor,
+          ),
           Text(
             title,
             style: TextStyle(color: iconColor),
@@ -79,10 +82,9 @@ class _OperationItemUI extends StatelessWidget {
 class _AccountItemCardUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: 130,
-      margin: const EdgeInsets.only(top: 20),
       child: Center(
         child: Container(
           width: 335,
@@ -97,14 +99,14 @@ class _AccountItemCardUI extends StatelessWidget {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              Positioned(
-                right: 8,
-                child: Container(
-                  width: 4,
-                  height: 20,
-                  color: const Color.fromARGB(255, 203, 207, 222),
-                ),
-              ),
+              // Positioned(
+              //   right: 8,
+              //   child: Container(
+              //     width: 4,
+              //     height: 20,
+              //     color: const Color.fromARGB(255, 203, 207, 222),
+              //   ),
+              // ),
               const Positioned(
                 top: 20.5,
                 left: 20,

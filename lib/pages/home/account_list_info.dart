@@ -6,7 +6,7 @@ class AccountListInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.only(left: 20, top: 20, bottom: 0, right: 20),
+      padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20, right: 20),
       child: const Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

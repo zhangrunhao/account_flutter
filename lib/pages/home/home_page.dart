@@ -1,4 +1,6 @@
-import 'package:account_flutter/pages/home/account_item_card.dart';
+import 'package:account_flutter/bean/account_bean.dart';
+import 'package:account_flutter/db/account_db.dart';
+import 'package:account_flutter/pages/home/account_card_list.dart';
 import 'package:account_flutter/pages/home/account_list_info.dart';
 import 'package:account_flutter/pages/home/top_switch.dart';
 import 'package:account_flutter/widgets/bg_widget.dart';
@@ -13,46 +15,48 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final AccountDB _accountDB = AccountDB();
+  List<AccountBean> accounts = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchList("1");
+  }
+
+  void _fetchList(type) {
+    _accountDB.queryList("type=$type").then((value) {
+      setState(() {
+        accounts = value;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return BgWidget(
-      child: Container(
-        margin: const EdgeInsets.only(top: 20),
-        child: const Column(
-          children: [
-            TopSwitch(),
-            AccountListInfo(),
-            AccountItemCard(),
-          ],
-        ),
+      child: Column(
+        children: [
+          TopSwitch(
+            onChange: (index) {
+              if (index == 0) {
+                // 资产
+                _fetchList(1);
+              } else if (index == 1) {
+                // 负债
+                _fetchList(2);
+              }
+            },
+          ),
+          AccountListInfo(
+            accountNum: accounts.length,
+          ),
+          AccountCardList(
+            accounts: accounts,
+          ),
+        ],
       ),
     );
   }
 }
 
 
-// class _HomePageState extends State<HomePage> {
-//   List<TradeBean> trades = [];
-//   @override
-//   void initState() {
-//     super.initState();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text("首页"),
-//       ),
-//       body: const WalletWidget(),
-//       floatingActionButton: FloatingActionButton(
-//         onPressed: () {
-//           Navigator.pushNamed(context, "trade").then((value) {
-//             // 更新对应账户的余额
-//           });
-//         },
-//         child: const Icon(Icons.add),
-//       ),
-//     );
-//   }
-// }

@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 
 class AccountListInfo extends StatelessWidget {
-  const AccountListInfo({super.key});
+  final int accountNum;
+  const AccountListInfo({super.key, required this.accountNum});
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.only(left: 20, top: 20, bottom: 20, right: 20),
-      child: const Row(
+      padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "我的资产(2)",
-            style: TextStyle(
+            "我的资产(${accountNum.toString()})",
+            style: const TextStyle(
               fontSize: 23,
               decoration: TextDecoration.none,
               color: Color.fromARGB(255, 4, 11, 32),
             ),
           ),
-          _AddButton(),
+          const _AddButton(),
         ],
       ),
     );

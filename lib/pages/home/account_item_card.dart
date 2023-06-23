@@ -1,19 +1,26 @@
+import 'package:account_flutter/bean/account_bean.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class AccountItemCard extends StatelessWidget {
-  const AccountItemCard({super.key});
+  final AccountBean accountBean;
+  const AccountItemCard({super.key, required this.accountBean});
   @override
   Widget build(BuildContext context) {
-    return Slidable(
-      endActionPane: const ActionPane(
-        extentRatio: .25,
-        motion: ScrollMotion(),
-        children: [
-          _OperationUI(),
-        ],
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20),
+      child: Slidable(
+        endActionPane: const ActionPane(
+          extentRatio: .25,
+          motion: ScrollMotion(),
+          children: [
+            _OperationUI(),
+          ],
+        ),
+        child: _AccountItemCardUI(
+          accountBean: accountBean,
+        ),
       ),
-      child: _AccountItemCardUI(),
     );
   }
 }
@@ -80,6 +87,8 @@ class _OperationItemUI extends StatelessWidget {
 }
 
 class _AccountItemCardUI extends StatelessWidget {
+  final AccountBean accountBean;
+  const _AccountItemCardUI({required this.accountBean});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -99,20 +108,20 @@ class _AccountItemCardUI extends StatelessWidget {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              // Positioned(
-              //   right: 8,
-              //   child: Container(
-              //     width: 4,
-              //     height: 20,
-              //     color: const Color.fromARGB(255, 203, 207, 222),
-              //   ),
-              // ),
-              const Positioned(
+              Positioned(
+                right: 8,
+                child: Container(
+                  width: 4,
+                  height: 20,
+                  color: const Color.fromARGB(255, 203, 207, 222),
+                ),
+              ),
+              Positioned(
                 top: 20.5,
                 left: 20,
                 child: Text(
-                  "当前余额:",
-                  style: TextStyle(
+                  accountBean.name,
+                  style: const TextStyle(
                     fontSize: 12,
                     decoration: TextDecoration.none,
                     color: Colors.white60,
@@ -121,19 +130,19 @@ class _AccountItemCardUI extends StatelessWidget {
               ),
               const Positioned(
                 top: 14,
-                right: 14,
+                right: 20,
                 child: Icon(
                   Icons.keyboard_arrow_right,
                   size: 18,
                   color: Colors.white,
                 ),
               ),
-              const Positioned(
+              Positioned(
                 bottom: 20,
                 left: 20,
                 child: Text(
-                  "889888",
-                  style: TextStyle(
+                  '¥ ${accountBean.money}',
+                  style: const TextStyle(
                     fontSize: 28,
                     decoration: TextDecoration.none,
                     color: Colors.white,
@@ -142,13 +151,13 @@ class _AccountItemCardUI extends StatelessWidget {
               ),
               Positioned(
                 bottom: 20,
-                right: 20,
+                right: 24,
                 child: Container(
                   width: 40,
                   height: 40,
                   color: Colors.white,
                   child: Image.asset(
-                    "images/account_icons/zhifubao.png",
+                    "images/account_icons/${accountBean.icon}",
                     width: 40,
                     height: 40,
                   ),

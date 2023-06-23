@@ -89,8 +89,10 @@ Widget _buildAccountListTitle(
           case 0:
             // 编辑
             Navigator.of(context)
-                .pushNamed("account_edit",
-                    arguments: AccountEditPageArguments(account.type, account))
+                .pushNamed(
+              "account_edit",
+              arguments: AccountEditPageArguments(account.type, account),
+            )
                 .then((value) {
               fetchList();
             });

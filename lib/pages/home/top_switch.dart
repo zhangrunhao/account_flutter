@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class TopSwitch extends StatefulWidget {
-  const TopSwitch({super.key});
+  final Function onChange;
+  const TopSwitch({super.key, required this.onChange});
   @override
   State<StatefulWidget> createState() => _TopSwitchState();
 }
@@ -28,6 +29,7 @@ class _TopSwitchState extends State<TopSwitch> {
               onTap: () {
                 setState(() {
                   active = index;
+                  widget.onChange(index);
                 });
               },
             );

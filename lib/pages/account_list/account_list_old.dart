@@ -1,7 +1,7 @@
 import 'package:account_flutter/bean/account_bean.dart';
 import 'package:account_flutter/db/account_db.dart';
 import 'package:account_flutter/pages/account_edit/account_edit_page.dart';
-import 'package:account_flutter/util/show_dialog.dart';
+import 'package:account_flutter/widgets/show_delete_dialog.dart';
 import 'package:flutter/material.dart';
 
 class AccountList extends StatefulWidget {

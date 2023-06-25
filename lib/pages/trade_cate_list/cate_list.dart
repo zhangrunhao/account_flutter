@@ -1,6 +1,6 @@
 import 'package:account_flutter/bean/trade_cate_bean.dart';
 import 'package:account_flutter/db/trade_cate_db.dart';
-import 'package:account_flutter/util/show_dialog.dart';
+import 'package:account_flutter/widgets/show_delete_dialog.dart';
 import 'package:flutter/material.dart';
 
 class CateList extends StatelessWidget {

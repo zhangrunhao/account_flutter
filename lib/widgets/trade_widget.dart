@@ -1,6 +1,6 @@
 import 'package:account_flutter/bean/trade_bean.dart';
 import 'package:account_flutter/db/trade_db.dart';
-import 'package:account_flutter/util/show_dialog.dart';
+import 'package:account_flutter/widgets/show_delete_dialog.dart';
 import 'package:flutter/material.dart';
 
 class TradeWidget extends StatelessWidget {

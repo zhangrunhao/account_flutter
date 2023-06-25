@@ -76,19 +76,19 @@ class DatabaseHelper {
     await db.insert("account", {
       "name": "支付宝",
       "type": 1,
-      "icon": "zhifubao",
+      "icon": "zhifubao.png",
       "money": 10,
     });
     await db.insert("account", {
       "name": "微信",
       "type": 1,
-      "icon": "weixin",
+      "icon": "weixin.png",
       "money": 0,
     });
     await db.insert("account", {
       "name": "京东白条",
       "type": 2,
-      "icon": "jd",
+      "icon": "jd.png",
       "money": 0,
     });
     // 初始化分类

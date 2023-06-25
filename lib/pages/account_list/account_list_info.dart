@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class AccountListInfo extends StatelessWidget {
   final int accountNum;
-  const AccountListInfo({super.key, required this.accountNum});
+  final String accountListName;
+  const AccountListInfo({super.key, required this.accountNum, required this.accountListName});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -12,7 +13,7 @@ class AccountListInfo extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "我的资产(${accountNum.toString()})",
+            "$accountListName(${accountNum.toString()})",
             style: const TextStyle(
               fontSize: 23,
               decoration: TextDecoration.none,
@@ -41,7 +42,6 @@ class _AddButton extends StatelessWidget {
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(
                 Icons.add,

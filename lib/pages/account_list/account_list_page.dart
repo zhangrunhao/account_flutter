@@ -1,22 +1,23 @@
 import 'package:account_flutter/bean/account_bean.dart';
 import 'package:account_flutter/db/account_db.dart';
-import 'package:account_flutter/pages/home/account_card_list.dart';
-import 'package:account_flutter/pages/home/account_list_info.dart';
-import 'package:account_flutter/pages/home/top_switch.dart';
+import 'package:account_flutter/pages/account_list/account_card_list.dart';
+import 'package:account_flutter/pages/account_list/account_list_info.dart';
+import 'package:account_flutter/pages/account_list/top_switch.dart';
 import 'package:account_flutter/widgets/bg_widget.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class AccountListPage extends StatefulWidget {
+  const AccountListPage({Key? key}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
-    return _HomePageState();
+    return _AccountListPageState();
   }
 }
 
-class _HomePageState extends State<HomePage> {
+class _AccountListPageState extends State<AccountListPage> {
   final AccountDB _accountDB = AccountDB();
   List<AccountBean> accounts = [];
+  String accountListName = "我的资产";
 
   @override
   void initState() {
@@ -41,13 +42,20 @@ class _HomePageState extends State<HomePage> {
               if (index == 0) {
                 // 资产
                 _fetchList(1);
+                setState(() {
+                  accountListName = "我的资产";
+                });
               } else if (index == 1) {
                 // 负债
                 _fetchList(2);
+                setState(() {
+                  accountListName = "我的负债";
+                });
               }
             },
           ),
           AccountListInfo(
+            accountListName: accountListName,
             accountNum: accounts.length,
           ),
           AccountCardList(

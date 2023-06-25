@@ -3,7 +3,7 @@ import 'package:account_flutter/bean/trade_bean.dart';
 import 'package:account_flutter/bean/trade_cate_bean.dart';
 import 'package:account_flutter/pages/account_detail/account_detail_page.dart';
 import 'package:account_flutter/pages/account_edit/account_edit_page.dart';
-import 'package:account_flutter/pages/home/home_page.dart';
+import 'package:account_flutter/pages/account_list/account_list_page.dart';
 import 'package:account_flutter/pages/trade/trade_page.dart';
 import 'package:account_flutter/pages/trade_cate_edit/trade_cate_edit_page.dart';
 import 'package:account_flutter/pages/trade_cate_list/trade_cate_list_page.dart';
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        "/": (context) => const HomePage(),
+        "/": (context) => const AccountListPage(),
         "trade": (context) {
           Object? arguments = ModalRoute.of(context)?.settings.arguments;
           if (arguments is TradeBean) {
@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
         },
         "account_detail": (context) {
           Object? arguments = ModalRoute.of(context)?.settings.arguments;
-          return AccountDetailPage(account: arguments as AccountBean);
+          return AccountDetailPage(accountBean: arguments as AccountBean);
         },
         "account_edit": (context) {
           AccountEditPageArguments arguments = ModalRoute.of(context)

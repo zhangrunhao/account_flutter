@@ -1,5 +1,5 @@
 import 'package:account_flutter/bean/account_bean.dart';
-import 'package:account_flutter/pages/home/account_item_card.dart';
+import 'package:account_flutter/pages/account_list/account_item_card.dart';
 import 'package:flutter/material.dart';
 
 class AccountCardList extends StatelessWidget {

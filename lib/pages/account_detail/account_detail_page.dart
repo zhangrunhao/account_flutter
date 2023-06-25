@@ -1,130 +1,106 @@
 import 'package:account_flutter/bean/account_bean.dart';
-import 'package:account_flutter/bean/trade_bean.dart';
-import 'package:account_flutter/db/account_db.dart';
-import 'package:account_flutter/db/trade_db.dart';
-import 'package:account_flutter/pages/account_detail/account_detail.dart';
-import 'package:account_flutter/pages/account_detail/trade_list.dart';
-import 'package:account_flutter/pages/account_edit/account_edit_page.dart';
+import 'package:account_flutter/widgets/bg_widget.dart';
 import 'package:flutter/material.dart';
 
-class AccountDetailPage extends StatefulWidget {
-  final AccountBean account;
-  const AccountDetailPage({super.key, required this.account});
+class AccountDetailPage extends StatelessWidget {
+  final AccountBean accountBean;
+  const AccountDetailPage({super.key, required this.accountBean});
   @override
-  State<StatefulWidget> createState() => _AccountDetailState();
+  Widget build(BuildContext context) {
+    return BgWidget(
+      child: Column(
+        children: [
+          NavigateBar(
+            accountIcon: Image.asset(
+              "images/account_icons/${accountBean.icon}",
+              width: 15,
+              height: 15,
+            ),
+            accountName: accountBean.name,
+          ),
+        ],
+      ),
+    );
+  }
 }
 
-class _AccountDetailState extends State<AccountDetailPage> {
-  List<TradeBean> trades = [];
-  final TradeDB _tradeDB = TradeDB();
-  final AccountDB _accountDB = AccountDB();
-  AccountBean? account;
-
-  @override
-  void initState() {
-    super.initState();
-    account = widget.account;
-    _fetchTradeList();
-  }
-
-  _fetchTradeList() async {
-    List<TradeBean> result =
-        await _tradeDB.queryList("account_id=${widget.account.id}");
-    setState(() {
-      trades = result;
-    });
-  }
-
-  _fetchAccountDetail() async {
-    AccountBean resAccount = await _accountDB.queryById(account!.id);
-    setState(() {
-      account = resAccount;
-    });
-  }
+class NavigateBar extends StatelessWidget {
+  final Image accountIcon;
+  final String accountName;
+  const NavigateBar(
+      {super.key, required this.accountIcon, required this.accountName});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("账户详情"),
-        leading: IconButton(
-          icon: const Icon(Icons.chevron_left),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              // 编辑
-              Navigator.of(context)
-                  .pushNamed(
-                "account_edit",
-                arguments: AccountEditPageArguments(
-                  widget.account.type,
-                  widget.account,
-                ),
-              )
-                  .then((value) {
-                if (value is AccountBean) {
-                  setState(() {
-                    account = value;
-                  });
-                }
-              });
-            },
-            child: const Icon(Icons.edit),
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      alignment: Alignment.center,
+      height: 44,
+      padding: const EdgeInsets.only(left: 15, right: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const BackIcon(),
+          CenterInfo(accountIcon: accountIcon, accountName: accountName),
+          Container(
+            width: 64,
+            height: 25,
+            color: Colors.amber,
           )
         ],
       ),
-      body: Column(
-        children: [
-          AccountDetail(
-            account: account!,
+    );
+  }
+}
+
+class CenterInfo extends StatelessWidget {
+  final Image accountIcon;
+
+  final String accountName;
+
+  const CenterInfo(
+      {super.key, required this.accountIcon, required this.accountName});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(right: 5),
+          child: accountIcon,
+        ),
+        Text(
+          accountName,
+          style: const TextStyle(
+            fontSize: 18,
+            decoration: TextDecoration.none,
           ),
-          TradeList(
-            trades: trades,
-            tradeUpdateCallBack: (TradeBean trade) {
-              List<TradeBean> newTradeList = trades.map((e) {
-                if (e.id == trade.id) {
-                  if (trade.accountId == account!.id) {
-                    _fetchAccountDetail();
-                  }
-                  return trade;
-                } else {
-                  return e;
-                }
-              }).toList();
-              setState(() {
-                trades = newTradeList;
-              });
-            },
-            tradeDeleteCallBack: (int id) {
-              setState(() {
-                trades.removeWhere((element) => element.id == id);
-              });
-            },
+          strutStyle: const StrutStyle(leading: 2.1),
+        ),
+      ],
+    );
+  }
+}
+
+class BackIcon extends StatelessWidget {
+  const BackIcon({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pop();
+      },
+      child: const SizedBox(
+        width: 44,
+        height: 44,
+        child: Center(
+          child: Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.black87,
+            size: 18,
           ),
-          ElevatedButton(
-            child: const Text("添加一条"),
-            onPressed: () {
-              Navigator.of(context)
-                  .pushNamed(
-                "trade",
-                arguments: account,
-              )
-                  .then((value) {
-                _fetchAccountDetail();
-                setState(() {
-                  TradeBean tradeResult = value as TradeBean;
-                  if (tradeResult.accountId == account!.id) {
-                    trades.add(tradeResult);
-                  }
-                });
-              });
-            },
-          )
-        ],
+        ),
       ),
     );
   }

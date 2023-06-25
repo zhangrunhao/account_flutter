@@ -17,8 +17,20 @@ class AccountItemCard extends StatelessWidget {
             _OperationUI(),
           ],
         ),
-        child: _AccountItemCardUI(
-          accountBean: accountBean,
+        child: GestureDetector(
+          onTap: () {
+            Navigator.of(context)
+                .pushNamed(
+              "account_detail",
+              arguments: accountBean,
+            )
+                .then((value) {
+              // TODO: 更新列表
+            });
+          },
+          child: _AccountItemCardUI(
+            accountBean: accountBean,
+          ),
         ),
       ),
     );

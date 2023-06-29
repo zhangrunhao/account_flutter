@@ -1,4 +1,5 @@
 import 'package:account_flutter/bean/account_bean.dart';
+import 'package:account_flutter/widgets/show_year_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 class NavigateBar extends StatelessWidget {
@@ -83,10 +84,17 @@ class _BackIcon extends StatelessWidget {
 class _YearSelect extends StatelessWidget {
   const _YearSelect();
 
+  Future<String> _selectYear(BuildContext context) async {
+    List<String> arr = ["1992", "2001", "2002", "2012", "2013", "1992", "2001"];
+    return await showYearBottomSheet(context, arr);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        String year = await _selectYear(context);
+        print(year);
       },
       child: Container(
         width: 64,

@@ -1,10 +1,11 @@
 import 'package:account_flutter/bean/account_bean.dart';
-import 'package:account_flutter/widgets/show_year_bottom_sheet.dart';
+import 'package:account_flutter/pages/account_detail/year_select.dart';
 import 'package:flutter/material.dart';
 
 class NavigateBar extends StatelessWidget {
   final AccountBean accountBean;
-  const NavigateBar({super.key, required this.accountBean});
+  final List<String> years;
+  const NavigateBar({super.key, required this.accountBean, required this.years});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,9 @@ class NavigateBar extends StatelessWidget {
           _CenterInfo(
             accountBean: accountBean,
           ),
-          const _YearSelect(),
+          YearSelect(
+            years: years,
+          ),
         ],
       ),
     );
@@ -74,47 +77,6 @@ class _BackIcon extends StatelessWidget {
             Icons.arrow_back_ios_new,
             color: Colors.black87,
             size: 18,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _YearSelect extends StatelessWidget {
-  const _YearSelect();
-
-  Future<String> _selectYear(BuildContext context) async {
-    List<String> arr = ["1992", "2001", "2002", "2012", "2013", "1992", "2001"];
-    return await showYearBottomSheet(context, arr);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        String year = await _selectYear(context);
-        print(year);
-      },
-      child: Container(
-        width: 64,
-        height: 25,
-        color: Colors.white24,
-        padding: const EdgeInsets.only(right: 5, left: 6),
-        child: const Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "2023",
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color.fromARGB(255, 4, 11, 32),
-                  decoration: TextDecoration.none,
-                ),
-              ),
-              Icon(Icons.keyboard_arrow_down_outlined, size: 14),
-            ],
           ),
         ),
       ),

@@ -13,7 +13,7 @@ class AccountDetailPage extends StatelessWidget {
     return BgWidget(
       child: Column(
         children: [
-          NavigateBar(accountBean: accountBean),
+          NavigateBar(accountBean: accountBean, years: const [],),
           AccountInfo(accountBean: accountBean),
           const Expanded(
             child: SingleChildScrollView(

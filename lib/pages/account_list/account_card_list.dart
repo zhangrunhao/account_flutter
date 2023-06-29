@@ -7,8 +7,7 @@ class AccountCardList extends StatelessWidget {
   const AccountCardList({super.key, required this.accounts});
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
+    return Container(
         margin: const EdgeInsets.only(top: 20),
         child: ListView.builder(
           itemCount: accounts.length,
@@ -18,7 +17,6 @@ class AccountCardList extends StatelessWidget {
             );
           },
         ),
-      ),
-    );
+      );
   }
 }

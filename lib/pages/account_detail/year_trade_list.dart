@@ -1,7 +1,8 @@
+import 'package:account_flutter/pages/account_detail/trade_single.dart';
 import 'package:flutter/material.dart';
 
 class YearTradeList extends StatefulWidget {
-  const YearTradeList();
+  const YearTradeList({super.key});
 
   @override
   YearTradeListState createState() => YearTradeListState();
@@ -31,12 +32,9 @@ class YearTradeListState extends State<YearTradeList> {
           },
           body: Column(
             children: [
-              _TradeWidget(),
-              _TradeWidget(),
-              _TradeWidget(),
-              _TradeWidget(),
-              _TradeWidget(),
-              _TradeWidget(),
+              TradeSingle(),
+              TradeSingle(),
+              TradeSingle(),
             ],
           ),
           isExpanded: e.isExpanded,
@@ -59,107 +57,4 @@ List<MonthItem> generateItems(int numberOfItems) {
   return List<MonthItem>.generate(numberOfItems, (int index) {
     return MonthItem(text: '${index + 1}月');
   });
-}
-
-class _TradeWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 60,
-      decoration: const BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            color: Colors.black,
-            style: BorderStyle.solid,
-            width: 1,
-          ),
-        ),
-      ),
-      padding: const EdgeInsets.only(left: 16.5, right: 5),
-      child: const Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          _TradeIcon(),
-          Expanded(child: _TradeInfo()),
-          Align(
-            alignment: Alignment.centerRight,
-            child: _AccountMoney(),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _TradeIcon extends StatelessWidget {
-  const _TradeIcon();
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox(
-      width: 23,
-      child: Icon(Icons.access_alarms, size: 23),
-    );
-  }
-}
-
-class _TradeInfo extends StatelessWidget {
-  const _TradeInfo();
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(top: 8, bottom: 9, left: 11.5),
-      child: const Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "餐饮日常",
-            style: TextStyle(
-              fontSize: 15,
-              color: Color(0xff1f1f24),
-              fontWeight: FontWeight.w600,
-              decoration: TextDecoration.none,
-            ),
-          ),
-          Text(
-            "充电宝 01/01 12:20",
-            style: TextStyle(
-                fontSize: 12,
-                color: Color(0xff84868f),
-                decoration: TextDecoration.none),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _AccountMoney extends StatelessWidget {
-  const _AccountMoney();
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Text(
-          "50.01",
-          style: TextStyle(
-            color: Color(0xff1f1f24),
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            decoration: TextDecoration.none,
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.only(left: 13),
-          width: 2,
-          height: 10,
-          color: const Color(0xFFCBCFDE),
-        ),
-      ],
-    );
-  }
 }

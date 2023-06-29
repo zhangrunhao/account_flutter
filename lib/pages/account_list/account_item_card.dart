@@ -25,7 +25,6 @@ class AccountItemCard extends StatelessWidget {
               arguments: accountBean,
             )
                 .then((value) {
-              // TODO: 更新列表
             });
           },
           child: _AccountItemCardUI(

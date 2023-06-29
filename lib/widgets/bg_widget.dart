@@ -8,8 +8,8 @@ class BgWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
+        height: double.infinity,
+        width: double.infinity,
         decoration: const BoxDecoration(
           color: Colors.white,
         ),

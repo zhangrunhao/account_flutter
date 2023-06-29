@@ -15,10 +15,7 @@ class AccountDetailPage extends StatelessWidget {
         children: [
           NavigateBar(accountBean: accountBean),
           AccountInfo(accountBean: accountBean),
-          ConstrainedBox(
-            constraints: BoxConstraints.expand(
-              height: 300,
-            ),
+          const Expanded(
             child: SingleChildScrollView(
               child: YearTradeList(),
             ),

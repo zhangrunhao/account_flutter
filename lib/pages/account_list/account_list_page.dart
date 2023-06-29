@@ -32,6 +32,7 @@ class _AccountListPageState extends State<AccountListPage> {
       });
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return BgWidget(
@@ -58,13 +59,13 @@ class _AccountListPageState extends State<AccountListPage> {
             accountListName: accountListName,
             accountNum: accounts.length,
           ),
-          AccountCardList(
-            accounts: accounts,
+          Expanded(
+            child: AccountCardList(
+              accounts: accounts,
+            ),
           ),
         ],
       ),
     );
   }
 }
-
-

@@ -16,7 +16,9 @@ class NavigateBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const _BackIcon(),
-          _CenterInfo(accountBean: accountBean,),
+          _CenterInfo(
+            accountBean: accountBean,
+          ),
           const _YearSelect(),
         ],
       ),
@@ -36,10 +38,10 @@ class _CenterInfo extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(right: 5),
           child: Image.asset(
-              "images/account_icons/${accountBean.icon}",
-              width: 15,
-              height: 15,
-            ),
+            "images/account_icons/${accountBean.icon}",
+            width: 15,
+            height: 15,
+          ),
         ),
         Text(
           accountBean.name,
@@ -85,7 +87,6 @@ class _YearSelect extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed("trade");
       },
       child: Container(
         width: 64,

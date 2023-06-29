@@ -16,20 +16,18 @@ class TradeList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: trades.length,
-        itemBuilder: (context, index) {
-          TradeBean trade = trades[index];
-          return TradeWidget(
-            trade: trade,
-            updateCallback: tradeUpdateCallBack,
-            deleteCallback: tradeDeleteCallBack,
-          );
-        },
-      ),
+    return ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: trades.length,
+      itemBuilder: (context, index) {
+        TradeBean trade = trades[index];
+        return TradeWidget(
+          trade: trade,
+          updateCallback: tradeUpdateCallBack,
+          deleteCallback: tradeDeleteCallBack,
+        );
+      },
     );
   }
 }

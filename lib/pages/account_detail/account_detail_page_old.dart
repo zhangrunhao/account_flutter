@@ -2,7 +2,7 @@ import 'package:account_flutter/bean/account_bean.dart';
 import 'package:account_flutter/bean/trade_bean.dart';
 import 'package:account_flutter/db/account_db.dart';
 import 'package:account_flutter/db/trade_db.dart';
-import 'package:account_flutter/pages/account_detail/account_detail.dart';
+// import 'package:account_flutter/pages/account_detail/account_detail.dart';
 import 'package:account_flutter/pages/account_detail/trade_list.dart';
 import 'package:account_flutter/pages/account_edit/account_edit_page.dart';
 import 'package:flutter/material.dart';
@@ -79,9 +79,9 @@ class _AccountDetailState extends State<AccountDetailPage> {
       ),
       body: Column(
         children: [
-          AccountDetail(
-            account: account!,
-          ),
+          // AccountDetail(
+          //   account: account!,
+          // ),
           TradeList(
             trades: trades,
             tradeUpdateCallBack: (TradeBean trade) {
